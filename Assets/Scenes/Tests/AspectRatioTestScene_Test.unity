@@ -152,6 +152,223 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
+--- !u!1 &337520981
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 337520982}
+  - 222: {fileID: 337520984}
+  - 114: {fileID: 337520983}
+  m_Layer: 5
+  m_Name: Text
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &337520982
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337520981}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1378244393}
+  m_RootOrder: 0
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 198, y: -168}
+  m_SizeDelta: {x: 358, y: 282}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &337520983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337520981}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 123
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 129
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'LOGO
+
+    HERE'
+--- !u!222 &337520984
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 337520981}
+--- !u!1 &388583513
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 224: {fileID: 388583514}
+  - 222: {fileID: 388583516}
+  - 114: {fileID: 388583515}
+  m_Layer: 5
+  m_Name: Text (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &388583514
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 388583513}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 1378244393}
+  m_RootOrder: 1
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -260.75003, y: -398}
+  m_SizeDelta: {x: 472.5, y: 741}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &388583515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 388583513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 0
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: "According to all known laws\r\nof aviation,\r\n\r\n  \r\nthere is no way
+    a bee\r\nshould be able to fly.\r\n\r\n  \r\nIts wings are too small to get\r\nits
+    fat little body off the ground.\r\n\r\n  \r\nThe bee, of course, flies anyway\r\n\r\n
+    \ \r\nbecause bees don't care\r\nwhat humans think is impossible.\r\n\r\n  \r\nYellow,
+    black. Yellow, black.\r\nYellow, black. Yellow, black.\r\n\r\n  \r\nOoh, black
+    and yellow!\r\nLet's shake it up a little.\r\n\r\n  \r\nBarry! Breakfast is ready!\r\n\r\n
+    \ \r\nOoming!\r\n\r\n  \r\nHang on a second.\r\n\r\n  \r\nHello?\r\n\r\n  \r\n-
+    Barry?\r\n- Adam?\r\n\r\n  \r\n- Oan you believe this is happening?\r\n- I can't.
+    I'll pick you up.\r\n\r\n  \r\nLooking sharp.\r\n\r\n  \r\nUse the stairs. Your
+    father\r\npaid good money for those.\r\n\r\n  \r\nSorry. I'm excited.\r\n\r\n
+    \ \r\nHere's the graduate.\r\nWe're very proud of you, son.\r\n\r\n  \r\nA perfect
+    report card, all B's.\r\n\r\n  \r\nVery proud.\r\n\r\n  \r\nMa! I got a thing
+    going here.\r\n\r\n  \r\n- You got lint on your fuzz.\r\n- Ow! That's me!\r\n\r\n
+    \ \r\n- Wave to us! We'll be in row 118,000.\r\n- Bye!\r\n\r\n  \r\nBarry, I told
+    you,\r\nstop flying in the house!\r\n\r\n  \r\n- Hey, Adam.\r\n- Hey, Barry.\r\n\r\n
+    \ \r\n- Is that fuzz gel?\r\n- A little. Special day, graduation.\r\n\r\n  \r\nNever
+    thought I'd make it.\r\n\r\n  \r\nThree days grade school,\r\nthree days high
+    school.\r\n\r\n  \r\nThose were awkward.\r\n\r\n  \r\nThree days college. I'm
+    glad I took\r\na day and hitchhiked around the hive.\r\n\r\n  \r\nYou did come
+    back different.\r\n\r\n  \r\n- Hi, Barry.\r\n- Artie, growing a mustache? Looks
+    good.\r\n\r\n  \r\n- Hear about Frankie?\r\n- Yeah.\r\n\r\n  \r\n- You going to
+    the funeral?\r\n- No, I'm not going.\r\n\r\n  \r\nEverybody knows,\r\nsting someone,
+    you die.\r\n\r\n  \r\nDon't waste it on a squirrel.\r\nSuch a hothead.\r\n\r\n
+    \ \r\nI guess he could have\r\njust gotten out of the way.\r\n\r\n  \r\nI love
+    this incorporating\r\nan amusement park into our day.\r\n\r\n  \r\nThat's why
+    we don't need vacations.\r\n\r\n  \r\nBoy, quite a bit of pomp...\r\nunder the
+    circumstances.\r\n\r\n  \r\n- Well, Adam, today we are men.\r\n- We are!\r\n\r\n
+    \ \r\n- Bee-men.\r\n- Amen!\r\n\r\n  \r\nHallelujah!\r\n\r\n  \r\nStudents, faculty,
+    distinguished bees,\r\n\r\n  \r\nplease welcome Dean Buzzwell.\r\n\r\n  \r\nWelcome,
+    New Hive Oity\r\ngraduating class of...\r\n\r\n  \r\n...9:15.\r\n\r\n  \r\nThat
+    concludes our ceremonies.\r\n\r\n  \r\nAnd begins your career\r\nat Honex Industries!\r\n\r\n
+    \ \r\nWill we pick ourjob today?\r\n\r\n  \r\nI heard it's just orientation.\r\n\r\n
+    \ \r\nHeads up! Here we go.\r\n\r\n  \r\nKeep your hands and antennas\r\ninside
+    the tram at all times.\r\n\r\n  \r\n- Wonder what it'll be like?\r\n- A little
+    scary.\r\n\r\n  \r\nWelcome to Honex,\r\na division of Honesco\r\n\r\n  \r\nand
+    a part of the Hexagon Group.\r\n\r\n  \r\nThis is it!\r\n\r\n  \r\nWow.\r\n\r\n
+    \ \r\nWow.\r\n\r\n  \r\nWe know that you, as a bee,\r\nhave worked your whole
+    life\r\n\r\n  \r\nto get to the point where you\r\ncan work for your whole life.\r\n\r\n
+    \ \r\nHoney begins when our valiant Pollen\r\nJocks bring the nectar to the hive.\r\n\r\n
+    \ \r\nOur top-secret formula\r\n\r\n  \r\nis automatically color-corrected,\r\nscent-adjusted
+    and bubble-contoured\r\n\r\n  \r\ninto this soothing sweet syrup\r\n\r\n  \r\nwith
+    its distinctive\r\ngolden glow you know as...\r\n\r\n  \r\nHoney!\r\n\r\n  \r\n-
+    That girl was hot.\r\n- She's my cousin!\r\n\r\n  \r\n- She is?\r\n- Yes, we're
+    all cousins.\r\n\r\n  \r\n- Right. You're right.\r\n- At Honex, we constantly
+    strive\r\n\r\n  \r\nto improve every aspect\r\nof bee existence.\r\n\r\n  \r\nThese
+    bees are stress-testing\r\na new helmet technology.\r\n\r\n  \r\n- What do you
+    think he makes?\r\n- Not enough.\r\n\r\n  \r\nHere we have our latest advancement,\r\nthe
+    Krelman.\r\n\r\n  \r\n- What does that do?\r\n- Oatches that little strand of
+    honey\r\n\r\n  \r\nthat hangs after you pour it.\r\nSaves us millions.\r\n\r\n
+    \ \r\nOan anyone work on the Krelman?\r\n\r\n  \r\nOf course. Most bee jobs are\r\nsmall
+    ones. But bees know\r\n\r\n  \r\nthat every small job,\r\nif it's done well, means
+    a lot.\r\n\r\n  \r\nBut choose carefully\r\n\r\n  \r\nbecause you'll stay in the
+    job\r\nyou pick for the rest of your life.\r\n\r\n  \r\nThe same job the rest
+    of your life?\r\nI didn't know that.\r\n\r\n  \r\nWhat's the difference?\r\n\r\n
+    \ \r\nYou'll be happy to know that bees,\r\nas a species, haven't had one day
+    off\r\n\r\n  \r\nin 27 million years.\r\n\r\n  \r\nSo you'll just work us to death?\r\n\r\n
+    \ \r\nWe'll sure try.\r\n\r\n  \r\nWow! That blew my mind!\r\n\r\n  \r\n\"What's
+    the difference?\"\r\nHow can you say that?\r\n\r\n  \r\nOne job forever?\r\nThat's
+    an insane choice to have to make.\r\n\r\n  \r\nI'm relieved. Now we only have\r\nto
+    make one decision in life.\r\n\r\n  \r\nBut, Adam, how could they\r\nnever have
+    told us that?\r\n\r\n  \r\nWhy would you question anything?\r\nWe're bees.\r\n\r\n
+    \ \r\nWe're the most perfectly\r\nfunctioning society on Earth.\r\n\r\n  \r\nYou
+    ever think maybe things\r\nwork a little too well here?\r\n\r\n  \r\nLike what?
+    Give me one example.\r\n\r\n  \r\nI don't know. But you know\r\nwhat I'm talking
+    about.\r\n\r\n  \r\nPlease clear the gate.\r\nRoyal Nectar Force on approach.\r\n\r\n
+    \ \r\nWait a second. Oheck it out.\r\n\r\n  \r\n- Hey, those are Pollen Jocks!\r\n-
+    Wow.\r\n\r\n  \r\nI've never seen them this close.\r\n\r\n  \r\nThey know what
+    it's like\r\noutside the hive.\r\n\r\n  \r\nYeah, but some don't come back."
+--- !u!222 &388583516
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 388583513}
 --- !u!1 &489575119
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +473,106 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bcd363d7ea6e9a44c8e9cb27c924138a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &747595251
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224000010177668466, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 73e2a34e1816c4241bb6699e1587da1f, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &986172968
 GameObject:
   m_ObjectHideFlags: 0
@@ -318,6 +635,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
+--- !u!224 &1378244393 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224000012672754100, guid: 73e2a34e1816c4241bb6699e1587da1f,
+    type: 2}
+  m_PrefabInternal: {fileID: 747595251}
 --- !u!1 &1779694246
 GameObject:
   m_ObjectHideFlags: 0
