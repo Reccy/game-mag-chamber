@@ -5,17 +5,8 @@ using System.Collections;
 
 public class DebugMenu : MonoBehaviour {
 
-    GraphicsManager graphics;
-    GameManager game;
-
     public int resWidth, resHeight;
     public bool fullscreen;
-
-    void Awake()
-    {
-        graphics = Object.FindObjectOfType<GraphicsManager>();
-        game = Object.FindObjectOfType<GameManager>();
-    }
 
     //Scene-Load Settings
     public void LoadScene(Text textObj)
