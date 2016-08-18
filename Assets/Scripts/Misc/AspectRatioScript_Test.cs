@@ -24,6 +24,11 @@ public class AspectRatioScript_Test : MonoBehaviour
             Application.Quit();
         }
 
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Screen.fullScreen = !Screen.fullScreen;
+        }
+
         if(Input.GetKeyDown(KeyCode.E))
         {
             currentRes++;
@@ -68,9 +73,15 @@ public class AspectRatioScript_Test : MonoBehaviour
 
         if(aspectRatio <= 1.25f) //5:4
         {
-            UpdateText(Screen.currentResolution + "\n5:4");
-            camera.orthographicSize = 7.11f;
+            UpdateText(Screen.currentResolution + "\nSMALL");
+            camera.orthographicSize = 5.35f;
         }
+        else
+        {
+            UpdateText(Screen.currentResolution + "\nNORMAL");
+            camera.orthographicSize = 5f;
+        }
+            /*
         else if(aspectRatio <= 1.333334f) //4:3
         {
             UpdateText(Screen.currentResolution + "\n4:3");
@@ -90,7 +101,7 @@ public class AspectRatioScript_Test : MonoBehaviour
         {
             UpdateText(Screen.currentResolution + "\n16:9");
             camera.orthographicSize = 5f;
-        }
+        }*/
     }
 
     void UpdateText(string input)
