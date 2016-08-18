@@ -17,23 +17,26 @@ public class DebugMenu : MonoBehaviour {
         game = Object.FindObjectOfType<GameManager>();
     }
 
+    //Scene-Load Settings
+    public void LoadScene(Text textObj)
+    {
+        SceneManager.LoadScene(textObj.text);
+    }
+
+    //Resolution Settings
     public void UpdateResolution()
     {
-        Debug.Log("Setting resolution: " + resWidth + ", " + resHeight);
         Screen.SetResolution(resWidth, resHeight, fullscreen);
-        Debug.Log("New Resolution: " + resWidth + ", " + resHeight);
     }
 
     public void SetResWidth(InputField rw)
     {
-        resWidth = int.Parse(rw.text);
-        Debug.Log("RES WIDTH:" + resWidth);
+        int.TryParse(rw.text, out resWidth);
     }
 
     public void SetResHeight(InputField rh)
     {
-        resHeight = int.Parse(rh.text);
-        Debug.Log("RES HEIGHT:" + resHeight);
+        int.TryParse(rh.text, out resHeight);
     }
 
     public void SetFullscreen(Toggle f)
