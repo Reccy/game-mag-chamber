@@ -8,10 +8,24 @@ public class DebugMenu : MonoBehaviour {
     public int resWidth, resHeight;
     public bool fullscreen;
 
+    private InputField sceneField;
+
+    void Awake()
+    {
+        sceneField = GameObject.Find("SceneField").GetComponent<InputField>();
+        Debug.Log(sceneField.transform.parent);
+    }
+
     //Scene-Load Settings
     public void LoadScene(Text textObj)
     {
         SceneManager.LoadScene(textObj.text);
+    }
+
+    public void SetSceneText(Text textObj)
+    {
+        Debug.Log(textObj.text);
+        sceneField.text = textObj.text;
     }
 
     //Resolution Settings
