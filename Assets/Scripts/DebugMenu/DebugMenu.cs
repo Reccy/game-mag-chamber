@@ -13,7 +13,6 @@ public class DebugMenu : MonoBehaviour {
     void Awake()
     {
         sceneField = GameObject.Find("SceneField").GetComponent<InputField>();
-        Debug.Log(sceneField.transform.parent);
     }
 
     //Scene-Load Settings
@@ -24,7 +23,6 @@ public class DebugMenu : MonoBehaviour {
 
     public void SetSceneText(Text textObj)
     {
-        Debug.Log(textObj.text);
         sceneField.text = textObj.text;
     }
 
