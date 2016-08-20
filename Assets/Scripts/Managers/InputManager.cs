@@ -51,6 +51,12 @@ public class InputManager : MonoBehaviour {
         return Quaternion.Euler(GetMouseEulerFrom(inObj));
     }
 
+    //Returns the mouse's distance to the object
+    public float GetMouseDistanceFrom(GameObject inObj)
+    {
+        return Vector2.Distance(inObj.transform.position, mousePosition);
+    }
+
     //Returns mouse sin value
     public float GetMouseSinFrom(GameObject inObj)
     {
