@@ -61,7 +61,10 @@ public class Player : MonoBehaviour
         {
             playerState.ChangeState(State.MovingSlow);
         }
+    }
 
+    void MovingNormal_FixedUpdate()
+    {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
     }
@@ -73,7 +76,7 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
     }
 
-    void MovingFast_Update()
+    void MovingFast_FixedUpdate()
     {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeedFast * Time.deltaTime));
@@ -100,7 +103,10 @@ public class Player : MonoBehaviour
 
         //Update Line Renderer
         UpdateLineRenderer();
+    }
 
+    void MovingSlow_FixedUpdate()
+    {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
     }
@@ -113,7 +119,7 @@ public class Player : MonoBehaviour
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
     }
 
-    void MovingRedirected_Update()
+    void MovingRedirected_FixedUpdate()
     {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
