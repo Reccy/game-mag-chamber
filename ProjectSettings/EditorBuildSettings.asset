@@ -8,8 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/preload.unity
   - enabled: 1
+    path: Assets/Scenes/Tests/Player_Test.unity
+  - enabled: 1
     path: Assets/Scenes/Tests/AspectRatioTestScene_Test.unity
   - enabled: 1
-    path: Assets/Scenes/Tests/Player_Test.unity
+    path: Assets/Scenes/Tests/Framerate_Test.unity
   - enabled: 1
     path: Assets/Scenes/debug.unity

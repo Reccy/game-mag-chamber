@@ -46,4 +46,19 @@ public class DebugMenu : MonoBehaviour {
     {
         fullscreen = f.isOn;
     }
+
+    //Time Settings
+    public void SetTargetFPS(InputField inField)
+    {
+        int targetFPS;
+        int.TryParse(inField.text, out targetFPS);
+        Application.targetFrameRate = targetFPS;
+    }
+
+    public void SetTimestep(InputField inField)
+    {
+        int timeStep;
+        int.TryParse(inField.text, out timeStep);
+        Time.fixedDeltaTime = timeStep;
+    }
 }

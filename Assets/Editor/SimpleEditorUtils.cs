@@ -7,6 +7,13 @@ using System.Collections;
 [InitializeOnLoad]
 public static class SimpleEditorUtils
 {
+    //Sets quality level to lowest in editor
+	static SimpleEditorUtils() {
+	    if(EditorApplication.isPlaying)
+        {
+            QualitySettings.antiAliasing = 0;
+        }
+	}
 
     //Go to the prelaunch scene and then play (Ctrl + 0)
     [MenuItem("Editor Tools/Play-Unplay, But From Prelaunch Scene %0")]

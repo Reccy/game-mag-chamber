@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
+        if (Application.isEditor)
+        {
+            QualitySettings.antiAliasing = 0;
+            QualitySettings.vSyncCount = 0;
+        }
+
         if(debugMode)
         {
             SceneManager.LoadScene("debug");
