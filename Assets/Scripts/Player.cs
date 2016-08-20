@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
 
     //Other variables
     LineRenderer lineRenderer;
+    public float lineRendererOffset = 0.20f;
 
     void Awake()
     {
@@ -80,10 +81,10 @@ public class Player : MonoBehaviour
     }
 
     //Other Methods
+
+    //Updates the LineRenderer's positioning
     void UpdateLineRenderer()
     {
-        float xLineOffset, yLineOffset;
-        
-        lineRenderer.SetPositions(new Vector3[] { new Vector2(transform.position.x + xLineOffset, transform.position.y + yLineOffset), inputManager.GetMousePosition() });
+        lineRenderer.SetPositions(new Vector3[] { new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset, inputManager.GetMousePosition() });
     }
 }
