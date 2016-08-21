@@ -26,7 +26,7 @@ public class Framerate_Test : MonoBehaviour {
         if(uT == UpdateType.Update)
         {
             //Move forward
-            transform.Translate(Vector2.up * 5f * Time.deltaTime);
+            transform.Translate(Vector2.up * 2f * Time.deltaTime);
             if(transform.position.y > 4 && transform.position.y < 4.07)
             {
                 Debug.Log(transform.name + " reached goal at: " + Time.timeSinceLevelLoad);
@@ -40,7 +40,7 @@ public class Framerate_Test : MonoBehaviour {
         if(uT == UpdateType.FixedUpdate)
         {
             //Move forward
-            transform.Translate(Vector2.up * 5f * Time.deltaTime);
+            transform.Translate(Vector2.up * 2f * Time.deltaTime);
             if (transform.position.y > 4 && transform.position.y < 4.07)
             {
                 Debug.Log(transform.name + " reached goal at: " + Time.timeSinceLevelLoad);

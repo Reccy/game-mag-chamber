@@ -14,9 +14,8 @@ public class Player : MonoBehaviour
 
     //Other variables
     LineRenderer lineRenderer;
-    CircleCollider2D collider;
+    CircleCollider2D col;
     GameObject platform;
-    InterpolatedTransform interpolator;
 
     Quaternion movingRotation; //Rotation for player's movement vector
 
@@ -29,8 +28,7 @@ public class Player : MonoBehaviour
     {
         inputManager = Object.FindObjectOfType<InputManager>();
         lineRenderer = GetComponent<LineRenderer>();
-        collider = GetComponent<CircleCollider2D>();
-        interpolator = GetComponent<InterpolatedTransform>();
+        col = GetComponent<CircleCollider2D>();
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);
@@ -39,7 +37,9 @@ public class Player : MonoBehaviour
     //Stationary State
     void Stationary_Enter()
     {
-        interpolator.ForgetPreviousTransforms();
+        if (platform)
+            Debug.Log(platform.gameObject.name);
+
         LineRendererEnabled(true);
     }
 
@@ -132,7 +132,6 @@ public class Player : MonoBehaviour
     }
 
     //Collision Detection Code
-
     void OnTriggerEnter2D(Collider2D colObj)
     {
         string colLayer = LayerMask.LayerToName(colObj.gameObject.layer);
@@ -143,7 +142,7 @@ public class Player : MonoBehaviour
                 RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
                 
                 platform = colCast.transform.gameObject;
-                transform.position = colCast.point + (colCast.normal * collider.radius);
+                transform.position = colCast.point + (colCast.normal * col.radius);
 
                 playerState.ChangeState(State.Stationary);
                 break;
