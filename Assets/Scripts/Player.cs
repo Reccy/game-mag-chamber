@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     //Other variables
     LineRenderer lineRenderer;
+    CircleCollider2D collider;
+    GameObject platform;
+    InterpolatedTransform interpolator;
 
     Quaternion movingRotation; //Rotation for player's movement vector
 
@@ -26,6 +29,8 @@ public class Player : MonoBehaviour
     {
         inputManager = Object.FindObjectOfType<InputManager>();
         lineRenderer = GetComponent<LineRenderer>();
+        collider = GetComponent<CircleCollider2D>();
+        interpolator = GetComponent<InterpolatedTransform>();
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);
@@ -34,6 +39,7 @@ public class Player : MonoBehaviour
     //Stationary State
     void Stationary_Enter()
     {
+        interpolator.ForgetPreviousTransforms();
         LineRendererEnabled(true);
     }
 
@@ -65,9 +71,6 @@ public class Player : MonoBehaviour
 
     void MovingNormal_FixedUpdate()
     {
-        //Resolve Collisions
-        ResolveCollisions();
-
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
     }
@@ -129,11 +132,6 @@ public class Player : MonoBehaviour
     }
 
     //Collision Detection Code
-    //Collisions Resolution
-    void ResolveCollisions()
-    {
-
-    }
 
     void OnTriggerEnter2D(Collider2D colObj)
     {
@@ -142,8 +140,11 @@ public class Player : MonoBehaviour
         switch (colLayer)
         {
             case "Platform":
-                RaycastHit2D testHit = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
-                Debug.Log(testHit.transform.name);
+                RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
+                
+                platform = colCast.transform.gameObject;
+                transform.position = colCast.point + (colCast.normal * collider.radius);
+
                 playerState.ChangeState(State.Stationary);
                 break;
         }
