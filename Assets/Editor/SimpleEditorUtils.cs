@@ -42,6 +42,21 @@ public static class SimpleEditorUtils
         Debug.Log("Refreshed Asset Database!");
     }
 
+    //Delete all player prefs
+    [MenuItem("Editor Tools/Delete Player Prefs %2")]
+    public static void DeletePlayePrefs()
+    {
+        if (EditorApplication.isPlaying == true)
+        {
+            EditorApplication.isPlaying = false;
+            return;
+        }
+        if(EditorUtility.DisplayDialog("Delete PlayerPrefs?", "Are you sure you want to delete all PlayerPrefs?", "Delete PlayerPrefs", "Cancel"))
+        {
+            PlayerPrefs.DeleteAll();
+        }
+    }
+
     //Opens the project in the explorer
     [MenuItem("Editor Tools/Open Project in Explorer")]
     private static void OpenInExplorer()
