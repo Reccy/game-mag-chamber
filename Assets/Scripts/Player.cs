@@ -44,12 +44,6 @@ public class Player : MonoBehaviour
         {
             playerState.ChangeState(State.MovingNormal);
         }
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-        }
-
         UpdateLineRenderer();
     }
 
@@ -71,6 +65,9 @@ public class Player : MonoBehaviour
 
     void MovingNormal_FixedUpdate()
     {
+        //Resolve Collisions
+        ResolveCollisions();
+
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
     }
@@ -129,6 +126,27 @@ public class Player : MonoBehaviour
     {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
+    }
+
+    //Collision Detection Code
+    //Collisions Resolution
+    void ResolveCollisions()
+    {
+
+    }
+
+    void OnTriggerEnter2D(Collider2D colObj)
+    {
+        string colLayer = LayerMask.LayerToName(colObj.gameObject.layer);
+
+        switch (colLayer)
+        {
+            case "Platform":
+                RaycastHit2D testHit = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
+                Debug.Log(testHit.transform.name);
+                playerState.ChangeState(State.Stationary);
+                break;
+        }
     }
 
     //Line Renderer Methods

@@ -54,8 +54,24 @@ namespace UnityExtensions.Physics2DExtensions
                 float angle = ((arcRange / segments) * i) + arcStart;
                 Vector2 dir = Quaternion.Euler(0, 0, angle) * Vector2.up;
 
-                RaycastHit2D rayHit = GetClosestRaycastHit2D(origin, dir, radius, layerMask);
-                rayHitsList.Add(rayHit);
+                RaycastHit2D rayHit = Physics2D.Raycast(origin, dir, radius, layerMask);
+
+                if (rayHit.transform != null)
+                {
+                    rayHitsList.Add(rayHit);
+                }
+
+                /*
+                 * Debug Code
+                if (i == 0)
+                {
+                    Debug.DrawRay(origin, dir * 100, Color.HSVToRGB(0, 1, 1), 10, false);
+                }
+                else
+                {
+                    Debug.DrawRay(origin, dir * 100, Color.HSVToRGB((float)i / (float)segments, 1, 1), 10, false);
+                }
+                */
             }
             RaycastHit2D[] rayHitsArray = rayHitsList.ToArray();
             return SortRaycastHit2D(rayHitsArray);

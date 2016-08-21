@@ -43,8 +43,8 @@ public static class SimpleEditorUtils
     }
 
     //Opens the project in the explorer
-    [MenuItem("Editor Tools/Open Project in File Explorer")]
-    public static void OpenInExplorer()
+    [MenuItem("Editor Tools/Open Project in Explorer")]
+    private static void OpenInExplorer()
     {
         string itemPath = Application.dataPath;
         itemPath = itemPath.Replace(@"/", @"\");   // explorer doesn't like front slashes

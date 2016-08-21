@@ -21,6 +21,8 @@ GameObject:
   - 4: {fileID: 4000010888861594}
   - 212: {fileID: 212000010913349440}
   - 120: {fileID: 120000010132722464}
+  - 50: {fileID: 50000011889377614}
+  - 58: {fileID: 58000011537937840}
   - 114: {fileID: 114000012463256592}
   - 114: {fileID: 114000011688535070}
   - 114: {fileID: 114000010346381304}
@@ -44,6 +46,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!50 &50000011889377614
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013270464232}
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_IsKinematic: 1
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
+--- !u!58 &58000011537937840
+CircleCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013270464232}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.21
 --- !u!114 &114000010346381304
 MonoBehaviour:
   m_ObjectHideFlags: 1
