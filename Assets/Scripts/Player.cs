@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using MonsterLove.StateMachine;
+using UnityExtensions.Physics2DExtensions;
 
 public class Player : MonoBehaviour
 {
@@ -42,6 +43,11 @@ public class Player : MonoBehaviour
         if(Input.GetMouseButtonDown(0)) //LMB Down -> Moving Normal
         {
             playerState.ChangeState(State.MovingNormal);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+
         }
 
         UpdateLineRenderer();

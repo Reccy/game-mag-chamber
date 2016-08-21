@@ -16,4 +16,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/SlowMotion_Test.unity
   - enabled: 1
+    path: Assets/Scenes/Tests/ArcCast_Test.unity
+  - enabled: 1
     path: Assets/Scenes/debug.unity

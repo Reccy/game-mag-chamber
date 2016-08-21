@@ -41,4 +41,13 @@ public static class SimpleEditorUtils
         AssetDatabase.Refresh();
         Debug.Log("Refreshed Asset Database!");
     }
+
+    //Opens the project in the explorer
+    [MenuItem("Editor Tools/Open Project in File Explorer")]
+    public static void OpenInExplorer()
+    {
+        string itemPath = Application.dataPath;
+        itemPath = itemPath.Replace(@"/", @"\");   // explorer doesn't like front slashes
+        System.Diagnostics.Process.Start("explorer.exe", "/select," + itemPath);
+    }
 }

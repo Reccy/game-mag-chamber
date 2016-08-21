@@ -17,13 +17,6 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        //Fix Graphics Settings lag in the editor
-        if (Application.isEditor)
-        {
-            QualitySettings.antiAliasing = 0;
-            QualitySettings.vSyncCount = 0;
-        }
-
         //Go to debug screen on startup
         if(debugMode)
         {
@@ -40,12 +33,14 @@ public class GameManager : MonoBehaviour {
     {
         float slowMotionTimeStart = slowMotionTime;
         float t = 0;
-        while(slowMotionTime != slowMotionTimeTarget)
+        while(slowMotionTime >= slowMotionTimeTarget)
         {
             t += Time.fixedDeltaTime / duration;
             slowMotionTime = Mathf.Lerp(slowMotionTimeStart, slowMotionTimeTarget, t);
             yield return new WaitForEndOfFrame();
         }
+        if (slowMotionTime != slowMotionTimeTarget)
+            slowMotionTime = slowMotionTimeTarget;
     }
 
     //Disables slow motion
@@ -53,11 +48,13 @@ public class GameManager : MonoBehaviour {
     {
         float slowMotionTimeStart = slowMotionTime;
         float t = 0;
-        while (slowMotionTime != 1)
+        while (slowMotionTime <= 1)
         {
             t += Time.fixedDeltaTime / duration;
             slowMotionTime = Mathf.Lerp(slowMotionTimeStart, 1, t);
             yield return new WaitForEndOfFrame();
         }
+        if (slowMotionTime != 1)
+            slowMotionTime = 1;
     }
 }
