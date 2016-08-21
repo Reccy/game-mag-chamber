@@ -24,8 +24,6 @@ GameObject:
   - 50: {fileID: 50000011889377614}
   - 58: {fileID: 58000011537937840}
   - 114: {fileID: 114000012463256592}
-  - 114: {fileID: 114000011688535070}
-  - 114: {fileID: 114000010346381304}
   m_Layer: 9
   m_Name: PlayerCharacter
   m_TagString: Player
@@ -77,28 +75,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.21
---- !u!114 &114000010346381304
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013270464232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e65849298bdb76a498fa94e056fcb0dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000011688535070
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013270464232}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83ed1ae3a3fc0224da2ed324a25c879b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &114000012463256592
 MonoBehaviour:
   m_ObjectHideFlags: 1
