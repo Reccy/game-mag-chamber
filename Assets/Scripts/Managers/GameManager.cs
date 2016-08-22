@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour {
         {
             t += Time.fixedDeltaTime / duration;
             slowMotionMultiplier = Mathf.Lerp(slowMotionTimeStart, slowMotionMultiplierTarget, t);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
         if (slowMotionMultiplier != slowMotionMultiplierTarget)
             slowMotionMultiplier = slowMotionMultiplierTarget;
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour {
         {
             t += Time.fixedDeltaTime / duration;
             slowMotionMultiplier = Mathf.Lerp(slowMotionTimeStart, 1, t);
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
         if (slowMotionMultiplier != 1)
             slowMotionMultiplier = 1;
