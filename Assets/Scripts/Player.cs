@@ -17,6 +17,7 @@ public class Player : MonoBehaviour
     LineRenderer lineRenderer;
     CircleCollider2D col;
     GameObject platform;
+    Vector2 platformOffset;
 
     Quaternion movingRotation; //Rotation for player's movement vector
 
@@ -52,6 +53,14 @@ public class Player : MonoBehaviour
             playerState.ChangeState(State.MovingNormal);
         }
         UpdateLineRenderer();
+    }
+
+    void Stationary_FixedUpdate()
+    {
+        if(platform)
+        {
+            transform.position = (Vector2)platform.transform.position + platformOffset;
+        }
     }
 
     //MovingNormal State
@@ -153,7 +162,10 @@ public class Player : MonoBehaviour
 
         platform = colCast.transform.gameObject;
         transform.position = colCast.point + (colCast.normal * col.radius);
+        platformOffset = transform.position - platform.transform.position;
         gameManager.DisableSlowMotion(0);
+        Debug.Log(platformOffset);
+
         playerState.ChangeState(State.Stationary);
     }
 
