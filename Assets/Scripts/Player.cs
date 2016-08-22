@@ -16,8 +16,11 @@ public class Player : MonoBehaviour
     //Other variables
     LineRenderer lineRenderer;
     CircleCollider2D col;
+
+    //Platform variables
     GameObject platform;
     Vector2 platformOffset;
+    Quaternion platformRotation;
 
     Quaternion movingRotation; //Rotation for player's movement vector
 
@@ -59,8 +62,22 @@ public class Player : MonoBehaviour
     {
         if(platform)
         {
-            transform.position = (Vector2)platform.transform.position + platformOffset;
+            Quaternion rotationDifference = Quaternion.Inverse(platformRotation) * platform.transform.rotation;
+            
+            if (rotationDifference != Quaternion.identity)
+            {
+                transform.position = ((Vector2)platform.transform.position + (Vector2)(rotationDifference * platformOffset));
+            }
+            else
+            {
+                transform.position = ((Vector2)platform.transform.position + platformOffset);
+            }
         }
+    }
+
+    void Stationary_Finally()
+    {
+        platform = null;
     }
 
     //MovingNormal State
@@ -160,13 +177,16 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, collisionRadius, LayerMask.GetMask("Platform"));
 
-        platform = colCast.transform.gameObject;
-        transform.position = colCast.point + (colCast.normal * col.radius);
-        platformOffset = transform.position - platform.transform.position;
-        gameManager.DisableSlowMotion(0);
-        Debug.Log(platformOffset);
+        if(colCast.transform.gameObject != platform)
+        {
+            platform = colCast.transform.gameObject; //Set the connected platform
+            transform.position = colCast.point + (colCast.normal * col.radius); //Set the player's position to the platform surface
+            platformOffset = transform.position - platform.transform.position; //Get the offset relative to the platform's center
+            platformRotation = platform.transform.rotation; //Get the platform's z rotation
+            gameManager.DisableSlowMotion(0); //Disable slow motion
 
-        playerState.ChangeState(State.Stationary);
+            playerState.ChangeState(State.Stationary);
+        }
     }
 
     //Line Renderer Methods
