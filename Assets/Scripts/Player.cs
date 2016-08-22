@@ -22,8 +22,9 @@ public class Player : MonoBehaviour
 
     public float playerSpeed = 150;
     public float playerSpeedFast = 200;
-
     public float lineRendererOffset = 0.20f;
+
+    float collisionRadius; //Offset for manual collision detection
 
     void Awake()
     {
@@ -31,6 +32,7 @@ public class Player : MonoBehaviour
         gameManager = Object.FindObjectOfType<GameManager>();
         lineRenderer = GetComponent<LineRenderer>();
         col = GetComponent<CircleCollider2D>();
+        collisionRadius = col.radius + 0.01f;
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);
@@ -39,9 +41,6 @@ public class Player : MonoBehaviour
     //Stationary State
     void Stationary_Enter()
     {
-        if (platform)
-            Debug.Log(platform.gameObject.name);
-
         LineRendererEnabled(true);
     }
 
@@ -94,7 +93,7 @@ public class Player : MonoBehaviour
     void MovingSlow_Enter()
     {
         LineRendererEnabled(true);
-        gameManager.EnableSlowMotion(0.5f);
+        gameManager.EnableSlowMotion(0.1f);
     }
 
     void MovingSlow_Update()
@@ -150,7 +149,7 @@ public class Player : MonoBehaviour
     //Collision with platform
     void HandleCollision_Platform(Collider2D platformCollision)
     {
-        RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
+        RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, collisionRadius, LayerMask.GetMask("Platform"));
 
         platform = colCast.transform.gameObject;
         transform.position = colCast.point + (colCast.normal * col.radius);

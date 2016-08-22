@@ -59,7 +59,6 @@ public class GameManager : MonoBehaviour {
     //Enables slow motion
     IEnumerator EnableSlowMotionCoroutine(float duration)
     {
-        Debug.Log("Enabling Slow Motion...");
         float slowMotionTimeStart = slowMotionMultiplier;
         float t = 0;
         while(slowMotionMultiplier >= slowMotionMultiplierTarget)
@@ -75,7 +74,6 @@ public class GameManager : MonoBehaviour {
     //Disables slow motion
     IEnumerator DisableSlowMotionCoroutine(float duration)
     {
-        Debug.Log("Disabling Slow Motion...");
         float slowMotionTimeStart = slowMotionMultiplier;
         float t = 0;
         while (slowMotionMultiplier <= 1)

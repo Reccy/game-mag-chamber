@@ -6,6 +6,8 @@ namespace UnityExtensions.Physics2DExtensions
 {
     public static class Physics2DExtensions
     {
+        public static bool arcCastDebug = false;
+
         //Sorts Raycast2D array to get closest Raycast2D
         public static RaycastHit2D SortRaycastHit2D(RaycastHit2D[] hits)
         {
@@ -61,17 +63,18 @@ namespace UnityExtensions.Physics2DExtensions
                     rayHitsList.Add(rayHit);
                 }
 
-                /*
-                 * Debug Code
-                if (i == 0)
+                //Debug Code
+                if(arcCastDebug)
                 {
-                    Debug.DrawRay(origin, dir * 100, Color.HSVToRGB(0, 1, 1), 10, false);
+                    if (i == 0)
+                    {
+                        Debug.DrawRay(origin, dir * radius, Color.HSVToRGB(0, 1, 1), 10, false);
+                    }
+                    else
+                    {
+                        Debug.DrawRay(origin, dir * radius, Color.HSVToRGB((float)i / (float)segments, 1, 1), 10, false);
+                    }
                 }
-                else
-                {
-                    Debug.DrawRay(origin, dir * 100, Color.HSVToRGB((float)i / (float)segments, 1, 1), 10, false);
-                }
-                */
             }
             RaycastHit2D[] rayHitsArray = rayHitsList.ToArray();
             return SortRaycastHit2D(rayHitsArray);
