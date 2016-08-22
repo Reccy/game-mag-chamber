@@ -21,12 +21,12 @@ public class SlowMo_Test : MonoBehaviour {
     {
         if(Input.GetKeyDown(KeyCode.Q))
         {
-            StartCoroutine(gameManager.EnableSlowMotion(0.5f));
+            gameManager.EnableSlowMotion(0.5f);
         }
 
         if(Input.GetKeyDown(KeyCode.E))
         {
-            StartCoroutine(gameManager.DisableSlowMotion(0.5f));
+            gameManager.DisableSlowMotion(0.5f);
         }
     }
 
@@ -39,7 +39,7 @@ public class SlowMo_Test : MonoBehaviour {
     {
         if (transform.position.y > 0)
         {
-            transform.Translate(Vector2.up * 5f * Time.deltaTime * gameManager.slowMotionTime);
+            transform.Translate(Vector2.up * 5f * Time.deltaTime * gameManager.slowMotionMultiplier);
         }
         else
         {
@@ -49,6 +49,6 @@ public class SlowMo_Test : MonoBehaviour {
 
     void Slow_FixedUpdate()
     {
-        transform.Translate(Vector2.up * 5f * Time.deltaTime * gameManager.slowMotionTime);
+        transform.Translate(Vector2.up * 5f * Time.deltaTime * gameManager.slowMotionMultiplier);
     }
 }

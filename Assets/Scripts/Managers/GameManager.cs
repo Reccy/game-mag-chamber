@@ -6,8 +6,11 @@ public class GameManager : MonoBehaviour {
 
     public bool debugMode = false;
 
-    public float slowMotionTime = 1;
-    public float slowMotionTimeTarget = 0.2f;
+    //Slow-Motion Coroutine Variables
+    public float slowMotionMultiplier = 1;
+    public float slowMotionMultiplierTarget = 0.2f;
+    Coroutine startSlowMotion;
+    Coroutine stopSlowMotion;
 
     //Creates psuedo-singleton pattern
 	void Awake()
@@ -28,33 +31,60 @@ public class GameManager : MonoBehaviour {
         }
     }
 
-    //Enables slow motion
-    public IEnumerator EnableSlowMotion(float duration)
+    //Slow Motion Methods
+    public void EnableSlowMotion(float duration)
     {
-        float slowMotionTimeStart = slowMotionTime;
+        if (startSlowMotion == null)
+            startSlowMotion = StartCoroutine(EnableSlowMotionCoroutine(duration));
+
+        if (stopSlowMotion != null)
+        {
+            StopCoroutine(stopSlowMotion);
+            stopSlowMotion = null;
+        }
+    }
+
+    public void DisableSlowMotion(float duration)
+    {
+        if (stopSlowMotion == null)
+            stopSlowMotion = StartCoroutine(DisableSlowMotionCoroutine(duration));
+
+        if (startSlowMotion != null)
+        {
+            StopCoroutine(startSlowMotion);
+            startSlowMotion = null;
+        }
+    }
+
+    //Enables slow motion
+    IEnumerator EnableSlowMotionCoroutine(float duration)
+    {
+        Debug.Log("Enabling Slow Motion...");
+        float slowMotionTimeStart = slowMotionMultiplier;
         float t = 0;
-        while(slowMotionTime >= slowMotionTimeTarget)
+        while(slowMotionMultiplier >= slowMotionMultiplierTarget)
         {
             t += Time.fixedDeltaTime / duration;
-            slowMotionTime = Mathf.Lerp(slowMotionTimeStart, slowMotionTimeTarget, t);
+            slowMotionMultiplier = Mathf.Lerp(slowMotionTimeStart, slowMotionMultiplierTarget, t);
             yield return new WaitForEndOfFrame();
         }
-        if (slowMotionTime != slowMotionTimeTarget)
-            slowMotionTime = slowMotionTimeTarget;
+        if (slowMotionMultiplier != slowMotionMultiplierTarget)
+            slowMotionMultiplier = slowMotionMultiplierTarget;
     }
 
     //Disables slow motion
-    public IEnumerator DisableSlowMotion(float duration)
+    IEnumerator DisableSlowMotionCoroutine(float duration)
     {
-        float slowMotionTimeStart = slowMotionTime;
+        Debug.Log("Disabling Slow Motion...");
+        float slowMotionTimeStart = slowMotionMultiplier;
         float t = 0;
-        while (slowMotionTime <= 1)
+        while (slowMotionMultiplier <= 1)
         {
             t += Time.fixedDeltaTime / duration;
-            slowMotionTime = Mathf.Lerp(slowMotionTimeStart, 1, t);
+            slowMotionMultiplier = Mathf.Lerp(slowMotionTimeStart, 1, t);
             yield return new WaitForEndOfFrame();
         }
-        if (slowMotionTime != 1)
-            slowMotionTime = 1;
+        if (slowMotionMultiplier != 1)
+            slowMotionMultiplier = 1;
     }
 }

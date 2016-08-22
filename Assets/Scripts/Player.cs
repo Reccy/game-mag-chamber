@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     //Manager variables
     InputManager inputManager;
+    GameManager gameManager;
 
     //State machine variables
     public enum State { Stationary, MovingNormal, MovingFast, MovingSlow, MovingRedirected };
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     void Awake()
     {
         inputManager = Object.FindObjectOfType<InputManager>();
+        gameManager = Object.FindObjectOfType<GameManager>();
         lineRenderer = GetComponent<LineRenderer>();
         col = GetComponent<CircleCollider2D>();
 
@@ -72,27 +74,27 @@ public class Player : MonoBehaviour
     void MovingNormal_FixedUpdate()
     {
         //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
+        transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //MovingFast State
     void MovingFast_Enter()
     {
         LineRendererEnabled(false);
-        Time.timeScale = 1;
+        gameManager.DisableSlowMotion(0);
     }
 
     void MovingFast_FixedUpdate()
     {
         //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeedFast * Time.deltaTime));
+        transform.Translate(movingRotation * (Vector2.up * playerSpeedFast * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //MovingSlow State
     void MovingSlow_Enter()
     {
         LineRendererEnabled(true);
-        Time.timeScale = 0.5f;
+        gameManager.EnableSlowMotion(0.5f);
     }
 
     void MovingSlow_Update()
@@ -114,24 +116,25 @@ public class Player : MonoBehaviour
     void MovingSlow_FixedUpdate()
     {
         //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
+        transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //MovingRedirected State
     void MovingRedirected_Enter()
     {
         LineRendererEnabled(false);
-        Time.timeScale = 1;
+        gameManager.DisableSlowMotion(0);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
     }
 
     void MovingRedirected_FixedUpdate()
     {
         //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeed * Time.deltaTime));
+        transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //Collision Detection Code
+    //Trigger Enter Switch
     void OnTriggerEnter2D(Collider2D colObj)
     {
         string colLayer = LayerMask.LayerToName(colObj.gameObject.layer);
@@ -139,14 +142,20 @@ public class Player : MonoBehaviour
         switch (colLayer)
         {
             case "Platform":
-                RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
-                
-                platform = colCast.transform.gameObject;
-                transform.position = colCast.point + (colCast.normal * col.radius);
-
-                playerState.ChangeState(State.Stationary);
+                HandleCollision_Platform(colObj);
                 break;
         }
+    }
+
+    //Collision with platform
+    void HandleCollision_Platform(Collider2D platformCollision)
+    {
+        RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, Mathf.Infinity, LayerMask.GetMask("Platform"));
+
+        platform = colCast.transform.gameObject;
+        transform.position = colCast.point + (colCast.normal * col.radius);
+        gameManager.DisableSlowMotion(0);
+        playerState.ChangeState(State.Stationary);
     }
 
     //Line Renderer Methods
