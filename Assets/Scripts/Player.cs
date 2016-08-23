@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
         generator = transform.Find("Generator").gameObject;
         eye = transform.Find("Eye").gameObject;
         collisionRadius = col.radius + 0.01f;
+        lineRenderer.sortingLayerName = "Game";
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);

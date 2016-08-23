@@ -3,11 +3,13 @@ using System.Collections;
 
 public class PlatformMovement_Test : MonoBehaviour {
 
+    GameManager gameManager;
     Vector2 startPos;
     public bool spin = false;
 
     void Awake()
     {
+        gameManager = Object.FindObjectOfType<GameManager>();
         startPos = transform.position;
     }
 
@@ -17,7 +19,7 @@ public class PlatformMovement_Test : MonoBehaviour {
         
         if(spin)
         {
-            transform.Rotate(Vector3.forward * Time.deltaTime * 60f);
+            transform.Rotate(Vector3.forward * Time.deltaTime * gameManager.slowMotionMultiplier * 60f);
         }
     }
 }
