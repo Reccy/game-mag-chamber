@@ -20,6 +20,7 @@ public class NineSlice : MonoBehaviour
     public float width;
     public float height;
     public int slicePixels = 5;
+    public bool resizeCollider = true;
 
     private float oldWidth;
     private float oldHeight;
@@ -47,7 +48,7 @@ public class NineSlice : MonoBehaviour
         oldWidth = width;
         oldHeight = height;
 
-        if(boxCol)
+        if(boxCol && resizeCollider)
         {
             boxCol.size = new Vector2(width, height);
         }
