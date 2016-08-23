@@ -10,14 +10,12 @@ public class Platform : MonoBehaviour {
     float storedSliceWidth, storedSliceHeight;
     NineSlice spriteSlicer;
     NineSlice glowEffectSlicer;
-    SpriteRenderer glowEffect;
 
     void Awake()
     {
         spriteSlicer = GetComponent<NineSlice>();
         storedSliceHeight = spriteSlicer.height;
         storedSliceWidth = spriteSlicer.width;
-        glowEffect = transform.Find("GlowEffect").GetComponent<SpriteRenderer>();
         glowEffectSlicer = transform.Find("GlowEffect").GetComponent<NineSlice>();
         glowEffectSlicer.width = spriteSlicer.width + 0.1f;
         glowEffectSlicer.height = spriteSlicer.height + 0.1f;
@@ -25,6 +23,7 @@ public class Platform : MonoBehaviour {
 
     void LateUpdate()
     {
+        //If the sprite slicer changes size, update the glow effect's size
         if (storedSliceWidth != spriteSlicer.width || storedSliceHeight != spriteSlicer.height)
         {
             glowEffectSlicer.width = spriteSlicer.width + 0.1f;
@@ -35,6 +34,7 @@ public class Platform : MonoBehaviour {
             
     }
 
+    //Collision methods
     void OnTriggerEnter2D(Collider2D colObj)
     {
         string colLayer = LayerMask.LayerToName(colObj.gameObject.layer);
@@ -59,6 +59,7 @@ public class Platform : MonoBehaviour {
         }
     }
 
+    //Sets the platform's color by changing the glow sprite and platform sprite
     void SetColor(PlatformColor gc)
     {
         switch(gc)

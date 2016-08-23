@@ -16,6 +16,8 @@ public class Player : MonoBehaviour
     //Other variables
     LineRenderer lineRenderer;
     CircleCollider2D col;
+    GameObject generator;
+    GameObject eye;
 
     //Platform variables
     GameObject platform;
@@ -24,10 +26,12 @@ public class Player : MonoBehaviour
 
     Quaternion movingRotation; //Rotation for player's movement vector
 
-    public float playerSpeed = 150;
-    public float playerSpeedFast = 200;
+    public float generatorRotationSpeed = 50;
+    public float playerSpeed = 30;
+    public float playerSpeedFast = 45;
     public float lineRendererOffset = 0.20f;
 
+    float generatorRotationPercent = 1;
     float collisionRadius; //Offset for manual collision detection
 
     void Awake()
@@ -36,10 +40,23 @@ public class Player : MonoBehaviour
         gameManager = Object.FindObjectOfType<GameManager>();
         lineRenderer = GetComponent<LineRenderer>();
         col = GetComponent<CircleCollider2D>();
+        generator = transform.Find("Generator").gameObject;
+        eye = transform.Find("Eye").gameObject;
         collisionRadius = col.radius + 0.01f;
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);
+    }
+
+    //Universal Update
+    void FixedUpdate()
+    {
+        //Rotate generator
+        generator.transform.Rotate(Vector3.forward, generatorRotationSpeed * generatorRotationPercent * Time.deltaTime); 
+
+        //Move eye to follow mouse
+        eye.transform.position = transform.position;
+        eye.transform.Translate(inputManager.GetMouseQuaternionFrom(this.gameObject) * (Vector2.up * Mathf.Clamp(Vector2.Distance((Vector2)transform.position, inputManager.GetMousePosition()), 0, 0.08f)));
     }
 
     //Stationary State
@@ -60,6 +77,7 @@ public class Player : MonoBehaviour
 
     void Stationary_FixedUpdate()
     {
+        //If the player is on a platform, stay on the platform
         if(platform)
         {
             Quaternion rotationDifference = Quaternion.Inverse(platformRotation) * platform.transform.rotation;
@@ -73,11 +91,22 @@ public class Player : MonoBehaviour
                 transform.position = ((Vector2)platform.transform.position + platformOffset);
             }
         }
+
+        //Reset the generator rotation percentage over time
+        if(generatorRotationPercent > 1)
+        {
+            generatorRotationPercent -= 20 * Time.deltaTime;
+        }
+        else if(generatorRotationPercent < 1)
+        {
+            generatorRotationPercent = 1;
+        }
     }
 
     void Stationary_Finally()
     {
-        platform = null;
+        platform = null; //Player is no longer on a platform
+        generatorRotationPercent = 30; //Generator is at full power
     }
 
     //MovingNormal State
@@ -107,6 +136,7 @@ public class Player : MonoBehaviour
     {
         LineRendererEnabled(false);
         gameManager.DisableSlowMotion(0);
+        generatorRotationPercent = 60;
     }
 
     void MovingFast_FixedUpdate()
