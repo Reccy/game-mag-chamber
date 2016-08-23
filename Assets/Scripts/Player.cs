@@ -177,15 +177,18 @@ public class Player : MonoBehaviour
     {
         RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, collisionRadius, LayerMask.GetMask("Platform"));
 
-        if(colCast.transform.gameObject != platform)
+        if(colCast)
         {
-            platform = colCast.transform.gameObject; //Set the connected platform
-            transform.position = colCast.point + (colCast.normal * col.radius); //Set the player's position to the platform surface
-            platformOffset = transform.position - platform.transform.position; //Get the offset relative to the platform's center
-            platformRotation = platform.transform.rotation; //Get the platform's z rotation
-            gameManager.DisableSlowMotion(0); //Disable slow motion
+            if (colCast.transform.gameObject != platform)
+            {
+                platform = colCast.transform.gameObject; //Set the connected platform
+                transform.position = colCast.point + (colCast.normal * col.radius); //Set the player's position to the platform surface
+                platformOffset = transform.position - platform.transform.position; //Get the offset relative to the platform's center
+                platformRotation = platform.transform.rotation; //Get the platform's z rotation
+                gameManager.DisableSlowMotion(0); //Disable slow motion
 
-            playerState.ChangeState(State.Stationary);
+                playerState.ChangeState(State.Stationary);
+            }
         }
     }
 
