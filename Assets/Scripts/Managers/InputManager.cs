@@ -57,6 +57,12 @@ public class InputManager : MonoBehaviour {
         return Vector2.Distance(inObj.transform.position, mousePosition);
     }
 
+    //Returns the mouse's direction to the object
+    public Vector2 GetMouseDirectionFrom(GameObject inObj)
+    {
+        return mousePosition - (Vector2)inObj.transform.position;
+    }
+
     //Returns mouse sin value
     public float GetMouseSinFrom(GameObject inObj)
     {

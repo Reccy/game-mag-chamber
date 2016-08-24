@@ -615,6 +615,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4b9d141ebbdf724a857fcefd87e1761, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRendererNormalStart: {r: 0.121568635, g: 0.8980393, b: 0.10196079, a: 1}
+  lineRendererNormalEnd: {r: 0.08235294, g: 0.7294118, b: 0.19607845, a: 1}
+  lineRendererBlockedStart: {r: 0.8980393, g: 0.28313723, b: 0.10196075, a: 1}
+  lineRendererBlockedEnd: {r: 0.7411765, g: 0.23303363, b: 0.08415101, a: 1}
+  greenShield: {fileID: 21300000, guid: d0a52552685bbbd4e827503a1eb6af8c, type: 3}
+  redShield: {fileID: 21300000, guid: 8cc493976f85aa34e9ff48a438b6b2c5, type: 3}
+  greenGlow: {fileID: 21300000, guid: 73c1e470fa9df6b4a9c0635f40d1e5bd, type: 3}
+  redGlow: {fileID: 21300000, guid: 2dd877bd65bd987438076d80101aa48e, type: 3}
   generatorRotationSpeed: 50
   playerSpeed: 30
   playerSpeedFast: 45

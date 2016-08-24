@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
     StateMachine<State> playerState;
 
     //Other variables
+    public Color lineRendererNormalStart, lineRendererNormalEnd, lineRendererBlockedStart, lineRendererBlockedEnd;
+    public Sprite greenShield, redShield, greenGlow, redGlow;
+    SpriteRenderer shield, glow;
     LineRenderer lineRenderer;
     CircleCollider2D col;
     GameObject generator;
@@ -38,6 +41,8 @@ public class Player : MonoBehaviour
     {
         inputManager = Object.FindObjectOfType<InputManager>();
         gameManager = Object.FindObjectOfType<GameManager>();
+        shield = transform.Find("Shield").GetComponent<SpriteRenderer>();
+        glow = transform.Find("Glow").GetComponent<SpriteRenderer>();
         lineRenderer = GetComponent<LineRenderer>();
         col = GetComponent<CircleCollider2D>();
         generator = transform.Find("Generator").gameObject;
@@ -69,7 +74,7 @@ public class Player : MonoBehaviour
     void Stationary_Update()
     {
         //Handle Input
-        if(Input.GetMouseButtonDown(0)) //LMB Down -> Moving Normal
+        if(Input.GetMouseButtonDown(0) && PlayerCanJump()) //LMB Down -> Moving Normal
         {
             playerState.ChangeState(State.MovingNormal);
         }
@@ -224,9 +229,24 @@ public class Player : MonoBehaviour
     }
 
     //Line Renderer Methods
+    bool PlayerCanJump()
+    {
+        RaycastHit2D ray = Physics2D.Raycast(transform.position, inputManager.GetMouseDirectionFrom(this.gameObject), 50, LayerMask.GetMask("Platform"));
+
+        if(ray && platform)
+        {
+            if(ray.transform.gameObject == platform)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     //Updates the LineRenderer's positioning
     void UpdateLineRenderer()
     {
+        //Update Positioning
         if(inputManager.GetMouseDistanceFrom(this.gameObject) >= lineRendererOffset) //If the mouse is not pointing at the player, render line normally
         {
             lineRenderer.SetPositions(new Vector3[] { 
@@ -240,6 +260,20 @@ public class Player : MonoBehaviour
                 (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset,
                 (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset
             });
+        }
+
+        //Update Colors
+        if(PlayerCanJump())
+        {
+            shield.sprite = greenShield;
+            glow.sprite = greenGlow;
+            lineRenderer.SetColors(lineRendererNormalStart, lineRendererNormalEnd);
+        }
+        else
+        {
+            shield.sprite = redShield;
+            glow.sprite = redGlow;
+            lineRenderer.SetColors(lineRendererBlockedStart, lineRendererBlockedEnd);
         }
     }
 
