@@ -3,19 +3,33 @@ using System.Collections;
 
 public class InputManager : MonoBehaviour {
 
+    GameManager gameManager;
     Vector2 mousePosition;
 
     void Awake()
     {
+        gameManager = Object.FindObjectOfType<GameManager>();
         mousePosition = Vector2.zero;
     }
 
 	void Update()
     {
         //Update the mouse's position from the camera
-        if(Camera.main != null)
+        if(Camera.main != null && gameManager.gameState.State != GameManager.GameState.Paused)
         {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
+
+        //Game pause
+        if (gameManager.gameState.State == GameManager.GameState.Running && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameManager.gameState.ChangeState(GameManager.GameState.Paused);
+        }
+
+        //Game resume
+        else if (gameManager.gameState.State == GameManager.GameState.Paused && Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameManager.gameState.ChangeState(GameManager.GameState.Running);
         }
     }
 

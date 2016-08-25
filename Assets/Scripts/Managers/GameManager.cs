@@ -1,9 +1,14 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using MonsterLove.StateMachine;
 
 public class GameManager : MonoBehaviour {
 
+    //Game State
+    public enum GameState { Initializing, Menu, Paused, Running, LoadingScene };
+    public StateMachine<GameState> gameState;
+    
     public bool debugMode = false;
 
     //Slow-Motion Coroutine Variables
@@ -12,14 +17,19 @@ public class GameManager : MonoBehaviour {
     Coroutine startSlowMotion;
     Coroutine stopSlowMotion;
 
-    //Creates psuedo-singleton pattern
 	void Awake()
     {
+        //Init game state
+        gameState = StateMachine<GameState>.Initialize(this);
+        gameState.ChangeState(GameState.Initializing);
+
+        //Creates psuedo-singleton pattern
         DontDestroyOnLoad(this.gameObject);
 	}
 
     void Start()
     {
+        gameState.ChangeState(GameState.Running);
         //Go to debug screen on startup
         if(debugMode)
         {
@@ -29,6 +39,17 @@ public class GameManager : MonoBehaviour {
         {
             SceneManager.LoadScene(1);
         }
+    }
+
+    //Paused methods
+    void Paused_Enter()
+    {
+        Time.timeScale = 0;
+    }
+
+    void Paused_Exit()
+    {
+        Time.timeScale = 1;
     }
 
     //Slow Motion Methods

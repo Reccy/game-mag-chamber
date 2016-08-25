@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         playerState.ChangeState(State.Stationary);
     }
 
-    //Universal Update
+    //Universal Fixed Update
     void FixedUpdate()
     {
         //Rotate generator
@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     void Stationary_Update()
     {
         //Handle Input
-        if(Input.GetMouseButtonDown(0) && PlayerCanJump()) //LMB Down -> Moving Normal
+        if(Input.GetMouseButtonDown(0) && PlayerCanJump() && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Normal
         {
             playerState.ChangeState(State.MovingNormal);
         }
@@ -132,7 +132,7 @@ public class Player : MonoBehaviour
     void MovingNormal_Update()
     {
         //Handle Input
-        if(Input.GetMouseButtonDown(0)) //LMB Down -> Moving Slow
+        if(Input.GetMouseButtonDown(0) && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Slow
         {
             playerState.ChangeState(State.MovingSlow);
         }
@@ -168,11 +168,11 @@ public class Player : MonoBehaviour
     void MovingSlow_Update()
     {
         //Manage Input
-        if(Input.GetMouseButtonUp(0)) //LMB Up -> Moving Redirected
+        if(Input.GetMouseButtonUp(0) && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Up -> Moving Redirected
         {
             playerState.ChangeState(State.MovingRedirected);
         }
-        else if(Input.GetMouseButtonDown(1)) //RMB Down -> Moving Fast
+        else if(Input.GetMouseButtonDown(1) && gameManager.gameState.State != GameManager.GameState.Paused) //RMB Down -> Moving Fast
         {
             playerState.ChangeState(State.MovingFast);
         }
@@ -269,23 +269,23 @@ public class Player : MonoBehaviour
     void UpdateLineRenderer()
     {
         //Update Positioning
-        if(inputManager.GetMouseDistanceFrom(this.gameObject) >= lineRendererOffset) //If the mouse is not pointing at the player, render line normally
+        if (inputManager.GetMouseDistanceFrom(this.gameObject) >= lineRendererOffset) //If the mouse is not pointing at the player, render line normally
         {
             lineRenderer.SetPositions(new Vector3[] { 
-                (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset,
-                inputManager.GetMousePosition()
-            });
+            (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset,
+            inputManager.GetMousePosition()
+        });
         }
         else //If the mouse is pointing at the player, render end point at the origin point
         {
             lineRenderer.SetPositions(new Vector3[] { 
-                (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset,
-                (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset
-            });
+            (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset,
+            (Vector2)transform.position + new Vector2(-inputManager.GetMouseSinFrom(this.gameObject), inputManager.GetMouseCosFrom(this.gameObject)) * lineRendererOffset
+        });
         }
 
         //Update Colors
-        if(PlayerCanJump())
+        if (PlayerCanJump())
         {
             shield.sprite = greenShield;
             glow.sprite = greenGlow;
