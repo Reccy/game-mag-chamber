@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     //Other variables
     public Color lineRendererNormalStart, lineRendererNormalEnd, lineRendererBlockedStart, lineRendererBlockedEnd;
     public Sprite greenShield, redShield, greenGlow, redGlow;
+    public GameObject playerImpactParticles, playerDeathParticles;
     SpriteRenderer shield, glow;
     LineRenderer lineRenderer;
     CircleCollider2D col;
@@ -63,6 +64,12 @@ public class Player : MonoBehaviour
         //Move eye to follow mouse
         eye.transform.position = transform.position;
         eye.transform.Translate(inputManager.GetMouseQuaternionFrom(this.gameObject) * (Vector2.up * Mathf.Clamp(Vector2.Distance((Vector2)transform.position, inputManager.GetMousePosition()), 0, 0.08f)));
+
+        //Check if player is within game's bounds
+        if(transform.position.x < -6.5 || transform.position.x > 6.5 || transform.position.y < -5 || transform.position.y > 5)
+        {
+            Die();
+        }
     }
 
     //Stationary State
@@ -215,7 +222,7 @@ public class Player : MonoBehaviour
 
         if(colCast)
         {
-            if (colCast.transform.gameObject != platform)
+            if (colCast.transform.gameObject != platform) //If the player collides with a different platform
             {
                 platform = colCast.transform.gameObject; //Set the connected platform
                 transform.position = colCast.point + (colCast.normal * col.radius); //Set the player's position to the platform surface
@@ -223,9 +230,24 @@ public class Player : MonoBehaviour
                 platformRotation = platform.transform.rotation; //Get the platform's z rotation
                 gameManager.DisableSlowMotion(0); //Disable slow motion
 
-                playerState.ChangeState(State.Stationary);
+                //TODO: Fix particle effects rotations
+                //Particle FX
+                GameObject colFX1 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(colCast.normal + (Vector2)transform.right, transform.up)); //Instantiate a new collision effect
+                GameObject colFX2 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(colCast.normal - (Vector2)transform.right, transform.up)); //Instantiate a new collision effect
+                Destroy(colFX1, 0.5f); //Destroys the collision effect
+                Destroy(colFX2, 0.5f); //Destroys the collision effect
+
+                playerState.ChangeState(State.Stationary); //Change player back to the stationary state
             }
         }
+    }
+
+    //Player Death
+    void Die()
+    {
+        GameObject colFX1 = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
+        Destroy(colFX1, 10);
+        Destroy(this.gameObject);
     }
 
     //Line Renderer Methods

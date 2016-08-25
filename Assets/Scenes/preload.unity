@@ -121,8 +121,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugMode: 1
-  slowMotionTime: 1
-  slowMotionTimeTarget: 0.2
+  slowMotionMultiplier: 1
+  slowMotionMultiplierTarget: 0.2
 --- !u!4 &803345570
 Transform:
   m_ObjectHideFlags: 0

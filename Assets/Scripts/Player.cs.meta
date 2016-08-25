@@ -1,10 +1,18 @@
 fileFormatVersion: 2
 guid: f4b9d141ebbdf724a857fcefd87e1761
-timeCreated: 1471617093
+timeCreated: 1472164372
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - greenShield: {fileID: 21300000, guid: d0a52552685bbbd4e827503a1eb6af8c, type: 3}
+  - redShield: {fileID: 21300000, guid: 8cc493976f85aa34e9ff48a438b6b2c5, type: 3}
+  - greenGlow: {fileID: 21300000, guid: 73c1e470fa9df6b4a9c0635f40d1e5bd, type: 3}
+  - redGlow: {fileID: 21300000, guid: 2dd877bd65bd987438076d80101aa48e, type: 3}
+  - playerImpactParticles: {fileID: 1000012196661924, guid: bd74ec7121797ec409f3fc70f91bfa7b,
+      type: 2}
+  - playerDeathParticles: {fileID: 1000014290997836, guid: 35000d181d92f1348a702b83733b71d0,
+      type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
