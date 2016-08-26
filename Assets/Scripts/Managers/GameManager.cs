@@ -75,16 +75,23 @@ public class GameManager : MonoBehaviour {
     }
 
     //Scene Transition Methods
-    public void LoadScene(string sceneName)
+    public void LoadScene(string sceneName, float delay = 0)
     {
         if (loadScene == null)
-            StartCoroutine(LoadSceneCoroutine(sceneName));
+            StartCoroutine(LoadSceneCoroutine(sceneName, delay));
         else
             Debug.Log("ERROR! Scene is already being loaded!");
     }
 
-    IEnumerator LoadSceneCoroutine(string sceneName)
+    IEnumerator LoadSceneCoroutine(string sceneName, float delay = 0)
     {
+        delay = delay + Time.time;
+
+        while(delay > Time.time)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
         sceneTransition.Transition();
         
         while(sceneTransition.IsTransitioning())

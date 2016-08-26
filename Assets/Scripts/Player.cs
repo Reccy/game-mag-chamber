@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using MonsterLove.StateMachine;
 using UnityExtensions.Physics2DExtensions;
@@ -248,6 +249,7 @@ public class Player : MonoBehaviour
         GameObject colFX1 = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
         Destroy(colFX1, 10);
         Destroy(this.gameObject);
+        gameManager.LoadScene(SceneManager.GetActiveScene().name, 5);
     }
 
     //Line Renderer Methods
