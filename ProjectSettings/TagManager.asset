@@ -47,6 +47,9 @@ TagManager:
   - name: Game
     uniqueID: 3760586115
     locked: 0
+  - name: UI
+    uniqueID: 2106837765
+    locked: 0
   - name: SceneTransition
     uniqueID: 3040930599
     locked: 0
