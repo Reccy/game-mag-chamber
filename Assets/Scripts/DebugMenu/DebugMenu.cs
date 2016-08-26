@@ -10,15 +10,18 @@ public class DebugMenu : MonoBehaviour {
 
     private InputField sceneField;
 
+    GameManager gameManager;
+
     void Awake()
     {
+        gameManager = Object.FindObjectOfType<GameManager>();
         sceneField = GameObject.Find("SceneField").GetComponent<InputField>();
     }
 
     //Scene-Load Settings
     public void LoadScene(Text textObj)
     {
-        SceneManager.LoadScene(textObj.text);
+        gameManager.LoadScene(textObj.text);
     }
 
     public void SetSceneText(Text textObj)

@@ -47,6 +47,9 @@ TagManager:
   - name: Game
     uniqueID: 3760586115
     locked: 0
+  - name: SceneTransition
+    uniqueID: 3040930599
+    locked: 0
   - name: Letterbox
     uniqueID: 3314873319
     locked: 0

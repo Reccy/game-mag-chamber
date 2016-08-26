@@ -14,11 +14,19 @@ public class GameManager : MonoBehaviour {
     //Slow-Motion Coroutine Variables
     public float slowMotionMultiplier = 1;
     public float slowMotionMultiplierTarget = 0.2f;
-    Coroutine startSlowMotion;
-    Coroutine stopSlowMotion;
+    Coroutine startSlowMotion, stopSlowMotion, loadScene;
+
+    //Scene Transition effect
+    SceneTransition sceneTransition;
 
 	void Awake()
     {
+        //Get reference to scene transition effect
+        sceneTransition = Object.FindObjectOfType<SceneTransition>();
+
+        //Subscribe to Scene Manager callback
+        SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
+
         //Init game state
         gameState = StateMachine<GameState>.Initialize(this);
         gameState.ChangeState(GameState.Initializing);
@@ -41,6 +49,20 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    void Update()
+    {
+        if(debugMode)
+        {
+            if(Input.GetKey(KeyCode.LeftControl))
+            {
+                if(Input.GetKeyDown(KeyCode.L))
+                {
+                    LoadScene("debug");
+                }
+            }
+        }
+    }
+
     //Paused methods
     void Paused_Enter()
     {
@@ -50,6 +72,35 @@ public class GameManager : MonoBehaviour {
     void Paused_Exit()
     {
         Time.timeScale = 1;
+    }
+
+    //Scene Transition Methods
+    public void LoadScene(string sceneName)
+    {
+        if (loadScene == null)
+            StartCoroutine(LoadSceneCoroutine(sceneName));
+        else
+            Debug.Log("ERROR! Scene is already being loaded!");
+    }
+
+    IEnumerator LoadSceneCoroutine(string sceneName)
+    {
+        sceneTransition.Transition();
+        
+        while(sceneTransition.IsTransitioning())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        SceneManager.LoadScene(sceneName);
+    }
+
+    void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        if (!sceneTransition.IsTransitioning())
+        {
+            sceneTransition.Transition();
+        }
     }
 
     //Slow Motion Methods
