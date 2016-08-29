@@ -1831,10 +1831,10 @@ RectTransform:
   - {fileID: 1512830935}
   m_Father: {fileID: 1949333506}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 447, y: -73}
-  m_SizeDelta: {x: 398, y: -503.05}
+  m_SizeDelta: {x: 398, y: 162.94}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &573239488
 MonoBehaviour:
@@ -4150,9 +4150,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Transition_Test
-
-'
+  m_Text: Transition_Test
 --- !u!222 &1631130643
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4568,6 +4566,16 @@ Prefab:
         type: 2}
       propertyPath: m_Pivot.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012126585922, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_BlockingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000012126585922, guid: 73e2a34e1816c4241bb6699e1587da1f,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 73e2a34e1816c4241bb6699e1587da1f, type: 2}

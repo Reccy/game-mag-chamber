@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using MonsterLove.StateMachine;
@@ -6,18 +7,22 @@ using MonsterLove.StateMachine;
 public class GameManager : MonoBehaviour {
 
     //Game State
-    public enum GameState { Initializing, Menu, Paused, Running, LoadingScene };
+    public enum GameState { Initializing, Paused, Running, LoadingScene };
     public StateMachine<GameState> gameState;
     
     public bool debugMode = false;
 
+    //Canvas Graphic Raycaster
+    public GraphicRaycaster gfxRaycaster;
+
     //Slow-Motion Coroutine Variables
     public float slowMotionMultiplier = 1;
     public float slowMotionMultiplierTarget = 0.2f;
-    Coroutine startSlowMotion, stopSlowMotion, loadScene;
+    Coroutine startSlowMotion, stopSlowMotion;
 
     //Scene Transition effect
     SceneTransition sceneTransition;
+    bool sceneLoaded;
 
 	void Awake()
     {
@@ -31,21 +36,23 @@ public class GameManager : MonoBehaviour {
         gameState = StateMachine<GameState>.Initialize(this);
         gameState.ChangeState(GameState.Initializing);
 
+        //Is the scene finished loading
+        sceneLoaded = false;
+
         //Creates psuedo-singleton pattern
         DontDestroyOnLoad(this.gameObject);
 	}
 
     void Start()
     {
-        gameState.ChangeState(GameState.Running);
         //Go to debug screen on startup
         if(debugMode)
         {
-            SceneManager.LoadScene("debug");
+            LoadScene("debug", 0, false);
         }
         else
         {
-            SceneManager.LoadScene(1);
+            LoadScene(1);
         }
     }
 
@@ -74,40 +81,120 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1;
     }
 
-    //Scene Transition Methods
-    public void LoadScene(string sceneName, float delay = 0)
+    public void TogglePause()
     {
-        if (loadScene == null)
-            StartCoroutine(LoadSceneCoroutine(sceneName, delay));
-        else
-            Debug.Log("ERROR! Scene is already being loaded!");
+        //Game pause
+        if (gameState.State == GameManager.GameState.Running)
+        {
+            gameState.ChangeState(GameManager.GameState.Paused);
+        }
+
+        //Game resume
+        else if (gameState.State == GameManager.GameState.Paused)
+        {
+            gameState.ChangeState(GameManager.GameState.Running);
+        } 
     }
 
-    IEnumerator LoadSceneCoroutine(string sceneName, float delay = 0)
+    //Scene Transition Methods
+    public void LoadScene(string sceneName, float delay = 0, bool transition = true)
     {
+        if(gameState.State != GameState.LoadingScene)
+            StartCoroutine(LoadSceneCoroutine(sceneName, delay, transition));
+    }
+
+    public void LoadScene(int sceneIndex, float delay = 0, bool transition = true)
+    {
+        if (gameState.State != GameState.LoadingScene)
+            StartCoroutine(LoadSceneCoroutine(sceneIndex, delay, transition));
+    }
+
+    IEnumerator LoadSceneCoroutine(string scene, float delay = 0, bool transition = true)
+    {
+        //Pre-Scene load
+        gameState.ChangeState(GameState.LoadingScene);
+
         delay = delay + Time.time;
+
+        if (gfxRaycaster)
+            gfxRaycaster.enabled = false;
 
         while(delay > Time.time)
         {
             yield return new WaitForEndOfFrame();
         }
 
-        sceneTransition.Transition();
+        if (transition)
+        {
+            sceneTransition.Transition();
+        }
         
         while(sceneTransition.IsTransitioning())
         {
             yield return new WaitForEndOfFrame();
         }
 
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(scene);
     }
 
-    void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    IEnumerator LoadSceneCoroutine(int scene, float delay = 0, bool transition = true)
     {
-        if (!sceneTransition.IsTransitioning())
+        //Pre-Scene load
+        gameState.ChangeState(GameState.LoadingScene);
+
+        delay = delay + Time.time;
+
+        if (gfxRaycaster)
+            gfxRaycaster.enabled = false;
+
+        while (delay > Time.time)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        if (transition)
         {
             sceneTransition.Transition();
         }
+
+        while (sceneTransition.IsTransitioning())
+        {
+            yield return new WaitForEndOfFrame();
+        }
+
+        SceneManager.LoadScene(scene);
+    }
+
+    IEnumerator PostLoadCoroutine()
+    {
+        if(SceneManager.GetSceneByName("preload").name != SceneManager.GetActiveScene().name)
+        {
+            if (GameObject.FindGameObjectWithTag("MainCanvas"))
+            {
+                gfxRaycaster = GameObject.FindGameObjectWithTag("MainCanvas").GetComponent<GraphicRaycaster>();
+                gfxRaycaster.enabled = false;
+            }
+
+            if (!sceneTransition.IsTransitioning())
+            {
+                sceneTransition.Transition();
+            }
+
+            while (sceneTransition.IsTransitioning())
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            gfxRaycaster.enabled = true;
+
+            gameState.ChangeState(GameState.Running);
+        }
+    }
+
+    //On scene change
+    void SceneManager_activeSceneChanged(Scene arg0, Scene arg1)
+    {
+        StartCoroutine(PostLoadCoroutine());
     }
 
     //Slow Motion Methods

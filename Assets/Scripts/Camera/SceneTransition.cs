@@ -24,6 +24,18 @@ public class SceneTransition : MonoBehaviour {
         }
     }
 
+    public void SetOpen()
+    {
+        topSprites.transform.position = new Vector2(0, 10);
+        bottomSprites.transform.position = new Vector2(0, -10);
+    }
+
+    public void SetClosed()
+    {
+        topSprites.transform.position = new Vector2(0, 0);
+        bottomSprites.transform.position = new Vector2(0, -0);
+    }
+
     void Awake()
     {
         topSprites = transform.Find("TopSprites").gameObject;

@@ -20,18 +20,50 @@ public class InputManager : MonoBehaviour {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         }
 
-        //Game pause
-        if (gameManager.gameState.State == GameManager.GameState.Running && Input.GetKeyDown(KeyCode.Escape))
+        //Toggle game pause
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManager.gameState.ChangeState(GameManager.GameState.Paused);
-        }
-
-        //Game resume
-        else if (gameManager.gameState.State == GameManager.GameState.Paused && Input.GetKeyDown(KeyCode.Escape))
-        {
-            gameManager.gameState.ChangeState(GameManager.GameState.Running);
+            gameManager.TogglePause();
         }
     }
+
+    /*
+     * Input Commands
+     */
+
+    public bool GetJumpButtonDown()
+    {
+        if(Input.GetMouseButtonDown(0) && ControlsEnabled())
+            return true;
+        return false;
+    }
+
+    public bool GetJumpButton()
+    {
+        if(Input.GetMouseButton(0) && ControlsEnabled())
+            return true;
+        return false;
+    }
+
+    public bool GetJumpButtonUp()
+    {
+        if(Input.GetMouseButtonUp(0) && ControlsEnabled())
+            return true;
+        return false;
+    }
+
+    public bool ControlsEnabled()
+    {
+        if(gameManager.gameState.State == GameManager.GameState.LoadingScene)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    /*
+     * Mouse Commands
+     */
 
     //Returns the mouse's position on screen
     public Vector2 GetMousePosition()

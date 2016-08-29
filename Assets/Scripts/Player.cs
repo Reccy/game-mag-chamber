@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     void Stationary_Update()
     {
         //Handle Input
-        if(Input.GetMouseButtonDown(0) && PlayerCanJump() && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Normal
+        if(inputManager.GetJumpButtonDown() && PlayerCanJump() && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Normal
         {
             playerState.ChangeState(State.MovingNormal);
         }
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
     void MovingNormal_Update()
     {
         //Handle Input
-        if(Input.GetMouseButtonDown(0) && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Slow
+        if(inputManager.GetJumpButtonDown() && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Down -> Moving Slow
         {
             playerState.ChangeState(State.MovingSlow);
         }
@@ -169,11 +169,11 @@ public class Player : MonoBehaviour
     void MovingSlow_Update()
     {
         //Manage Input
-        if(Input.GetMouseButtonUp(0) && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Up -> Moving Redirected
+        if(inputManager.GetJumpButtonUp() && gameManager.gameState.State != GameManager.GameState.Paused) //LMB Up -> Moving Redirected
         {
             playerState.ChangeState(State.MovingRedirected);
         }
-        else if(Input.GetMouseButtonDown(1) && gameManager.gameState.State != GameManager.GameState.Paused) //RMB Down -> Moving Fast
+        else if(inputManager.GetJumpButtonDown() && gameManager.gameState.State != GameManager.GameState.Paused) //RMB Down -> Moving Fast
         {
             playerState.ChangeState(State.MovingFast);
         }
@@ -246,6 +246,7 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
+        gameManager.DisableSlowMotion(0);
         GameObject colFX1 = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
         Destroy(colFX1, 10);
         Destroy(this.gameObject);
