@@ -7,14 +7,14 @@ using MonsterLove.StateMachine;
 public class MainMenu : MonoBehaviour {
 
     //State Machine
-    enum MenuState {MainMenu, LevelSelect, Options};
+    enum MenuState {MainMenu, LevelSelect, Options, Credits, Quit};
     StateMachine<MenuState> menuState;
 
     //Game Manager
     GameManager gameManager;
 
     //Panels
-    public GameObject mainMenuPanel, levelSelectPanel, optionsPanel;
+    public GameObject mainMenuPanel, levelSelectPanel, optionsPanel, creditsPanel, quitPanel;
 
     //Levels
     public LevelData[] levels;
@@ -69,6 +69,28 @@ public class MainMenu : MonoBehaviour {
         optionsPanel.SetActive(false);
     }
 
+    //Credits Panel
+    void Credits_Enter()
+    {
+        creditsPanel.SetActive(true);
+    }
+
+    void Credits_Exit()
+    {
+        creditsPanel.SetActive(false);
+    }
+
+    //Quit Panel
+    void Quit_Enter()
+    {
+        quitPanel.SetActive(true);
+    }
+
+    void Quit_Exit()
+    {
+        quitPanel.SetActive(false);
+    }
+
     /*
      * Button management
      */
@@ -84,9 +106,14 @@ public class MainMenu : MonoBehaviour {
         menuState.ChangeState(MenuState.Options);
     }
 
-	public void QuitGame()
+    public void Credits()
     {
-        Application.Quit();
+        menuState.ChangeState(MenuState.Credits);
+    }
+
+	public void Quit()
+    {
+        menuState.ChangeState(MenuState.Quit);
     }
 
     //Level Select
@@ -172,6 +199,11 @@ public class MainMenu : MonoBehaviour {
         PlayerPrefs.Save();
     }
 
+    //Quit
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
 
     /*
      * Level Select Methods
