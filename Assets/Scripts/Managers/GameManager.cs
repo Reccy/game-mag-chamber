@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour {
         }
         else
         {
-            LoadScene(1);
+            LoadScene(1, 0, false);
         }
     }
 
