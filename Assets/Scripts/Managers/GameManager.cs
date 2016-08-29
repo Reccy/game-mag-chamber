@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour {
 
     //Scene Transition effect
     SceneTransition sceneTransition;
-    bool sceneLoaded;
 
 	void Awake()
     {
@@ -35,9 +34,6 @@ public class GameManager : MonoBehaviour {
         //Init game state
         gameState = StateMachine<GameState>.Initialize(this);
         gameState.ChangeState(GameState.Initializing);
-
-        //Is the scene finished loading
-        sceneLoaded = false;
 
         //Creates psuedo-singleton pattern
         DontDestroyOnLoad(this.gameObject);
