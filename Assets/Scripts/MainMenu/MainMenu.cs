@@ -9,6 +9,9 @@ public class MainMenu : MonoBehaviour {
     enum MenuState {MainMenu, LevelSelect};
     StateMachine<MenuState> menuState;
 
+    //Game Manager
+    GameManager gameManager;
+
     //Panels
     public GameObject mainMenuPanel, levelSelectPanel;
     Button[] mainMenuButtons;
@@ -19,6 +22,9 @@ public class MainMenu : MonoBehaviour {
 
     void Awake()
     {
+        //Get Game Manager reference
+        gameManager = Object.FindObjectOfType<GameManager>();
+
         //Gets level data
         UpdateLevelData(selectedLevelIndex);
 
@@ -124,6 +130,28 @@ public class MainMenu : MonoBehaviour {
         levelSelectPanel.transform.Find("HighScore").GetComponent<Text>().text = "High Score:\n" + levels[index].highScore;
         levelSelectPanel.transform.Find("DevScore").GetComponent<Text>().text = "Dev Score:\n" + levels[index].devScore;
         levelSelectPanel.transform.Find("StartButton").GetComponent<Button>().interactable = levels[index].isUnlocked;
+    }
+
+    public void LoadLevel()
+    {
+        switch(selectedLevelIndex)
+        {
+            case 0:
+                gameManager.LoadScene("Level1");
+                break;
+            case 1:
+                gameManager.LoadScene("Level2");
+                break;
+            case 2:
+                gameManager.LoadScene("Level3");
+                break;
+            case 3:
+                gameManager.LoadScene("Level4");
+                break;
+            case 4:
+                gameManager.LoadScene("Level5");
+                break;
+        }
     }
 }
 

@@ -569,7 +569,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 543719217}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 718294040}
+        m_MethodName: LoadLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &543719217
@@ -718,22 +729,22 @@ MonoBehaviour:
     levelImage: {fileID: 21300000, guid: d3a29ccf06e29454bb6e5d628d5670a2, type: 3}
     highScore: 0
     devScore: 987654321
-    isUnlocked: 0
+    isUnlocked: 1
   - levelName: Radian Avenue
     levelImage: {fileID: 21300000, guid: ad8f12e80804716498c0014535257664, type: 3}
     highScore: 0
     devScore: 121212121
-    isUnlocked: 0
+    isUnlocked: 1
   - levelName: Central Command
     levelImage: {fileID: 21300000, guid: 623327679f2c5eb4dba1f04541de0dcc, type: 3}
     highScore: 0
     devScore: 212121212
-    isUnlocked: 0
+    isUnlocked: 1
   - levelName: The Core
     levelImage: {fileID: 21300000, guid: 1e7584942ff1ccc49a4713428da377f9, type: 3}
     highScore: 0
     devScore: 876567834
-    isUnlocked: 0
+    isUnlocked: 1
 --- !u!4 &718294041
 Transform:
   m_ObjectHideFlags: 0
