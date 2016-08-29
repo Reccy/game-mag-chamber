@@ -161,7 +161,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aspectRatio: 1.7777778
-  resetResolution: 1
+  resetResolution: 0
 --- !u!114 &803345573
 MonoBehaviour:
   m_ObjectHideFlags: 0

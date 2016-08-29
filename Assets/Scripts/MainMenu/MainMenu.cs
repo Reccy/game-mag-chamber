@@ -124,7 +124,52 @@ public class MainMenu : MonoBehaviour {
     //Options
     public void ApplyOptions()
     {
-        Debug.Log("Not implemented yet...");
+        //Get screen settings
+        int screenWidth, screenHeight;
+        string selectedResolution = options.resolutionDropdown.options[options.resolutionDropdown.value].text;
+        string[] splits = selectedResolution.Split('x');
+        int.TryParse(splits[0], out screenWidth);
+        int.TryParse(splits[1], out screenHeight);
+        bool fullscreen = (options.windowDropdown.value == 0) ? false : true;
+
+        Screen.SetResolution(screenWidth, screenHeight, fullscreen);
+
+        //Get Anti-Aliasing settings
+        int aaValue = (int)System.Math.Pow(2, options.aaDropdown.value);
+        
+        if (aaValue == 1)
+            aaValue = 0;
+
+        QualitySettings.antiAliasing = aaValue;
+
+        //Get VSync settings
+        int vsValue = options.vsDropdown.value;
+
+        QualitySettings.vSyncCount = vsValue;
+
+        //Get FPS settings
+        int fpsLimit;
+        if(options.fpsDropdown.value == 0)
+        {
+            fpsLimit = 60;
+        }
+        else if(options.fpsDropdown.value == 1)
+        {
+            fpsLimit = 30;
+        }
+        else
+        {
+            fpsLimit = 0;
+        }
+        Application.targetFrameRate = fpsLimit;
+
+        //Save options to PlayerPrefs
+        PlayerPrefs.SetString("Resolution", selectedResolution);
+        PlayerPrefs.SetInt("Fullscreen", (fullscreen ? 1 : 0));
+        PlayerPrefs.SetInt("AntiAliasing", aaValue);
+        PlayerPrefs.SetInt("VSync", vsValue);
+        PlayerPrefs.SetInt("FPS", fpsLimit);
+        PlayerPrefs.Save();
     }
 
 
@@ -171,20 +216,58 @@ public class MainMenu : MonoBehaviour {
     //Initialize the Options Menu
     void InitOptionsMenu()
     {
-        //Init Resolutions
+        //Check if PlayePrefs exist, else generate keys
+        if (!PlayerPrefs.HasKey("Resolution"))
+            PlayerPrefs.SetString("Resolution", "640 x 480");
+
+        if (!PlayerPrefs.HasKey("Fullscreen"))
+            PlayerPrefs.SetInt("Fullscreen", 0);
+
+        if (!PlayerPrefs.HasKey("AntiAliasing"))
+            PlayerPrefs.SetInt("AntiAliasing", 0);
+
+        if (!PlayerPrefs.HasKey("VSync"))
+            PlayerPrefs.SetInt("VSync", 0);
+
+        if (!PlayerPrefs.HasKey("FPS"))
+            PlayerPrefs.SetInt("FPS", 60);
+
+        PlayerPrefs.Save();
+
+        //Load player preferences
+        string selectedResolution = PlayerPrefs.GetString("Resolution");
+        int fullscreen = PlayerPrefs.GetInt("Fullscreen");
+        int aaValue = PlayerPrefs.GetInt("AntiAliasing");
+        int vsValue = PlayerPrefs.GetInt("VSync");
+        int targetFPS = PlayerPrefs.GetInt("FPS");
+
+        //Get Resolution
         options.resolutionDropdown.ClearOptions();
+
+        int i = 0, resIndex = 0;
         foreach(Resolution res in Screen.resolutions)
         {
-            options.resolutionDropdown.options.Add(new Dropdown.OptionData(res.ToString()));
+            //Remove refresh rate from input
+            string resString = res.ToString();
+            string[] splitRes = resString.Split('@');
+
+            if(selectedResolution.Equals(splitRes[0]))
+            {
+                resIndex = i;
+            }
+
+            options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
+            i++;
         }
         options.resolutionDropdown.captionText = options.resolutionDropdown.transform.Find("Label").GetComponent<Text>();
+        options.resolutionDropdown.value = resIndex;
 
         //Init Window Mode
         options.windowDropdown.ClearOptions();
-        options.windowDropdown.options.Add(new Dropdown.OptionData("Fullscreen"));
-        options.windowDropdown.options.Add(new Dropdown.OptionData("Fullscreen/Windowed"));
         options.windowDropdown.options.Add(new Dropdown.OptionData("Windowed"));
+        options.windowDropdown.options.Add(new Dropdown.OptionData("Fullscreen"));
         options.windowDropdown.captionText = options.windowDropdown.transform.Find("Label").GetComponent<Text>();
+        options.windowDropdown.value = fullscreen;
 
         //Init AA
         options.aaDropdown.ClearOptions();
@@ -193,22 +276,35 @@ public class MainMenu : MonoBehaviour {
         options.aaDropdown.options.Add(new Dropdown.OptionData("4x MSAA"));
         options.aaDropdown.options.Add(new Dropdown.OptionData("8x MSAA"));
         options.aaDropdown.captionText = options.aaDropdown.transform.Find("Label").GetComponent<Text>();
+        options.aaDropdown.value = aaValue;
 
         //Init VSync
         options.vsDropdown.ClearOptions();
-        options.vsDropdown.options.Add(new Dropdown.OptionData("VSync OFF"));
+        options.vsDropdown.options.Add(new Dropdown.OptionData("VSync Disabled"));
         options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for VBlank"));
         options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for Second VBlank"));
         options.vsDropdown.captionText = options.vsDropdown.transform.Find("Label").GetComponent<Text>();
+        options.vsDropdown.value = vsValue;
 
         //Init FPS Limit
         options.fpsDropdown.ClearOptions();
-        options.fpsDropdown.options.Add(new Dropdown.OptionData("60 fps"));
-        options.fpsDropdown.options.Add(new Dropdown.OptionData("30 fps"));
+        options.fpsDropdown.options.Add(new Dropdown.OptionData("60 FPS"));
+        options.fpsDropdown.options.Add(new Dropdown.OptionData("30 FPS"));
         options.fpsDropdown.options.Add(new Dropdown.OptionData("No Limit"));
         options.fpsDropdown.captionText = options.fpsDropdown.transform.Find("Label").GetComponent<Text>();
+        switch(targetFPS)
+        {
+            case 60:
+                options.fpsDropdown.value = 0;
+                break;
+            case 30:
+                options.fpsDropdown.value = 1;
+                break;
+            case 0:
+                options.fpsDropdown.value = 2;
+                break;
+        }
     }
-
 }
 
 //Level Data
@@ -222,6 +318,7 @@ public class LevelData
     public bool isUnlocked;
 }
 
+//Options Dropdowns
 [System.Serializable]
 public class Options
 {
@@ -230,10 +327,4 @@ public class Options
     public Dropdown aaDropdown;
     public Dropdown vsDropdown;
     public Dropdown fpsDropdown;
-
-    public Resolution currentResolution;
-    public string windowMode;
-    public string aaMode;
-    public string vsMode;
-    public string fpsLimit;
 }
