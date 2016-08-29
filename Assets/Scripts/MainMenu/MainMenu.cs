@@ -6,15 +6,14 @@ using MonsterLove.StateMachine;
 public class MainMenu : MonoBehaviour {
 
     //State Machine
-    enum MenuState {MainMenu, LevelSelect};
+    enum MenuState {MainMenu, LevelSelect, Options};
     StateMachine<MenuState> menuState;
 
     //Game Manager
     GameManager gameManager;
 
     //Panels
-    public GameObject mainMenuPanel, levelSelectPanel;
-    Button[] mainMenuButtons;
+    public GameObject mainMenuPanel, levelSelectPanel, optionsPanel;
 
     //Levels
     public LevelData[] levels;
@@ -30,9 +29,7 @@ public class MainMenu : MonoBehaviour {
 
         //Disable panels
         levelSelectPanel.SetActive(false);
-
-        //Get list of buttons
-        mainMenuButtons = mainMenuPanel.GetComponentsInChildren<Button>();
+        optionsPanel.SetActive(false);
 
         //Init FSM
         menuState = StateMachine<MenuState>.Initialize(this);
@@ -42,23 +39,6 @@ public class MainMenu : MonoBehaviour {
     /*
      * State management
      */
-
-    //Main Menu
-    void MainMenu_Enter()
-    {
-        foreach(Button button in mainMenuButtons)
-        {
-            button.interactable = true;
-        }
-    }
-    
-    void MainMenu_Exit()
-    {
-        foreach(Button button in mainMenuButtons)
-        {
-            button.interactable = false;
-        }
-    }
 
     //Level Select
     void LevelSelect_Enter()
@@ -71,6 +51,17 @@ public class MainMenu : MonoBehaviour {
         levelSelectPanel.SetActive(false);
     }
 
+    //Options Panel
+    void Options_Enter()
+    {
+        optionsPanel.SetActive(true);
+    }
+
+    void Options_Exit()
+    {
+        optionsPanel.SetActive(false);
+    }
+
     /*
      * Button management
      */
@@ -79,6 +70,11 @@ public class MainMenu : MonoBehaviour {
     public void PlayGame()
     {
         menuState.ChangeState(MenuState.LevelSelect);
+    }
+
+    public void Options()
+    {
+        menuState.ChangeState(MenuState.Options);
     }
 
 	public void QuitGame()
