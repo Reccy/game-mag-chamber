@@ -465,6 +465,7 @@ GameObject:
   - 222: {fileID: 209263794}
   - 114: {fileID: 209263793}
   - 114: {fileID: 209263792}
+  - 223: {fileID: 209263795}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -556,6 +557,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 209263790}
+--- !u!223 &209263795
+Canvas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 209263790}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_SortingLayerID: 2106837765
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1001 &288210114
 Prefab:
   m_ObjectHideFlags: 0
@@ -1827,6 +1847,7 @@ GameObject:
   - 222: {fileID: 572096849}
   - 114: {fileID: 572096848}
   - 114: {fileID: 572096847}
+  - 223: {fileID: 572096850}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -1918,6 +1939,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 572096845}
+--- !u!223 &572096850
+Canvas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 572096845}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_SortingLayerID: 2106837765
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &592732635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2063,7 +2103,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 718294040}
-        m_MethodName: BackToMenu
+        m_MethodName: ApplyOptions
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2470,22 +2510,28 @@ MonoBehaviour:
     levelImage: {fileID: 21300000, guid: d3a29ccf06e29454bb6e5d628d5670a2, type: 3}
     highScore: 0
     devScore: 987654321
-    isUnlocked: 1
+    isUnlocked: 0
   - levelName: Radian Avenue
     levelImage: {fileID: 21300000, guid: ad8f12e80804716498c0014535257664, type: 3}
     highScore: 0
     devScore: 121212121
-    isUnlocked: 1
+    isUnlocked: 0
   - levelName: Central Command
     levelImage: {fileID: 21300000, guid: 623327679f2c5eb4dba1f04541de0dcc, type: 3}
     highScore: 0
     devScore: 212121212
-    isUnlocked: 1
+    isUnlocked: 0
   - levelName: The Core
     levelImage: {fileID: 21300000, guid: 1e7584942ff1ccc49a4713428da377f9, type: 3}
     highScore: 0
     devScore: 876567834
-    isUnlocked: 1
+    isUnlocked: 0
+  options:
+    resolutionDropdown: {fileID: 1682507085}
+    windowDropdown: {fileID: 686118408}
+    aaDropdown: {fileID: 1184654853}
+    vsDropdown: {fileID: 711538403}
+    fpsDropdown: {fileID: 755208054}
 --- !u!4 &718294041
 Transform:
   m_ObjectHideFlags: 0
@@ -3323,6 +3369,7 @@ GameObject:
   - 222: {fileID: 888848112}
   - 114: {fileID: 888848111}
   - 114: {fileID: 888848110}
+  - 223: {fileID: 888848113}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -3414,6 +3461,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 888848108}
+--- !u!223 &888848113
+Canvas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 888848108}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_SortingLayerID: 2106837765
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &890615788
 GameObject:
   m_ObjectHideFlags: 0
@@ -4679,6 +4745,7 @@ GameObject:
   - 222: {fileID: 1239122336}
   - 114: {fileID: 1239122335}
   - 114: {fileID: 1239122334}
+  - 223: {fileID: 1239122337}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -4770,6 +4837,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1239122332}
+--- !u!223 &1239122337
+Canvas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1239122332}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_SortingLayerID: 2106837765
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1247102772
 GameObject:
   m_ObjectHideFlags: 0
@@ -4860,7 +4946,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1262147118
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5476,6 +5562,7 @@ GameObject:
   - 222: {fileID: 1447706228}
   - 114: {fileID: 1447706227}
   - 114: {fileID: 1447706226}
+  - 223: {fileID: 1447706229}
   m_Layer: 5
   m_Name: Template
   m_TagString: Untagged
@@ -5567,6 +5654,25 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1447706224}
+--- !u!223 &1447706229
+Canvas:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1447706224}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_SortingLayerID: 2106837765
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1 &1451208409
 GameObject:
   m_ObjectHideFlags: 0

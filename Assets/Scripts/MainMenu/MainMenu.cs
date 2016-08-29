@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using MonsterLove.StateMachine;
 
 public class MainMenu : MonoBehaviour {
@@ -19,10 +20,16 @@ public class MainMenu : MonoBehaviour {
     public LevelData[] levels;
     int selectedLevelIndex = 0;
 
+    //Options
+    public Options options;
+
     void Awake()
     {
         //Get Game Manager reference
         gameManager = Object.FindObjectOfType<GameManager>();
+
+        //Initialized Options Menu
+        InitOptionsMenu();
 
         //Gets level data
         UpdateLevelData(selectedLevelIndex);
@@ -114,6 +121,13 @@ public class MainMenu : MonoBehaviour {
         UpdateLevelData(selectedLevelIndex);
     }
 
+    //Options
+    public void ApplyOptions()
+    {
+        Debug.Log("Not implemented yet...");
+    }
+
+
     /*
      * Level Select Methods
      */
@@ -149,6 +163,52 @@ public class MainMenu : MonoBehaviour {
                 break;
         }
     }
+
+    /*
+     * Options Menu Methods
+     */
+
+    //Initialize the Options Menu
+    void InitOptionsMenu()
+    {
+        //Init Resolutions
+        options.resolutionDropdown.ClearOptions();
+        foreach(Resolution res in Screen.resolutions)
+        {
+            options.resolutionDropdown.options.Add(new Dropdown.OptionData(res.ToString()));
+        }
+        options.resolutionDropdown.captionText = options.resolutionDropdown.transform.Find("Label").GetComponent<Text>();
+
+        //Init Window Mode
+        options.windowDropdown.ClearOptions();
+        options.windowDropdown.options.Add(new Dropdown.OptionData("Fullscreen"));
+        options.windowDropdown.options.Add(new Dropdown.OptionData("Fullscreen/Windowed"));
+        options.windowDropdown.options.Add(new Dropdown.OptionData("Windowed"));
+        options.windowDropdown.captionText = options.windowDropdown.transform.Find("Label").GetComponent<Text>();
+
+        //Init AA
+        options.aaDropdown.ClearOptions();
+        options.aaDropdown.options.Add(new Dropdown.OptionData("Disabled"));
+        options.aaDropdown.options.Add(new Dropdown.OptionData("2x MSAA"));
+        options.aaDropdown.options.Add(new Dropdown.OptionData("4x MSAA"));
+        options.aaDropdown.options.Add(new Dropdown.OptionData("8x MSAA"));
+        options.aaDropdown.captionText = options.aaDropdown.transform.Find("Label").GetComponent<Text>();
+
+        //Init VSync
+        options.vsDropdown.ClearOptions();
+        options.vsDropdown.options.Add(new Dropdown.OptionData("VSync OFF"));
+        options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for VBlank"));
+        options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for Second VBlank"));
+        options.vsDropdown.captionText = options.vsDropdown.transform.Find("Label").GetComponent<Text>();
+
+        //Init FPS Limit
+        options.fpsDropdown.ClearOptions();
+        options.fpsDropdown.options.Add(new Dropdown.OptionData("60 fps"));
+        options.fpsDropdown.options.Add(new Dropdown.OptionData("30 fps"));
+        options.fpsDropdown.options.Add(new Dropdown.OptionData("No Limit"));
+        options.fpsDropdown.captionText = options.fpsDropdown.transform.Find("Label").GetComponent<Text>();
+    }
+
 }
 
 //Level Data
@@ -160,4 +220,20 @@ public class LevelData
     public int highScore;
     public int devScore;
     public bool isUnlocked;
+}
+
+[System.Serializable]
+public class Options
+{
+    public Dropdown resolutionDropdown;
+    public Dropdown windowDropdown;
+    public Dropdown aaDropdown;
+    public Dropdown vsDropdown;
+    public Dropdown fpsDropdown;
+
+    public Resolution currentResolution;
+    public string windowMode;
+    public string aaMode;
+    public string vsMode;
+    public string fpsLimit;
 }
