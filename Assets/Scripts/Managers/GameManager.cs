@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour {
     public bool debugMode = false;
 
     //Canvas Graphic Raycaster
+    [HideInInspector]
     public GraphicRaycaster gfxRaycaster;
 
     //Slow-Motion Coroutine Variables
