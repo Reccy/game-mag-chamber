@@ -24,13 +24,36 @@ public static class SimpleEditorUtils
             EditorApplication.isPlaying = false;
             return;
         }
+
+        PlayerPrefs.SetString("DEBUG_PreviousScene", EditorSceneManager.GetActiveScene().path);
+        PlayerPrefs.Save();
+
         EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         EditorSceneManager.OpenScene("Assets/Scenes/preload.unity");
         EditorApplication.isPlaying = true;
     }
 
-    //Refresh Asset Database (Ctrl + 1)
-    [MenuItem("Editor Tools/Refresh Asset Database %1")]
+    //Reload last edited scene
+    [MenuItem("Editor Tools/Edit Previous Played Scene %1")]
+    public static void GoToLastScene()
+    {
+        if (EditorApplication.isPlaying == true)
+        {
+            EditorApplication.isPlaying = false;
+            return;
+        }
+        if(PlayerPrefs.HasKey("DEBUG_PreviousScene"))
+        {
+            EditorSceneManager.OpenScene(PlayerPrefs.GetString("DEBUG_PreviousScene"));
+        }
+        else
+        {
+            Debug.Log("Error: No previous scene found!");
+        }
+    }
+
+    //Refresh Asset Database
+    [MenuItem("Editor Tools/Refresh Asset Database")]
     public static void RefreshAssetDatabase()
     {
         if (EditorApplication.isPlaying == true)
@@ -43,7 +66,7 @@ public static class SimpleEditorUtils
     }
 
     //Delete all player prefs
-    [MenuItem("Editor Tools/Delete Player Prefs %2")]
+    [MenuItem("Editor Tools/Delete Player Prefs")]
     public static void DeletePlayePrefs()
     {
         if (EditorApplication.isPlaying == true)
