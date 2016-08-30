@@ -54,8 +54,6 @@ public class Player : MonoBehaviour
 
         playerState = StateMachine<State>.Initialize(this); //Init state machine
         playerState.ChangeState(State.Stationary);
-
-        Time.timeScale = 0.1f;
     }
 
     //Universal Fixed Update

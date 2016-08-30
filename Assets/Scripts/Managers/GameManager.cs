@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour {
     public StateMachine<GameState> gameState;
     
     public bool debugMode = false;
+    public GameObject debugMenuPrefab;
+    private GameObject debugMenuInstance;
 
     //Canvas Graphic Raycaster
     [HideInInspector]
@@ -42,15 +44,7 @@ public class GameManager : MonoBehaviour {
 
     void Start()
     {
-        //Go to debug screen on startup
-        if(debugMode)
-        {
-            LoadScene("debug", 0, false);
-        }
-        else
-        {
-            LoadScene(1, 0, false);
-        }
+        LoadScene(1, 0, false);
     }
 
     void Update()
@@ -59,10 +53,30 @@ public class GameManager : MonoBehaviour {
         {
             if(Input.GetKey(KeyCode.LeftControl))
             {
-                if(Input.GetKeyDown(KeyCode.L))
+                if(Input.GetKeyDown(KeyCode.D))
                 {
-                    LoadScene("debug");
+                    ToggleDebugMenu();
                 }
+            }
+        }
+    }
+
+    //Debug Menu
+    void ToggleDebugMenu()
+    {
+        if(Camera.main && !debugMenuInstance)
+        {
+            debugMenuInstance = (GameObject)Instantiate(debugMenuPrefab, Vector2.zero, Quaternion.identity, GameObject.FindGameObjectWithTag("MainCanvas").transform.Find("CanvasPanel").transform);
+        }
+        else if (Camera.main && debugMenuInstance)
+        {
+            if(debugMenuInstance.activeInHierarchy)
+            {
+                debugMenuInstance.SetActive(false);
+            }
+            else
+            {
+                debugMenuInstance.SetActive(true);
             }
         }
     }
