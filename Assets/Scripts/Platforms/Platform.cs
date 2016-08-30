@@ -5,6 +5,7 @@ public class Platform : MonoBehaviour {
 
     enum PlatformColor { Normal, Player };
 
+    public string sortingLayer;
     public Sprite blueSprite, greenSprite, blueGlowSprite, greenGlowSprite;
 
     float storedSliceWidth, storedSliceHeight;
@@ -13,6 +14,8 @@ public class Platform : MonoBehaviour {
 
     void Awake()
     {
+        GetComponent<MeshRenderer>().sortingLayerID = SortingLayer.NameToID(sortingLayer);
+        GetComponent<MeshRenderer>().sortingOrder = 0;
         spriteSlicer = GetComponent<NineSlice>();
         storedSliceHeight = spriteSlicer.height;
         storedSliceWidth = spriteSlicer.width;

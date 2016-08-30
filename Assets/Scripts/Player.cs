@@ -231,10 +231,9 @@ public class Player : MonoBehaviour
                 platformRotation = platform.transform.rotation; //Get the platform's z rotation
                 gameManager.DisableSlowMotion(0); //Disable slow motion
 
-                //TODO: Fix particle effects rotations
                 //Particle FX
-                GameObject colFX1 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(colCast.normal + (Vector2)transform.right, transform.up)); //Instantiate a new collision effect
-                GameObject colFX2 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(colCast.normal - (Vector2)transform.right, transform.up)); //Instantiate a new collision effect
+                GameObject colFX1 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(Quaternion.Euler(0, 0, 70) * colCast.normal)); //Instantiate a new collision effect
+                GameObject colFX2 = (GameObject)Instantiate(playerImpactParticles, colCast.point, Quaternion.LookRotation(Quaternion.Euler(0, 0, -70) * colCast.normal)); //Instantiate a new collision effect
                 Destroy(colFX1, 0.5f); //Destroys the collision effect
                 Destroy(colFX2, 0.5f); //Destroys the collision effect
 
