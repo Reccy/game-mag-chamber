@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MonsterLove.StateMachine;
 
-public class MainMenu : MonoBehaviour {
+public class MainMenu_Old : MonoBehaviour {
 
     //State Machine
     enum MenuState {MainMenu, LevelSelect, Options, Credits, Quit};
