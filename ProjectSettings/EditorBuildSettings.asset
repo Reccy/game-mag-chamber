@@ -34,4 +34,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tests/Transition_Test.unity
   - enabled: 1
+    path: Assets/Scenes/Tests/Sound_Test.unity
+  - enabled: 1
     path: Assets/Scenes/debug.unity

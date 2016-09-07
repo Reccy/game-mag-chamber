@@ -151,6 +151,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cbd5176074c18b4f91c5583beaf7f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 0b823ba97cdce01439da2ced10a5869c, type: 2}
+  groupMusic: {fileID: 243000013516649088, guid: 0b823ba97cdce01439da2ced10a5869c,
+    type: 2}
+  groupUI: {fileID: 243000011971157574, guid: 0b823ba97cdce01439da2ced10a5869c, type: 2}
+  groupSFX: {fileID: 243000010855947760, guid: 0b823ba97cdce01439da2ced10a5869c, type: 2}
+  audioClips:
+  - {fileID: 8300000, guid: acd14c5dc3d07394b80ec0c6a68605e1, type: 3}
+  - {fileID: 8300000, guid: 8b55d156b1cff744e94648a75d4efd0f, type: 3}
+  - {fileID: 8300000, guid: 0589705420f4e2a49a0de3422526441a, type: 3}
+  - {fileID: 8300000, guid: d041ce2df00a36a4d86615a96ab1a151, type: 3}
+  - {fileID: 8300000, guid: 44657ed66a8cb004caea597e3b99c342, type: 3}
 --- !u!114 &803345572
 MonoBehaviour:
   m_ObjectHideFlags: 0
