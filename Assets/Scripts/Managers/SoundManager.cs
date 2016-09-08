@@ -6,6 +6,10 @@ using UnityExtensions.MathfExtensions;
 
 public class SoundManager : MonoBehaviour
 {
+    public enum SlotState { Empty, Playing, Stopped, Paused }; //Slot state
+    public enum SlotType { Normal, OneShot }; //Slot type
+    public enum SoundChannel { Music, SFX, UI }; //Sound channels
+
     public AudioMixer audioMixer; //The audio mixer
     public AudioMixerGroup groupMusic, groupUI, groupSFX; //The audio mixer groups
 
@@ -13,46 +17,16 @@ public class SoundManager : MonoBehaviour
     private bool masterMute, musicMute, uiMute, sfxMute; //Is muted of each group
 
     public AudioClip[] audioClips; //List of audio clips
-    private Dictionary<string, AudioSource> audioSources; //Dictionary of audio sources
+    private AudioSlot[] audioSlots;
+    public int maxSlots;
 
     void Awake()
     {
-        audioSources = new Dictionary<string,AudioSource>();
-
-        //Add all clips to audio sources
-        foreach(AudioClip clip in audioClips)
+        //Create audio slots
+        audioSlots = new AudioSlot[maxSlots];
+        for(int i = 0; i < maxSlots; i++)
         {
-            AudioSource source = gameObject.AddComponent<AudioSource>();
-            
-            string clipName = clip.name;
-
-            //Route source to audio mixer
-            if(clipName.StartsWith("mus_")) //Music channel
-            {
-                clipName = clipName.Remove(0, 4);
-                source.outputAudioMixerGroup = groupMusic;
-                Debug.Log(clipName + " to Music");
-            }
-            else if(clipName.StartsWith("ui_")) //UI channel
-            {
-                clipName = clipName.Remove(0, 3);
-                source.outputAudioMixerGroup = groupUI;
-                Debug.Log(clipName + " to UI");
-            }
-            else if(clipName.StartsWith("sfx_")) //SFX channel
-            {
-                clipName = clipName.Remove(0, 4);
-                source.outputAudioMixerGroup = groupSFX;
-                Debug.Log(clipName + " to SFX");
-            }
-            else
-            {
-                //Error with prefix
-                Debug.Log("SYNTAX ERROR: " + clipName);
-            }
-
-            source.clip = clip;
-            audioSources.Add(clipName, source);
+            audioSlots[i] = new AudioSlot();
         }
     }
 
@@ -150,48 +124,233 @@ public class SoundManager : MonoBehaviour
     //Code for individual sounds
     //
 
-    //Plays sound normally
-    public void PlaySound(string soundName)
+    //Plays sound
+    public AudioSlot PlaySound(string soundName, SoundChannel channel, int priority = 128, bool loop = false, SlotType slotType = SlotType.Normal)
     {
-        if (audioSources.ContainsKey(soundName))
-        {
-            audioSources[soundName].Play();
-        }
-    }
+        AudioSlot slot;
 
-    //Plays sound while allowing overlapping
-    public void PlayOneShot(string soundName)
-    {
-        if (audioSources.ContainsKey(soundName))
+        if(slotType == SlotType.Normal)
         {
-            audioSources[soundName].PlayOneShot(audioSources[soundName].clip);
+            slot = GetOccupiedSlot(soundName);
         }
-    }
+        else
+        {
+            slot = GetEmptySlot();
+        }
 
-    //Whether or not to loop the sound
-    public void SetLooped(string soundName, bool loop)
-    {
-        if (audioSources.ContainsKey(soundName))
+        if (slot == null)
         {
-            audioSources[soundName].loop = loop;
+            slot = GetEmptySlot();
         }
+
+        slot.SetClip(GetClip(soundName), slotType, channel);
+        slot.GetSource().loop = loop;
+        slot.GetSource().priority = priority;
+        slot.Play();
+
+        return slot;
     }
 
     //Stops sound fully
     public void StopSound(string soundName)
     {
-        if (audioSources.ContainsKey(soundName))
-        {
-            audioSources[soundName].Stop();
-        }
+        AudioSlot slot = GetOccupiedSlot(soundName);
+
+        if(slot != null)
+            slot.Stop();
     }
 
     //Pauses sound (and all one shots too)
     public void PauseSound(string soundName)
     {
-        if (audioSources.ContainsKey(soundName))
+        AudioSlot slot = GetOccupiedSlot(soundName);
+
+        if(slot != null)
+            slot.Pause();
+    }
+
+    //Attempts to return the clip in the sounds list
+    AudioClip GetClip(string clipName)
+    {
+        foreach(AudioClip clip in audioClips)
         {
-            audioSources[soundName].Pause();
+            if(clip.name == clipName)
+            {
+                return clip;
+            }
         }
+        Debug.LogError("No clip named " + clipName);
+        return null;
+    }
+
+    //Attempts to return an empty slot. If not, returns slot with lowest priority.
+    AudioSlot GetEmptySlot()
+    {
+        AudioSlot lowestPrioritySlot = audioSlots[0];
+        int lowestPriority = 0;
+
+        foreach(AudioSlot slot in audioSlots)
+        {
+            if (slot.GetSource().priority >= lowestPriority)
+            {
+                lowestPriority = slot.GetSource().priority;
+                lowestPrioritySlot = slot;
+            }
+
+            if(slot.GetState() == SlotState.Empty)
+            {
+                Debug.Log("Return empty slot");
+                return slot;
+            }
+        }
+        return lowestPrioritySlot;
+    }
+
+    //Attempts to return an occupied slot by name.
+    AudioSlot GetOccupiedSlot(string clipName)
+    {
+        foreach(AudioSlot slot in audioSlots)
+        {
+            if(slot.GetClip() != null)
+            {
+                if (slot.GetClip().name == clipName && slot.GetState() != SlotState.Empty && slot.GetSlotType() == SlotType.Normal)
+                {
+                    Debug.Log("Return occupied slot: " + slot.GetClip().name);
+                    return slot;
+                }
+            }
+        }
+
+        Debug.LogError("No occupied slot with name " + clipName);
+        return null;
+    }
+
+    //Stops all slots in sound manager
+    void StopAllSlots()
+    {
+        foreach(AudioSlot slot in audioSlots)
+        {
+            if(slot != null)
+                slot.Stop();
+        }
+    }
+
+    //Clears all slots in sound manager
+    void ClearAllSlots()
+    {
+        foreach(AudioSlot slot in audioSlots)
+        {
+            if(slot != null)
+            {
+                slot.Clear();
+            }
+        }
+    }
+}
+
+//Stores data for audio slot
+public class AudioSlot
+{
+    private SoundManager soundManager;
+    private AudioSource source;
+
+    
+    private SoundManager.SlotState state;
+    private SoundManager.SlotType type;
+    private SoundManager.SoundChannel channel;
+
+    //Constructor
+    public AudioSlot()
+    {
+        soundManager = Object.FindObjectOfType<SoundManager>();
+        source = soundManager.gameObject.AddComponent<AudioSource>();
+        state = SoundManager.SlotState.Empty;
+        type = SoundManager.SlotType.Normal;
+    }
+
+    //Sets the clip to play & type
+    public void SetClip(AudioClip clip, SoundManager.SlotType type, SoundManager.SoundChannel channel)
+    {
+        if(type == SoundManager.SlotType.Normal)
+        {
+            source.Stop();
+            state = SoundManager.SlotState.Stopped;
+        }
+
+        source.clip = clip;
+        this.type = type;
+        this.channel = channel;
+
+        switch(channel)
+        {
+            case SoundManager.SoundChannel.Music:
+                source.outputAudioMixerGroup = soundManager.groupMusic;
+                break;
+            case SoundManager.SoundChannel.SFX:
+                source.outputAudioMixerGroup = soundManager.groupSFX;
+                break;
+            case SoundManager.SoundChannel.UI:
+                source.outputAudioMixerGroup = soundManager.groupUI;
+                break;
+        }
+    }
+
+    //Plays the source
+    public void Play()
+    {
+        if (type == SoundManager.SlotType.Normal)
+            source.Play();
+        else if (type == SoundManager.SlotType.OneShot)
+            source.PlayOneShot(source.clip);
+        
+        state = SoundManager.SlotState.Playing;
+    }
+
+    //Pauses the source
+    public void Pause()
+    {
+        source.Pause();
+        state = SoundManager.SlotState.Paused;
+    }
+
+    //Stops the source
+    public void Stop()
+    {
+        source.Stop();
+        state = SoundManager.SlotState.Stopped;
+    }
+
+    //Clears slot
+    public void Clear()
+    {
+        source.Stop();
+        state = SoundManager.SlotState.Empty;
+    }
+
+    //Get the current clip
+    public AudioClip GetClip()
+    {
+        return source.clip;
+    }
+
+    public AudioSource GetSource()
+    {
+        return source;
+    }
+
+    //Returns states
+    public SoundManager.SlotState GetState()
+    {
+        return state;
+    }
+
+    public SoundManager.SlotType GetSlotType()
+    {
+        return type;
+    }
+
+    public SoundManager.SoundChannel GetChannel()
+    {
+        return channel;
     }
 }

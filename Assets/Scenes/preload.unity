@@ -162,6 +162,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 0589705420f4e2a49a0de3422526441a, type: 3}
   - {fileID: 8300000, guid: d041ce2df00a36a4d86615a96ab1a151, type: 3}
   - {fileID: 8300000, guid: 44657ed66a8cb004caea597e3b99c342, type: 3}
+  maxSlots: 3
 --- !u!114 &803345572
 MonoBehaviour:
   m_ObjectHideFlags: 0
