@@ -15,27 +15,32 @@ public class Sound_Test : MonoBehaviour
     //Play sounds
     public void PlaySound(Text soundName)
     {
-        soundManager.PlaySound(soundName.text, SoundManager.SoundChannel.Music, 128, false, SoundManager.SlotType.Normal);
+        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 128, false, 0.1f);
     }
 
     public void PlayLoopedSound(Text soundName)
     {
-        soundManager.PlaySound(soundName.text, SoundManager.SoundChannel.Music, 128, true, SoundManager.SlotType.Normal);
+        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 128, true);
     }
 
     public void PlayOneShot(Text soundName)
     {
-        soundManager.PlaySound(soundName.text, SoundManager.SoundChannel.Music, 128, false, SoundManager.SlotType.OneShot);
+        soundManager.PlayOneShot(soundName.text, SoundManager.SoundChannel.Music, 128, false);
     }
 
     public void StopSound(Text soundName)
     {
-        soundManager.StopSound(soundName.text);
+        soundManager.Stop(soundName.text);
     }
 
     public void PauseSound(Text soundName)
     {
-        soundManager.PauseSound(soundName.text);
+        soundManager.Pause(soundName.text);
+    }
+
+    public void ResumeSound(Text soundName)
+    {
+        soundManager.Resume(soundName.text);
     }
 
     //Volume

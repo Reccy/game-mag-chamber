@@ -125,34 +125,73 @@ public class SoundManager : MonoBehaviour
     //
 
     //Plays sound
-    public AudioSlot PlaySound(string soundName, SoundChannel channel, int priority = 128, bool loop = false, SlotType slotType = SlotType.Normal)
+    public AudioSlot Play(string soundName, SoundChannel channel, int priority = 128, bool loop = false, float randomPitchRange = 0)
     {
-        AudioSlot slot;
+        AudioSlot slot = null;
 
-        if(slotType == SlotType.Normal)
-        {
-            slot = GetOccupiedSlot(soundName);
-        }
-        else
+        slot = GetOccupiedSlot(soundName);
+        
+        if(slot == null)
         {
             slot = GetEmptySlot();
         }
 
-        if (slot == null)
-        {
-            slot = GetEmptySlot();
-        }
-
-        slot.SetClip(GetClip(soundName), slotType, channel);
+        slot.SetClip(GetClip(soundName), SlotType.Normal, channel);
         slot.GetSource().loop = loop;
         slot.GetSource().priority = priority;
+        slot.GetSource().pitch = 1;
+
+        if (randomPitchRange != 0)
+            slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange / 2, slot.GetSource().pitch + randomPitchRange / 2);
+
+        Debug.Log("Pitch: " + slot.GetSource().pitch);
+
         slot.Play();
 
         return slot;
     }
 
+    //Plays sound one-shot
+    public AudioSlot PlayOneShot(string soundName, SoundChannel channel, int priority = 128, bool loop = false, float randomPitchRange = 0)
+    {
+        AudioSlot slot = null;
+
+        slot = GetEmptySlot();
+
+        slot.SetClip(GetClip(soundName), SlotType.OneShot, channel);
+        slot.GetSource().loop = loop;
+        slot.GetSource().priority = priority;
+        slot.GetSource().pitch = 1;
+
+        if (randomPitchRange != 0)
+            slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange/2, slot.GetSource().pitch + randomPitchRange/2);
+
+        Debug.Log("Pitch: " + slot.GetSource().pitch);
+
+        slot.Play();
+
+        return slot;
+    }
+
+    //Resumes from pause
+    public void Resume(string soundName)
+    {
+        AudioSlot slot = GetOccupiedSlot(soundName);
+        slot.GetSource().UnPause();
+    }
+
+    //Returns if the clip is playing
+    public bool IsPlaying(string soundName)
+    {
+        AudioSlot slot = GetOccupiedSlot(soundName);
+        if (slot == null)
+            return false;
+
+        return slot.GetSource().isPlaying;
+    }
+
     //Stops sound fully
-    public void StopSound(string soundName)
+    public void Stop(string soundName)
     {
         AudioSlot slot = GetOccupiedSlot(soundName);
 
@@ -161,7 +200,7 @@ public class SoundManager : MonoBehaviour
     }
 
     //Pauses sound (and all one shots too)
-    public void PauseSound(string soundName)
+    public void Pause(string soundName)
     {
         AudioSlot slot = GetOccupiedSlot(soundName);
 
@@ -179,7 +218,6 @@ public class SoundManager : MonoBehaviour
                 return clip;
             }
         }
-        Debug.LogError("No clip named " + clipName);
         return null;
     }
 
@@ -199,7 +237,6 @@ public class SoundManager : MonoBehaviour
 
             if(slot.GetState() == SlotState.Empty)
             {
-                Debug.Log("Return empty slot");
                 return slot;
             }
         }
@@ -207,7 +244,7 @@ public class SoundManager : MonoBehaviour
     }
 
     //Attempts to return an occupied slot by name.
-    AudioSlot GetOccupiedSlot(string clipName)
+    public AudioSlot GetOccupiedSlot(string clipName)
     {
         foreach(AudioSlot slot in audioSlots)
         {
@@ -215,13 +252,10 @@ public class SoundManager : MonoBehaviour
             {
                 if (slot.GetClip().name == clipName && slot.GetState() != SlotState.Empty && slot.GetSlotType() == SlotType.Normal)
                 {
-                    Debug.Log("Return occupied slot: " + slot.GetClip().name);
                     return slot;
                 }
             }
         }
-
-        Debug.LogError("No occupied slot with name " + clipName);
         return null;
     }
 
