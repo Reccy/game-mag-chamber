@@ -7,6 +7,7 @@ public class Platform : MonoBehaviour {
 
     public string sortingLayer;
     public Sprite blueGlowSprite, greenGlowSprite;
+    public float glowOffset;
 
     float storedSliceWidth, storedSliceHeight;
     NineSlice spriteSlicer;
@@ -20,8 +21,8 @@ public class Platform : MonoBehaviour {
         storedSliceHeight = spriteSlicer.height;
         storedSliceWidth = spriteSlicer.width;
         glowEffectSlicer = transform.Find("GlowEffect").GetComponent<NineSlice>();
-        glowEffectSlicer.width = spriteSlicer.width + 0.1f;
-        glowEffectSlicer.height = spriteSlicer.height + 0.1f;
+        glowEffectSlicer.width = spriteSlicer.width + glowOffset;
+        glowEffectSlicer.height = spriteSlicer.height + glowOffset;
     }
 
     void LateUpdate()
@@ -29,8 +30,8 @@ public class Platform : MonoBehaviour {
         //If the sprite slicer changes size, update the glow effect's size
         if (storedSliceWidth != spriteSlicer.width || storedSliceHeight != spriteSlicer.height)
         {
-            glowEffectSlicer.width = spriteSlicer.width + 0.1f;
-            glowEffectSlicer.height = spriteSlicer.height + 0.1f;
+            glowEffectSlicer.width = spriteSlicer.width + glowOffset;
+            glowEffectSlicer.height = spriteSlicer.height + glowOffset;
             storedSliceWidth = spriteSlicer.width;
             storedSliceHeight = spriteSlicer.height;
         }
