@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     InputManager inputManager;
     GameManager gameManager;
     MainCameraManager cameraManager;
+    SoundManager sound;
 
     //State machine variables
     public enum State { Stationary, MovingNormal, MovingFast, MovingSlow, MovingRedirected };
@@ -45,6 +46,7 @@ public class Player : MonoBehaviour
         inputManager = Object.FindObjectOfType<InputManager>();
         gameManager = Object.FindObjectOfType<GameManager>();
         cameraManager = Object.FindObjectOfType<MainCameraManager>();
+        sound = Object.FindObjectOfType<SoundManager>();
         shield = transform.Find("Shield").GetComponent<SpriteRenderer>();
         glow = transform.Find("Glow").GetComponent<SpriteRenderer>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -79,6 +81,7 @@ public class Player : MonoBehaviour
     void Stationary_Enter()
     {
         LineRendererEnabled(true);
+        sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 128, false, 0.2f);
     }
 
     void Stationary_Update()
@@ -130,6 +133,7 @@ public class Player : MonoBehaviour
     {
         LineRendererEnabled(false);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
+        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 128, false, 0.3f);
     }
 
     void MovingNormal_Update()

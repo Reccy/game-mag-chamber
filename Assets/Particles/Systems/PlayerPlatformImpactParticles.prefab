@@ -1591,7 +1591,7 @@ ParticleSystem:
       minMaxState: 1
     range: {x: 4, y: 7}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 3
     type: 1
     collisionMode: 1
@@ -1766,7 +1766,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -534381181
+  m_SortingLayerID: -1874603563
   m_SortingOrder: 0
   m_RenderMode: 1
   m_SortMode: 0
