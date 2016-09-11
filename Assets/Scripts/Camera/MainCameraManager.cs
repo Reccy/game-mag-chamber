@@ -4,10 +4,13 @@ using System.Collections;
 public class MainCameraManager : MonoBehaviour {
 
     GraphicsManager graphics; //Graphics manager
+    private Vector3 originPosition; //Original position of the camera
+    CameraShake camShake;
 
     void Awake()
     {
         graphics = Object.FindObjectOfType<GraphicsManager>();
+        camShake = GetComponent<CameraShake>();
     }
 
 	void Start () {
@@ -20,4 +23,10 @@ public class MainCameraManager : MonoBehaviour {
             graphics.UpdateAspectRatio(Camera.main.aspect);
         }
 	}
+
+    //Sets the screen shake paramaters
+    public void ScreenShake(float duration = 0.2f)
+    {
+        camShake.shakeDuration = duration;
+    }
 }
