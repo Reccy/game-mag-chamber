@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9c1de83c55cd8a41a13d9195ce68887, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  useSprite: {fileID: 21300000, guid: 6fe4a45f03324d34fb5a8663200d1893, type: 3}
+  useSprite: {fileID: 21300000, guid: f7c085791f546b14ea4f00c57a26b350, type: 3}
   width: 2
   height: 0.5
   slicePixels: 10

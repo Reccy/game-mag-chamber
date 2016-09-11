@@ -6,7 +6,7 @@ public class Platform : MonoBehaviour {
     enum PlatformColor { Normal, Player };
 
     public string sortingLayer;
-    public Sprite blueSprite, greenSprite, blueGlowSprite, greenGlowSprite;
+    public Sprite blueGlowSprite, greenGlowSprite;
 
     float storedSliceWidth, storedSliceHeight;
     NineSlice spriteSlicer;
@@ -68,11 +68,9 @@ public class Platform : MonoBehaviour {
         switch(gc)
         {
             case PlatformColor.Normal:
-                spriteSlicer.useSprite = blueSprite;
                 glowEffectSlicer.useSprite = blueGlowSprite;
                 break;
             case PlatformColor.Player:
-                spriteSlicer.useSprite = greenSprite;
                 glowEffectSlicer.useSprite = greenGlowSprite;
                 break;
         }
