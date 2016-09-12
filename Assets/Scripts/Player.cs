@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     SoundManager sound;
 
     //State machine variables
-    public enum State { Stationary, MovingNormal, MovingFast, MovingSlow, MovingRedirected };
+    public enum State { Stationary, MovingNormal, MovingFast, MovingRedirected };
     StateMachine<State> playerState;
 
     //Other variables
@@ -140,14 +140,20 @@ public class Player : MonoBehaviour
         LineRendererEnabled(false);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
         sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.9f, false, 0.3f, 128);
+        gameManager.EnableSlowMotion(0.4f);
     }
 
     void MovingNormal_Update()
     {
         //Handle Input
-        if(inputManager.GetJumpButtonDown()) //LMB Down -> Moving Slow
+        if(inputManager.GetJumpButtonUp()) //LMB Up -> Jump Redirect
         {
-            playerState.ChangeState(State.MovingSlow);
+            playerState.ChangeState(State.MovingRedirected);
+        }
+
+        if(inputManager.GetBoostButtonDown()) //RMB Down -> Boost
+        {
+            playerState.ChangeState(State.MovingFast);
         }
     }
 
@@ -169,35 +175,6 @@ public class Player : MonoBehaviour
     {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeedFast * gameManager.slowMotionMultiplier * Time.deltaTime));
-    }
-
-    //MovingSlow State
-    void MovingSlow_Enter()
-    {
-        LineRendererEnabled(true);
-        gameManager.EnableSlowMotion(0.1f);
-    }
-
-    void MovingSlow_Update()
-    {
-        //Manage Input
-        if(inputManager.GetJumpButtonUp()) //LMB Up -> Moving Redirected
-        {
-            playerState.ChangeState(State.MovingRedirected);
-        }
-        else if(inputManager.GetBoostButtonDown()) //RMB Down -> Moving Fast
-        {
-            playerState.ChangeState(State.MovingFast);
-        }
-
-        //Update Line Renderer
-        UpdateLineRenderer();
-    }
-
-    void MovingSlow_FixedUpdate()
-    {
-        //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //MovingRedirected State
