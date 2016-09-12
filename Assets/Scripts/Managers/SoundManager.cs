@@ -125,8 +125,9 @@ public class SoundManager : MonoBehaviour
     //
 
     //Plays sound
-    public AudioSlot Play(string soundName, SoundChannel channel, int priority = 128, bool loop = false, float randomPitchRange = 0)
+    public AudioSlot Play(string soundName, SoundChannel channel, float volume = 1, bool loop = false, float randomPitchRange = 0, int priority = 128)
     {
+        //Get a slot to apply the clip to
         AudioSlot slot = null;
 
         slot = GetOccupiedSlot(soundName);
@@ -136,22 +137,28 @@ public class SoundManager : MonoBehaviour
             slot = GetEmptySlot();
         }
 
+        //Set slot/clip paramaters
         slot.SetClip(GetClip(soundName), SlotType.Normal, channel);
         slot.GetSource().loop = loop;
         slot.GetSource().priority = priority;
         slot.GetSource().pitch = 1;
+        slot.GetSource().volume = volume;
 
+        //Apply pitch if required
         if (randomPitchRange != 0)
             slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange / 2, slot.GetSource().pitch + randomPitchRange / 2);
 
+        //Play sound
         slot.Play();
 
+        //Return slot if called class wants to directly access the slot
         return slot;
     }
 
     //Plays sound one-shot
-    public AudioSlot PlayOneShot(string soundName, SoundChannel channel, int priority = 128, bool loop = false, float randomPitchRange = 0)
+    public AudioSlot PlayOneShot(string soundName, SoundChannel channel, float volume = 1, bool loop = false, float randomPitchRange = 0, int priority = 128)
     {
+        //Get a slot to apply the clip to
         AudioSlot slot = null;
 
         slot = GetOccupiedSlot(soundName);
@@ -161,16 +168,21 @@ public class SoundManager : MonoBehaviour
             slot = GetEmptySlot();
         }
 
+        //Set slot/clip paramaters
         slot.SetClip(GetClip(soundName), SlotType.OneShot, channel);
         slot.GetSource().loop = loop;
         slot.GetSource().priority = priority;
         slot.GetSource().pitch = 1;
+        slot.GetSource().volume = volume;
 
+        //Apply pitch if required
         if (randomPitchRange != 0)
             slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange/2, slot.GetSource().pitch + randomPitchRange/2);
 
+        //Play sound
         slot.Play();
 
+        //Return slot if called class wants to directly access the slot
         return slot;
     }
 

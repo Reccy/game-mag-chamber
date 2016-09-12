@@ -15,17 +15,17 @@ public class Sound_Test : MonoBehaviour
     //Play sounds
     public void PlaySound(Text soundName)
     {
-        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 128, false, 0.1f);
+        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 1, false, 0.1f, 128);
     }
 
     public void PlayLoopedSound(Text soundName)
     {
-        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 128, true);
+        soundManager.Play(soundName.text, SoundManager.SoundChannel.Music, 1, true, priority: 128);
     }
 
     public void PlayOneShot(Text soundName)
     {
-        soundManager.PlayOneShot(soundName.text, SoundManager.SoundChannel.Music, 128, false);
+        soundManager.PlayOneShot(soundName.text, SoundManager.SoundChannel.Music, 1, false, priority: 128);
     }
 
     public void StopSound(Text soundName)

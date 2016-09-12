@@ -81,7 +81,7 @@ public class Player : MonoBehaviour
     void Stationary_Enter()
     {
         LineRendererEnabled(true);
-        sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 128, false, 0.2f);
+        sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 0.8f, false, 0.3f, 128);
     }
 
     void Stationary_Update()
@@ -133,7 +133,7 @@ public class Player : MonoBehaviour
     {
         LineRendererEnabled(false);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
-        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 128, false, 0.3f);
+        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.9f, false, 0.3f, 128);
     }
 
     void MovingNormal_Update()
