@@ -43,6 +43,7 @@ public class Player : MonoBehaviour
 
     void Awake()
     {
+        //Get references to objects in Unity
         inputManager = Object.FindObjectOfType<InputManager>();
         gameManager = Object.FindObjectOfType<GameManager>();
         cameraManager = Object.FindObjectOfType<MainCameraManager>();
@@ -53,10 +54,15 @@ public class Player : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
         generator = transform.Find("Generator").gameObject;
         eye = transform.Find("Eye").gameObject;
+
+        //Set collision radius
         collisionRadius = col.radius + 0.01f;
+
+        //Set the sorting layer for the lineRenderer (Prevents bug that causes line renderer to conflict with trail renderer)
         lineRenderer.sortingLayerName = "Game";
 
-        playerState = StateMachine<State>.Initialize(this); //Init state machine
+        //Init state machine
+        playerState = StateMachine<State>.Initialize(this);
         playerState.ChangeState(State.Stationary);
     }
 
@@ -251,11 +257,11 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
-        gameManager.DisableSlowMotion(0);
-        GameObject colFX = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity);
-        Destroy(colFX, 10);
-        Destroy(this.gameObject);
-        gameManager.LoadScene(SceneManager.GetActiveScene().name, 5);
+        gameManager.DisableSlowMotion(0); //Disables slow mo
+        GameObject colFX = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity); //Creates destruction effect
+        Destroy(colFX, 2); //Destroy destruction effect in 2 seconds
+        Destroy(this.gameObject); //Destroy the player object
+        gameManager.LoadScene(SceneManager.GetActiveScene().name, 1); //Reload the scene in 1 second
     }
 
     //Line Renderer Methods
