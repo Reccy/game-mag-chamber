@@ -23,14 +23,8 @@ public class GameManager : MonoBehaviour {
     public float slowMotionMultiplierTarget = 0.2f;
     Coroutine startSlowMotion, stopSlowMotion;
 
-    //Scene Transition effect
-    SceneTransition sceneTransition;
-
 	void Awake()
     {
-        //Get reference to scene transition effect
-        sceneTransition = Object.FindObjectOfType<SceneTransition>();
-
         //Subscribe to Scene Manager callback
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
 
@@ -135,16 +129,6 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
-        if (transition)
-        {
-            sceneTransition.Transition();
-        }
-        
-        while(sceneTransition.IsTransitioning())
-        {
-            yield return new WaitForEndOfFrame();
-        }
-
         SceneManager.LoadScene(scene);
     }
 
@@ -163,16 +147,6 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
-        if (transition)
-        {
-            sceneTransition.Transition();
-        }
-
-        while (sceneTransition.IsTransitioning())
-        {
-            yield return new WaitForEndOfFrame();
-        }
-
         SceneManager.LoadScene(scene);
     }
 
@@ -186,19 +160,11 @@ public class GameManager : MonoBehaviour {
                 gfxRaycaster.enabled = false;
             }
 
-            if (!sceneTransition.IsTransitioning())
-            {
-                sceneTransition.Transition();
-            }
-
-            while (sceneTransition.IsTransitioning())
-            {
-                yield return new WaitForEndOfFrame();
-            }
-
             gfxRaycaster.enabled = true;
 
             gameState.ChangeState(GameState.Running);
+
+            yield break;
         }
     }
 

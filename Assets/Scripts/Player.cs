@@ -76,8 +76,8 @@ public class Player : MonoBehaviour
         eye.transform.position = transform.position;
         eye.transform.Translate(inputManager.GetMouseQuaternionFrom(this.gameObject) * (Vector2.up * Mathf.Clamp(Vector2.Distance((Vector2)transform.position, inputManager.GetMousePosition()), 0, 0.08f)));
 
-        //Check if player is within game's bounds
-        if(transform.position.x < -6.5 || transform.position.x > 6.5 || transform.position.y < -5 || transform.position.y > 5)
+        //Kill the player if they go out of bounds
+        if(transform.position.x < -20 || transform.position.x > 20 || transform.position.y < -20 || transform.position.y > 20)
         {
             Die();
         }
