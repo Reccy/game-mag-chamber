@@ -17,8 +17,8 @@ public class SoundManager : MonoBehaviour
     private bool masterMute, musicMute, uiMute, sfxMute; //Is muted of each group
 
     public AudioClip[] audioClips; //List of audio clips
-    private AudioSlot[] audioSlots;
-    public int maxSlots;
+    private AudioSlot[] audioSlots; //List of audio slots
+    public int maxSlots; //The maximum amount of slots to store
 
     void Awake()
     {
@@ -144,8 +144,6 @@ public class SoundManager : MonoBehaviour
         if (randomPitchRange != 0)
             slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange / 2, slot.GetSource().pitch + randomPitchRange / 2);
 
-        Debug.Log("Pitch: " + slot.GetSource().pitch);
-
         slot.Play();
 
         return slot;
@@ -156,7 +154,12 @@ public class SoundManager : MonoBehaviour
     {
         AudioSlot slot = null;
 
-        slot = GetEmptySlot();
+        slot = GetOccupiedSlot(soundName);
+
+        if (slot == null)
+        {
+            slot = GetEmptySlot();
+        }
 
         slot.SetClip(GetClip(soundName), SlotType.OneShot, channel);
         slot.GetSource().loop = loop;
@@ -165,8 +168,6 @@ public class SoundManager : MonoBehaviour
 
         if (randomPitchRange != 0)
             slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange/2, slot.GetSource().pitch + randomPitchRange/2);
-
-        Debug.Log("Pitch: " + slot.GetSource().pitch);
 
         slot.Play();
 
@@ -235,11 +236,14 @@ public class SoundManager : MonoBehaviour
                 lowestPrioritySlot = slot;
             }
 
-            if(slot.GetState() == SlotState.Empty)
+            if(slot.GetState() == SlotState.Empty || !slot.GetSource().isPlaying)
             {
                 return slot;
             }
         }
+
+        Debug.LogError("No free sound slots. Returning lowest priority slot.");
+
         return lowestPrioritySlot;
     }
 
@@ -256,6 +260,7 @@ public class SoundManager : MonoBehaviour
                 }
             }
         }
+
         return null;
     }
 

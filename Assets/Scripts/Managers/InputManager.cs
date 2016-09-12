@@ -15,9 +15,12 @@ public class InputManager : MonoBehaviour {
 	void Update()
     {
         //Update the mouse's position from the camera
-        if(Camera.main != null && gameManager.gameState.State != GameManager.GameState.Paused)
+        if(Camera.main != null)
         {
-            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            if (gameManager.gameState.State != GameManager.GameState.Paused)
+            {
+                mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            }
         }
 
         //Toggle game pause
@@ -52,9 +55,30 @@ public class InputManager : MonoBehaviour {
         return false;
     }
 
+    public bool GetBoostButtonUp()
+    {
+        if (Input.GetMouseButtonUp(1) && ControlsEnabled())
+            return true;
+        return false;
+    }
+
+    public bool GetBoostButton()
+    {
+        if (Input.GetMouseButton(1) && ControlsEnabled())
+            return false;
+        return true;
+    }
+
+    public bool GetBoostButtonDown()
+    {
+        if (Input.GetMouseButtonUp(1) && ControlsEnabled())
+            return true;
+        return false;
+    }
+
     public bool ControlsEnabled()
     {
-        if(gameManager.gameState.State == GameManager.GameState.LoadingScene)
+        if(gameManager.gameState.State != GameManager.GameState.Running)
         {
             return false;
         }
