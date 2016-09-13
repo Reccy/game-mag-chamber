@@ -223,7 +223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17070d52db9fa6440b116f5ca0a5fb3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sortingLayer: Game
+  glowSortingLayer: Middleground
+  mainSortingLayer: Middleground
   blueGlowSprite: {fileID: 21300000, guid: 7fb79968c86a3a945b6d251fd4071d35, type: 3}
   greenGlowSprite: {fileID: 21300000, guid: 6086d76b7fc1d9a46a1e3cc4dd5d6c76, type: 3}
   glowOffset: 0.13
