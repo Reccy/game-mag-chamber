@@ -628,8 +628,8 @@ MonoBehaviour:
   playerDeathParticles: {fileID: 1000014290997836, guid: 35000d181d92f1348a702b83733b71d0,
     type: 2}
   generatorRotationSpeed: 50
-  playerSpeed: 30
-  playerSpeedFast: 45
+  playerSpeed: 35
+  fastSpeed: 45
   lineRendererOffset: 0.24
 --- !u!120 &120000011020590854
 LineRenderer:

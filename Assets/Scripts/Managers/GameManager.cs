@@ -199,6 +199,13 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public bool SlowMotionEnabled()
+    {
+        if(startSlowMotion != null || slowMotionMultiplier == slowMotionMultiplierTarget)
+            return true;
+        return false;
+    }
+
     //Enables slow motion
     IEnumerator EnableSlowMotionCoroutine(float duration)
     {

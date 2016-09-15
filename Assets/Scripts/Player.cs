@@ -34,16 +34,16 @@ public class Player : MonoBehaviour
     Quaternion movingRotation; //Rotation for player's movement vector
 
     public float generatorRotationSpeed = 50;
-    public float playerSpeed = 30;
-    public float playerSpeedFast = 45;
+    public float playerSpeed = 35;
+    public float fastSpeed = 45;
     public float lineRendererOffset = 0.20f;
 
-    float generatorRotationPercent = 1;
+    float generatorRotationPercent = 1; //Percentage to rotate the generator
     float collisionRadius; //Offset for manual collision detection
 
     void Awake()
     {
-        //Get references to objects in Unity
+        //Get references to objects in scene
         inputManager = Object.FindObjectOfType<InputManager>();
         gameManager = Object.FindObjectOfType<GameManager>();
         cameraManager = Object.FindObjectOfType<MainCameraManager>();
@@ -137,7 +137,6 @@ public class Player : MonoBehaviour
     //MovingNormal State
     void MovingNormal_Enter()
     {
-        LineRendererEnabled(false);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
         sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.9f, false, 0.3f, 128);
         gameManager.EnableSlowMotion(0.4f);
@@ -145,15 +144,12 @@ public class Player : MonoBehaviour
 
     void MovingNormal_Update()
     {
+        UpdateLineRenderer();
+
         //Handle Input
-        if(inputManager.GetJumpButtonUp()) //LMB Up -> Jump Redirect
+        if (inputManager.GetJumpButtonDown()) //LMB Up -> Jump Redirect
         {
             playerState.ChangeState(State.MovingRedirected);
-        }
-
-        if(inputManager.GetBoostButtonDown()) //RMB Down -> Boost
-        {
-            playerState.ChangeState(State.MovingFast);
         }
     }
 
@@ -161,20 +157,6 @@ public class Player : MonoBehaviour
     {
         //Move forward
         transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
-    }
-
-    //MovingFast State
-    void MovingFast_Enter()
-    {
-        LineRendererEnabled(false);
-        gameManager.DisableSlowMotion(0);
-        generatorRotationPercent = 60;
-    }
-
-    void MovingFast_FixedUpdate()
-    {
-        //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeedFast * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //MovingRedirected State
@@ -188,7 +170,7 @@ public class Player : MonoBehaviour
     void MovingRedirected_FixedUpdate()
     {
         //Move forward
-        transform.Translate(movingRotation * (Vector2.up * playerSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
+        transform.Translate(movingRotation * (Vector2.up * fastSpeed * gameManager.slowMotionMultiplier * Time.deltaTime));
     }
 
     //Collision Detection Code
@@ -216,6 +198,7 @@ public class Player : MonoBehaviour
             {
                 cameraManager.ScreenShake(0.2f); //Screen shake
 
+                //Set player position
                 platform = colCast.transform.gameObject; //Set the connected platform
                 transform.position = colCast.point + (colCast.normal * col.radius); //Set the player's position to the platform surface
                 platformOffset = transform.position - platform.transform.position; //Get the offset relative to the platform's center

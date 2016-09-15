@@ -55,27 +55,6 @@ public class InputManager : MonoBehaviour {
         return false;
     }
 
-    public bool GetBoostButtonUp()
-    {
-        if (Input.GetMouseButtonUp(1) && ControlsEnabled())
-            return true;
-        return false;
-    }
-
-    public bool GetBoostButton()
-    {
-        if (Input.GetMouseButton(1) && ControlsEnabled())
-            return false;
-        return true;
-    }
-
-    public bool GetBoostButtonDown()
-    {
-        if (Input.GetMouseButtonUp(1) && ControlsEnabled())
-            return true;
-        return false;
-    }
-
     public bool ControlsEnabled()
     {
         if(gameManager.gameState.State != GameManager.GameState.Running)
