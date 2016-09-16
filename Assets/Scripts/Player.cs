@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 using MonsterLove.StateMachine;
 using UnityExtensions.Physics2DExtensions;
 
@@ -25,6 +26,7 @@ public class Player : MonoBehaviour
     CircleCollider2D col;
     GameObject generator;
     GameObject eye;
+    List<GameObject> collidingObjects; //List of objects the player is currently colliding with
 
     //Platform variables
     GameObject platform;
@@ -55,6 +57,7 @@ public class Player : MonoBehaviour
         col = GetComponent<CircleCollider2D>();
         generator = transform.Find("Generator").gameObject;
         eye = transform.Find("Eye").gameObject;
+        collidingObjects = new List<GameObject>();
 
         //Set collision radius
         collisionRadius = col.radius + 0.01f;
@@ -153,7 +156,7 @@ public class Player : MonoBehaviour
         UpdateLineRenderer();
 
         //Handle Input
-        if (inputManager.GetJumpButtonDown()) //LMB Up -> Jump Redirect
+        if (inputManager.GetJumpButtonDown() && PlayerCanJump()) //LMB Up -> Jump Redirect
         {
             playerState.ChangeState(State.MovingRedirected);
         }
@@ -188,14 +191,32 @@ public class Player : MonoBehaviour
         switch (colLayer)
         {
             case "Platform":
-                HandleCollision_Platform(colObj);
+                HandleCollisionEnter_Platform(colObj);
                 break;
         }
     }
 
-    //Collision with platform
-    void HandleCollision_Platform(Collider2D platformCollision)
+    //Trigger Exit Switch
+    void OnTriggerExit2D(Collider2D colObj)
     {
+        string colLayer = LayerMask.LayerToName(colObj.gameObject.layer);
+
+        switch (colLayer)
+        {
+            case "Platform":
+                HandleCollisionExit_Platform(colObj);
+                break;
+        }
+    }
+
+    //Collision with platform enter
+    void HandleCollisionEnter_Platform(Collider2D platformCollision)
+    {
+        if (!collidingObjects.Contains(platformCollision.transform.gameObject))
+        {
+            collidingObjects.Add(platformCollision.transform.gameObject); //Add object to list of colliding objects
+        }
+
         RaycastHit2D colCast = Physics2DExtensions.ArcCast(transform.position, 0, 360, 360, collisionRadius, LayerMask.GetMask("Platform"));
 
         if(colCast)
@@ -220,6 +241,16 @@ public class Player : MonoBehaviour
         }
     }
 
+    //Collision with platform exit
+    void HandleCollisionExit_Platform(Collider2D platformCollision)
+    {
+        //Removes colliding object from list
+        if (collidingObjects.Contains(platformCollision.transform.gameObject))
+        {
+            collidingObjects.Remove(platformCollision.transform.gameObject);
+        }
+    }
+
     //Player Death
     void Die()
     {
@@ -236,11 +267,14 @@ public class Player : MonoBehaviour
         RaycastHit2D ray = Physics2D.Raycast(transform.position, inputManager.GetMouseDirectionFrom(this.gameObject), 50, LayerMask.GetMask("Platform"));
 
         //If jump point is the platform and the distance is too short, return false
-        if(ray && platform)
+        if(collidingObjects.Count > 0)
         {
-            if(ray.transform.gameObject == platform)
+            foreach(GameObject obj in collidingObjects)
             {
-                return false;
+                if(ray.transform.gameObject == obj)
+                {
+                    return false;
+                }
             }
         }
         return true;
