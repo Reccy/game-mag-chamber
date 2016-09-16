@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
     public float playerSpeed = 35;
     public float fastSpeed = 45;
     public float lineRendererOffset = 0.20f;
+    public float canJumpDistance = 5;
 
     float generatorRotationPercent = 1; //Percentage to rotate the generator
     float collisionRadius; //Offset for manual collision detection
@@ -87,7 +88,12 @@ public class Player : MonoBehaviour
     void Stationary_Enter()
     {
         LineRendererEnabled(true);
-        sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 0.8f, false, 0.3f, 128);
+
+        //Prevents sound from playing on level load
+        if(playerState.LastState != State.Stationary)
+        {
+            sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 0.8f, false, 0.3f, 128);
+        }
     }
 
     void Stationary_Update()
@@ -224,11 +230,12 @@ public class Player : MonoBehaviour
         gameManager.LoadScene(SceneManager.GetActiveScene().name, 1); //Reload the scene in 1 second
     }
 
-    //Line Renderer Methods
+    //Returns true if the player can jump
     bool PlayerCanJump()
     {
         RaycastHit2D ray = Physics2D.Raycast(transform.position, inputManager.GetMouseDirectionFrom(this.gameObject), 50, LayerMask.GetMask("Platform"));
 
+        //If jump point is the platform and the distance is too short, return false
         if(ray && platform)
         {
             if(ray.transform.gameObject == platform)

@@ -351,6 +351,8 @@ namespace MonsterLove.StateMachine
 			{
 				if (lastState == null) return default(T);
 
+                if (lastState.state == null) return default(T);
+
 				return (T) lastState.state;
 			}
 		}

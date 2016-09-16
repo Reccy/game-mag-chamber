@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour {
 
     void Update()
     {
+        //Debug Mode code - Only runs when Debug Mode is enabled from the _app object
         if(debugMode)
         {
             if(Input.GetKey(KeyCode.LeftControl))
