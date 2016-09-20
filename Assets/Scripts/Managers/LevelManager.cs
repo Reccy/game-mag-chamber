@@ -7,7 +7,9 @@ public class LevelManager : MonoBehaviour
     //Phase management
     public Phase[] phases; //Array of level phases
     public Vector2[] spawnLocations; //Locations that the obstacles can spawn at
-    private int currentPhase; //Current phase of the level (0 = no phase)
+    private Phase currentPhase; //Current phase of the level
+    private int phaseIndex; //Current phase as index
+    private int currentObstacles; //Current quantity of obstacles spawned
 
     //Time management
     private float levelStartTime; //Time since beginning of level
@@ -25,9 +27,29 @@ public class LevelManager : MonoBehaviour
     {
         levelStartTime = Time.time;
         levelElapsedTime = 0;
-        currentPhase = 0;
+        phaseIndex = 0;
+        currentPhase = phases[phaseIndex];
+        currentObstacles = 0;
         lastSpawnTime = 0;
         StartCoroutine(LevelManagerCoroutine());
+    }
+
+    //Select the next phase
+    void NextPhase()
+    {
+        if(phaseIndex + 1 < phases.Length)
+        {
+            phaseIndex++;
+        }
+        else
+        {
+            Debug.LogError("At final phase. Cannot access next phase.");
+        }
+    }
+
+    void Update()
+    {
+        Debug.Log("Amount of Obstacles: " + currentObstacles);
     }
 
     //Manages the level's progression
@@ -35,25 +57,24 @@ public class LevelManager : MonoBehaviour
     {
         while(true)
         {
-            //Loop through each phase
-            for (int i = 0; i <= currentPhase; i++)
+            //Get reference to spawn object and obstacle
+            Vector2 spawnPoint = GetSpawnPoint();
+            Obstacle obstacle = currentPhase.GetRandomObstacle();
+
+            //Check if it is time to spawn another obstacle
+            if (currentObstacles < currentPhase.maxObstacles && (Time.time - lastSpawnTime) >= currentPhase.patternSpawnRate)
             {
-                //Get reference to spawn object and obstacle
-                Vector2 spawnPoint = GetSpawnPoint();
-                Obstacle obstacle = phases[i].GetRandomObstacle();
+                //Instantiate an obstacle
+                GameObject obstacleObject = Instantiate(obstacle.obstacleObject, spawnPoint, Quaternion.identity) as GameObject;
 
-                //Check if it is time to spawn another obstacle
-                if (phases[i].currentObstacles < phases[i].maxObstacles && (Time.time - lastSpawnTime) >= phases[i].patternSpawnRate)
-                {
-                    //Instantiate an obstacle
-                    Instantiate(obstacle.obstacleObject, spawnPoint, Quaternion.identity);
+                //Give reference to level manager
+                obstacleObject.GetComponent<TestDelete>().SetLevelManager(this);
 
-                    //Update last spawn time
-                    lastSpawnTime = Time.time;
+                //Update last spawn time
+                lastSpawnTime = Time.time;
 
-                    //Increment phase obstacles
-                    phases[i].currentObstacles++;
-                }
+                //Increment phase obstacles
+                currentObstacles++;
             }
 
             //Update level elapsed time
@@ -63,6 +84,13 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    //Destroy callback for Obstacles
+    public void DestroyCallback(TestDelete td)
+    {
+        currentObstacles--;
+    }
+
+    //Returns a random spawn point
     private Vector2 GetSpawnPoint()
     {
         return spawnLocations[Random.Range(0, spawnLocations.Length)];
@@ -76,11 +104,10 @@ public class Phase
     private LevelManager levelManager;
 
     public Obstacle[] obstacles; //Array of obstacles in this phase
-    public int currentObstacles; //Current amount of obstacles spawned in this phase
     public int maxObstacles; //Maximum amount of obstacles allowed to be spawned at once
     public float patternSpawnRate; //Rate at which each new pattern spawns in seconds.
     public float nextPhaseTime; //Time in seconds until the next phase. Cumulative from last phase.
-    private float phaseStartTime; //Time at which the phase started
+    public float phaseStartTime; //Time at which the phase started
 
     public Obstacle GetRandomObstacle()
     {
