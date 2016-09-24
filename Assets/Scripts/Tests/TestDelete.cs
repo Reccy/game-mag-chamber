@@ -1,22 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TestDelete : MonoBehaviour {
-
-    private LevelManager levelManager;
-
-    public void SetLevelManager(LevelManager lvlManager)
-    {
-        levelManager = lvlManager;
-    }
+public class TestDelete : BulletPattern {
 
 	void Start()
     {
         Destroy(this.gameObject, 1);
-    }
-
-    public void OnDestroy()
-    {
-        levelManager.DestroyCallback(this);
     }
 }

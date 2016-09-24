@@ -47,11 +47,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-        Debug.Log("Amount of Obstacles: " + currentObstacles);
-    }
-
     //Manages the level's progression
     IEnumerator LevelManagerCoroutine()
     {
@@ -68,7 +63,7 @@ public class LevelManager : MonoBehaviour
                 GameObject obstacleObject = Instantiate(obstacle.obstacleObject, spawnPoint, Quaternion.identity) as GameObject;
 
                 //Give reference to level manager
-                obstacleObject.GetComponent<TestDelete>().SetLevelManager(this);
+                obstacleObject.GetComponent<BulletPattern>().SetLevelManager(this);
 
                 //Update last spawn time
                 lastSpawnTime = Time.time;
@@ -80,12 +75,12 @@ public class LevelManager : MonoBehaviour
             //Update level elapsed time
             levelElapsedTime = Time.time - levelStartTime;
 
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
     }
 
     //Destroy callback for Obstacles
-    public void DestroyCallback(TestDelete td)
+    public void DestroyCallback(BulletPattern td)
     {
         currentObstacles--;
     }
