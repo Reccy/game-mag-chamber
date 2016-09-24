@@ -28,22 +28,41 @@ public class LevelManager : MonoBehaviour
     {
         levelStartTime = Time.time;
         levelElapsedTime = 0;
-        phaseIndex = 0;
-        currentPhase = phases[phaseIndex];
+        phaseIndex = -1;
+        currentPhase = phases[0];
         currentObstacles = 0;
         lastSpawnTime = 0;
         accumulatedPhaseTime = currentPhase.phaseDuration;
+        NextPhase();
         StartCoroutine(LevelManagerCoroutine());
     }
 
     //Go to next phase
     void NextPhase()
     {
-        if(phaseIndex + 1 < phases.Length)
+        //If there is a next phase, go to next phase
+        if(HasNextPhase())
         {
             phaseIndex++;
             currentPhase = phases[phaseIndex];
             accumulatedPhaseTime += currentPhase.phaseDuration;
+
+            //Phase dependant code execution
+            switch (phaseIndex)
+            {
+                case 0:
+                    Debug.Log("FIRST!!!!11!!");
+                    break;
+                case 1:
+                    Debug.Log("second");
+                    break;
+                case 2:
+                    Debug.Log("second (index) ;)");
+                    break;
+                case 3:
+                    Debug.Log("THIRD INDEX! :D");
+                    break;
+            }
         }
     }
 
@@ -90,6 +109,9 @@ public class LevelManager : MonoBehaviour
             {
                 NextPhase();
             }
+
+            if(HasNextPhase())
+                Debug.Log("Current Phase: " + phaseIndex + " || Current Time: " + levelElapsedTime + " || Change Time: " + accumulatedPhaseTime);
 
             yield return new WaitForFixedUpdate();
         }
