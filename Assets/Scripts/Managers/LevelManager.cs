@@ -15,8 +15,9 @@ public class LevelManager : MonoBehaviour
     private float levelStartTime; //Time since beginning of level
     private float levelElapsedTime; //Time since beginning of level
     private float lastSpawnTime; //Time when last obstacle was spawned
+    private float accumulatedPhaseTime; //Accumulated time from phaseDuration
 
-    //TEST
+    //DEBUG
     void Start()
     {
         StartLevel();
@@ -31,20 +32,29 @@ public class LevelManager : MonoBehaviour
         currentPhase = phases[phaseIndex];
         currentObstacles = 0;
         lastSpawnTime = 0;
+        accumulatedPhaseTime = currentPhase.phaseDuration;
         StartCoroutine(LevelManagerCoroutine());
     }
 
-    //Select the next phase
+    //Go to next phase
     void NextPhase()
     {
         if(phaseIndex + 1 < phases.Length)
         {
             phaseIndex++;
+            currentPhase = phases[phaseIndex];
+            accumulatedPhaseTime += currentPhase.phaseDuration;
         }
-        else
+    }
+
+    //Is there another phase in the next position of the phases index
+    bool HasNextPhase()
+    {
+        if(phaseIndex + 1 < phases.Length)
         {
-            Debug.LogError("At final phase. Cannot access next phase.");
+            return true;
         }
+        return false;
     }
 
     //Manages the level's progression
@@ -75,6 +85,12 @@ public class LevelManager : MonoBehaviour
             //Update level elapsed time
             levelElapsedTime = Time.time - levelStartTime;
 
+            //Go to next phase when ready
+            if(currentPhase.phaseDuration != 0 && levelElapsedTime >= accumulatedPhaseTime && HasNextPhase())
+            {
+                NextPhase();
+            }
+
             yield return new WaitForFixedUpdate();
         }
     }
@@ -101,9 +117,11 @@ public class Phase
     public Obstacle[] obstacles; //Array of obstacles in this phase
     public int maxObstacles; //Maximum amount of obstacles allowed to be spawned at once
     public float patternSpawnRate; //Rate at which each new pattern spawns in seconds.
-    public float nextPhaseTime; //Time in seconds until the next phase. Cumulative from last phase.
+    public float phaseDuration; //Time in seconds until the next phase. Cumulative from last phase.
+    [HideInInspector]
     public float phaseStartTime; //Time at which the phase started
 
+    //Returns a random obstacle within the phase
     public Obstacle GetRandomObstacle()
     {
         return obstacles[Random.Range(0, obstacles.Length)];
