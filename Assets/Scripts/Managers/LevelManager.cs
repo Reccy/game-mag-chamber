@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
 
@@ -16,6 +17,7 @@ public class LevelManager : MonoBehaviour
     private float levelElapsedTime; //Time since beginning of level
     private float lastSpawnTime; //Time when last obstacle was spawned
     private float accumulatedPhaseTime; //Accumulated time from phaseDuration
+    public Text timeText; //UI text to display time
 
     //DEBUG
     void Start()
@@ -112,6 +114,34 @@ public class LevelManager : MonoBehaviour
 
             if(HasNextPhase())
                 Debug.Log("Current Phase: " + phaseIndex + " || Current Time: " + levelElapsedTime + " || Change Time: " + accumulatedPhaseTime);
+            
+            //Update UI Time
+            int minutes, seconds, timeInSeconds;
+            timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
+            minutes = (int)Mathf.Floor(timeInSeconds / 60);
+            seconds = timeInSeconds - (minutes * 60);
+            if(minutes < 10)
+            {
+                if(seconds < 10)
+                {
+                    timeText.text = "0" + minutes + ":0" + seconds;
+                }
+                else
+                {
+                    timeText.text = "0" + minutes + ":" + seconds;
+                }
+            }
+            else
+            {
+                if (seconds < 10)
+                {
+                    timeText.text = minutes + ":0" + seconds;
+                }
+                else
+                {
+                    timeText.text = minutes + ":" + seconds;
+                }
+            }
 
             yield return new WaitForFixedUpdate();
         }
