@@ -19,6 +19,18 @@ public class LevelManager : MonoBehaviour
     private float accumulatedPhaseTime; //Accumulated time from phaseDuration
     public Text timeText; //UI text to display time
 
+    //Reference to player
+    GameObject player;
+
+    //Reference to Game Manager
+    GameManager gameManager;
+
+    void Awake()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        gameManager = Object.FindObjectOfType<GameManager>();
+    }
+
     //DEBUG
     void Start()
     {
@@ -94,8 +106,14 @@ public class LevelManager : MonoBehaviour
                 //Instantiate an obstacle
                 GameObject obstacleObject = Instantiate(obstacle.obstacleObject, spawnPoint, Quaternion.identity) as GameObject;
 
+                //Give reference to game manager
+                obstacleObject.GetComponent<BulletPattern>().GameManager = gameManager;
+
                 //Give reference to level manager
-                obstacleObject.GetComponent<BulletPattern>().SetLevelManager(this);
+                obstacleObject.GetComponent<BulletPattern>().LevelManager = this;
+
+                //Give reference to player
+                obstacleObject.GetComponent<BulletPattern>().Player = player;
 
                 //Update last spawn time
                 lastSpawnTime = Time.time;

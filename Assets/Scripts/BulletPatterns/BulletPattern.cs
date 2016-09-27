@@ -3,16 +3,22 @@ using System.Collections;
 
 public class BulletPattern : MonoBehaviour
 {
+    public GameManager GameManager { set; get; }
+    public LevelManager LevelManager { set; get; }
+    public GameObject Player { set; get; }
 
-    private LevelManager levelManager;
-
-    public void SetLevelManager(LevelManager lvlManager)
+    void Start()
     {
-        levelManager = lvlManager;
+        if(GameManager == null || LevelManager == null || Player == null)
+        {
+            GameManager = Object.FindObjectOfType<GameManager>();
+            LevelManager = Object.FindObjectOfType<LevelManager>();
+            Player = GameObject.FindGameObjectWithTag("Player");
+        }
     }
 
     public void OnDestroy()
     {
-        levelManager.DestroyCallback(this);
+        LevelManager.DestroyCallback(this);
     }
 }
