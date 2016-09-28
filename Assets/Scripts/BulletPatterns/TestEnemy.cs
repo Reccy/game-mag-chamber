@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityExtensions.MathfExtensions;
 using System.Collections;
 using MonsterLove.StateMachine;
 
@@ -18,15 +19,24 @@ public class TestEnemy : BulletPattern
         //Move forwards
         transform.Translate(Vector2.up * 3 * GameManager.slowMotionMultiplier * Time.deltaTime);
 
-        //TODO: Rotate towards player
-        float angleToPlayer = 45;
-        transform.rotation = Quaternion.AngleAxis(angleToPlayer, Vector3.forward);
+        //Rotate towards player
 
-        //Check if ready to shoot
-        if(Vector2.Distance(transform.position, Player.transform.position) < 2)
+        if(Player)
+        {
+            float angleToPlayer = MathfExtensions.AngleFromTo(this.gameObject, Player);
+            transform.rotation = Quaternion.AngleAxis(angleToPlayer, Vector3.forward);
+
+            //Check if ready to shoot
+            if (Vector2.Distance(transform.position, Player.transform.position) < 5)
+            {
+                state.ChangeState(State.Shooting);
+            }
+        }
+        else
         {
             state.ChangeState(State.Shooting);
         }
+        
     }
 
     void Shooting_Update()
@@ -36,11 +46,6 @@ public class TestEnemy : BulletPattern
 
     void Update()
     {
-        Debug.Log("THIS: " + this.transform.name);
-        Debug.Log("LVL MANAGER: " + LevelManager.transform.name);
-        Debug.Log("GM MANAGER: " + GameManager.transform.name);
-        Debug.Log("PLAYER: " + Player.transform.name);
-
         //Destroy when obstacle goes out of bounds
         if (transform.position.x < -20 || transform.position.x > 20 || transform.position.y < -20 || transform.position.y > 20)
         {

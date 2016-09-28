@@ -193,6 +193,9 @@ public class Player : MonoBehaviour
             case "Platform":
                 HandleCollisionEnter_Platform(colObj);
                 break;
+            case "Enemy":
+                HandleCollisionEnter_Enemy(colObj);
+                break;
         }
     }
 
@@ -249,6 +252,12 @@ public class Player : MonoBehaviour
         {
             collidingObjects.Remove(platformCollision.transform.gameObject);
         }
+    }
+
+    //Collision with enemy enter
+    void HandleCollisionEnter_Enemy(Collider2D enemyCollision)
+    {
+        Die();
     }
 
     //Player Death

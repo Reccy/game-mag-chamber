@@ -26,5 +26,11 @@ namespace UnityExtensions.MathfExtensions
             return linear;
         }
 
+        public static float AngleFromTo(GameObject obj1, GameObject obj2)
+        {
+            Vector3 returnAngle = obj1.transform.eulerAngles.x < obj2.transform.position.x - obj1.transform.position.x ? new Vector3(0, 0, 360 - Vector2.Angle((Vector2)obj2.transform.position - (Vector2)obj1.transform.position, Vector2.up)) : new Vector3(0, 0, Vector2.Angle((Vector2)obj2.transform.position - (Vector2)obj1.transform.position, Vector2.up));
+            return returnAngle.z;
+        }
+
     }
 }
