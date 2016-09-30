@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
 
             gfxRaycaster.enabled = true;
 
-            gameState.ChangeState(GameState.Running);
+            gameState.ChangeState(GameState.Paused);
 
             yield break;
         }

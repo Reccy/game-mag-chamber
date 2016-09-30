@@ -125,13 +125,15 @@ public class LevelManager : MonoBehaviour
             //Update level elapsed time
             levelElapsedTime = Time.time - levelStartTime;
 
+            //Error checking for negative values
+            if (levelElapsedTime < 0)
+                levelElapsedTime = 0;
+
             //Go to next phase when ready
             if(currentPhase.phaseDuration != 0 && levelElapsedTime >= accumulatedPhaseTime && HasNextPhase())
             {
                 NextPhase();
             }
-
-            //Debug.Log("Current Phase: " + phaseIndex + " || Current Time: " + levelElapsedTime + " || Change Time: " + accumulatedPhaseTime);
             
             //Update UI Time
             int minutes, seconds, timeInSeconds;
