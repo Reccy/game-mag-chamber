@@ -36,21 +36,21 @@ public class InputManager : MonoBehaviour {
 
     public bool GetJumpButtonDown()
     {
-        if(Input.GetMouseButtonDown(0) && ControlsEnabled())
+        if((Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space)) && ControlsEnabled())
             return true;
         return false;
     }
 
     public bool GetJumpButton()
     {
-        if(Input.GetMouseButton(0) && ControlsEnabled())
+        if((Input.GetMouseButton(0) || Input.GetKeyDown(KeyCode.Space)) && ControlsEnabled())
             return true;
         return false;
     }
 
     public bool GetJumpButtonUp()
     {
-        if(Input.GetMouseButtonUp(0) && ControlsEnabled())
+        if((Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space)) && ControlsEnabled())
             return true;
         return false;
     }
