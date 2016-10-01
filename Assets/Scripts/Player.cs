@@ -289,6 +289,19 @@ public class Player : MonoBehaviour
         return true;
     }
 
+    //Forces player to jump from game start
+    public void ForceJump(StartLevelFromGUI sg)
+    {
+        if(sg.gameObject.name == "BeginButton")
+        {
+            playerState.ChangeState(State.MovingNormal);
+        }
+        else
+        {
+            Debug.LogError("THIS METHOD SHOULD ONLY BE CALLED FROM THE BEGIN BUTTON OBJECT");
+        }
+    }
+
     //Updates the LineRenderer's positioning
     void UpdateLineRenderer()
     {
