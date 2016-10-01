@@ -33,19 +33,19 @@ public class MainMenu : MonoBehaviour
     //State Management
     //
 
-    void Closed_Enter()
+    void Closed_Update()
     {
         optionsPanelRect.anchoredPosition = new Vector2(optionsClosedX, optionsPanelRect.anchoredPosition.y);
         quitPanelRect.anchoredPosition = new Vector2(quitClosedX, quitPanelRect.anchoredPosition.y);
     }
 
-    void Options_Enter()
+    void Options_Update()
     {
         optionsPanelRect.anchoredPosition = new Vector2(optionsOpenX, optionsPanelRect.anchoredPosition.y);
         quitPanelRect.anchoredPosition = new Vector2(quitClosedX, quitPanelRect.anchoredPosition.y);
     }
 
-    void Quit_Enter()
+    void Quit_Update()
     {
         optionsPanelRect.anchoredPosition = new Vector2(optionsClosedX, optionsPanelRect.anchoredPosition.y);
         quitPanelRect.anchoredPosition = new Vector2(quitOpenX, quitPanelRect.anchoredPosition.y);
