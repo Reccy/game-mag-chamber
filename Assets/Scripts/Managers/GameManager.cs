@@ -87,6 +87,11 @@ public class GameManager : MonoBehaviour {
         Time.timeScale = 1;
     }
 
+    public void StartLevelState()
+    {
+        gameState.ChangeState(GameManager.GameState.Running);
+    }
+
     public void TogglePause()
     {
         //Game pause
@@ -163,7 +168,7 @@ public class GameManager : MonoBehaviour {
 
             gfxRaycaster.enabled = true;
 
-            gameState.ChangeState(GameState.Running);
+            gameState.ChangeState(GameState.MainMenu);
 
             yield break;
         }

@@ -20,7 +20,8 @@ public class LevelManager : MonoBehaviour
     public Text timeText; //UI text to display time
 
     //UI management
-    public GameObject gameUI;
+    public GameObject gameUI; //Game UI
+    public Canvas menuUI; //Menu UI
 
     //Reference to player
     GameObject player;
@@ -34,12 +35,12 @@ public class LevelManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = Object.FindObjectOfType<GameManager>();
         gameUI.SetActive(false);
-        StartLevel();
     }
 
     //Start the level
     public void StartLevel()
     {
+        gameManager.StartLevelState();
         levelStartTime = Time.time;
         levelElapsedTime = 0;
         phaseIndex = 0;
@@ -50,6 +51,7 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(LevelManagerCoroutine());
         PhaseCode(phaseIndex);
         gameUI.SetActive(true);
+        menuUI.enabled = false;
     }
 
     //Go to next phase
