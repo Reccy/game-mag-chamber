@@ -7,9 +7,9 @@ public class BulletPattern : MonoBehaviour
     public LevelManager LevelManager { set; get; }
     public GameObject Player { set; get; }
 
-    void Start()
+    void Awake()
     {
-        if(GameManager == null || LevelManager == null || Player == null)
+        if(!GameManager || !LevelManager || !Player)
         {
             GameManager = Object.FindObjectOfType<GameManager>();
             LevelManager = Object.FindObjectOfType<LevelManager>();

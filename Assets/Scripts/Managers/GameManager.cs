@@ -7,7 +7,7 @@ using MonsterLove.StateMachine;
 public class GameManager : MonoBehaviour {
 
     //Game State
-    public enum GameState { Initializing, Paused, Running, LoadingScene };
+    public enum GameState { Initializing, Paused, Running, MainMenu, LoadingScene };
     public StateMachine<GameState> gameState;
     
     public bool debugMode = false;
@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
 
             gfxRaycaster.enabled = true;
 
-            gameState.ChangeState(GameState.Paused);
+            gameState.ChangeState(GameState.Running);
 
             yield break;
         }

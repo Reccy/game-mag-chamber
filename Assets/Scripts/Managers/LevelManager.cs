@@ -19,21 +19,21 @@ public class LevelManager : MonoBehaviour
     private float accumulatedPhaseTime; //Accumulated time from phaseDuration
     public Text timeText; //UI text to display time
 
+    //UI management
+    public GameObject gameUI;
+
     //Reference to player
     GameObject player;
 
     //Reference to Game Manager
     GameManager gameManager;
 
+    //Get instances to objects and hide game UI
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = Object.FindObjectOfType<GameManager>();
-    }
-
-    //DEBUG
-    void Start()
-    {
+        gameUI.SetActive(false);
         StartLevel();
     }
 
@@ -49,6 +49,7 @@ public class LevelManager : MonoBehaviour
         accumulatedPhaseTime = currentPhase.phaseDuration;
         StartCoroutine(LevelManagerCoroutine());
         PhaseCode(phaseIndex);
+        gameUI.SetActive(true);
     }
 
     //Go to next phase
@@ -70,13 +71,13 @@ public class LevelManager : MonoBehaviour
         switch (phaseIndex)
         {
             case 0:
-                Debug.Log("First");
+                Debug.Log("TEST_First");
                 break;
             case 1:
-                Debug.Log("Second");
+                Debug.Log("TEST_Second");
                 break;
             case 2:
-                Debug.Log("Third");
+                Debug.Log("TEST_Third");
                 break;
         }
     }
