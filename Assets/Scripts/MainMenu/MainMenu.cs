@@ -71,8 +71,6 @@ public class MainMenu : MonoBehaviour
         quitPanelRect.anchoredPosition = new Vector2(quitClosedX, quitPanelRect.anchoredPosition.y);
     }
 
-    //Close menus normally
-
     //Input Management
     public void ToggleOptionsMenu()
     {
@@ -97,6 +95,19 @@ public class MainMenu : MonoBehaviour
             menuState.ChangeState(MenuState.Quit);
         }
     }
+
+    //
+    // Quit Menu
+    //
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
+    //
+    // Options Menu
+    //
 
     //Initialize the Options Menu
     void InitOptionsMenu()
@@ -189,6 +200,67 @@ public class MainMenu : MonoBehaviour
                 options.fpsDropdown.value = 2;
                 break;
         }
+    }
+    
+    //Apply saved options
+    public void ApplyOptions()
+    {
+        //Get screen settings
+        int screenWidth, screenHeight;
+        string selectedResolution = options.resolutionDropdown.options[options.resolutionDropdown.value].text;
+        string[] splits = selectedResolution.Split('x');
+        int.TryParse(splits[0], out screenWidth);
+        int.TryParse(splits[1], out screenHeight);
+        bool fullscreen = (options.windowDropdown.value == 0) ? false : true;
+
+        Screen.SetResolution(screenWidth, screenHeight, fullscreen);
+
+        //Get Anti-Aliasing settings
+        int aaValue = (int)System.Math.Pow(2, options.aaDropdown.value);
+
+        if (aaValue == 1)
+            aaValue = 0;
+
+        QualitySettings.antiAliasing = aaValue;
+
+        //Get VSync settings
+        int vsValue = options.vsDropdown.value;
+
+        QualitySettings.vSyncCount = vsValue;
+
+        //Get FPS settings
+        int fpsLimit;
+        if (options.fpsDropdown.value == 0)
+        {
+            fpsLimit = 60;
+        }
+        else if (options.fpsDropdown.value == 1)
+        {
+            fpsLimit = 30;
+        }
+        else
+        {
+            fpsLimit = 0;
+        }
+        Application.targetFrameRate = fpsLimit;
+
+        //Save options to PlayerPrefs
+        PlayerPrefs.SetString("Resolution", selectedResolution);
+        PlayerPrefs.SetInt("Fullscreen", (fullscreen ? 1 : 0));
+        PlayerPrefs.SetInt("AntiAliasing", aaValue);
+        PlayerPrefs.SetInt("VSync", vsValue);
+        PlayerPrefs.SetInt("FPS", fpsLimit);
+        PlayerPrefs.Save();
+    }
+
+    //Load Default Options
+    public void LoadDefaults()
+    {
+        options.resolutionDropdown.value = 0;
+        options.windowDropdown.value = 0;
+        options.aaDropdown.value = 0;
+        options.vsDropdown.value = 0;
+        options.fpsDropdown.value = 0;
     }
 }
 
