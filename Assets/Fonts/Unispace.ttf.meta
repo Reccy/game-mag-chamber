@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ee33d0547e62c0145830f9bd999ae75d
-timeCreated: 1474843160
+guid: 58d6aec325b717644971376832b7a19c
+timeCreated: 1475442198
 licenseType: Free
 TrueTypeFontImporter:
   serializedVersion: 4
@@ -10,7 +10,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - 8-bit Operator+ SC
+  - Unispace
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
