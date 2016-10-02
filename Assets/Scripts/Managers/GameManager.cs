@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour {
     public float slowMotionMultiplierTarget = 0.2f;
     Coroutine startSlowMotion, stopSlowMotion;
 
+    LevelManager levelManager;
+
 	void Awake()
     {
         //Subscribe to Scene Manager callback
@@ -80,11 +82,13 @@ public class GameManager : MonoBehaviour {
     void Paused_Enter()
     {
         Time.timeScale = 0;
+        levelManager.ShowMenu();
     }
 
     void Paused_Exit()
     {
         Time.timeScale = 1;
+        levelManager.HideMenu();
     }
 
     public void StartLevelState()
@@ -167,6 +171,8 @@ public class GameManager : MonoBehaviour {
             }
 
             gfxRaycaster.enabled = true;
+
+            levelManager = Object.FindObjectOfType<LevelManager>();
 
             gameState.ChangeState(GameState.MainMenu);
 

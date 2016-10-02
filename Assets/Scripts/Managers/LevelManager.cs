@@ -51,6 +51,16 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(LevelManagerCoroutine());
         PhaseCode(phaseIndex);
         gameUI.SetActive(true);
+        
+        if(GameObject.Find("ClickText"))
+            GameObject.Find("ClickText").SetActive(false);
+
+        if (GameObject.Find("BestTimeBG"))
+            GameObject.Find("BestTimeBG").SetActive(false);
+
+        if (GameObject.Find("BeginButton"))
+            GameObject.Find("BeginButton").SetActive(false);
+
         menuUI.enabled = false;
     }
 
@@ -180,6 +190,16 @@ public class LevelManager : MonoBehaviour
     private Vector2 GetSpawnPoint()
     {
         return spawnLocations[Random.Range(0, spawnLocations.Length)];
+    }
+
+    public void ShowMenu()
+    {
+        menuUI.enabled = true;
+    }
+
+    public void HideMenu()
+    {
+        menuUI.enabled = false;
     }
 }
 
