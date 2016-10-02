@@ -21,7 +21,7 @@ public class MainMenu_Old : MonoBehaviour {
     int selectedLevelIndex = 0;
 
     //Options
-    public Options options;
+    public Deprecated_Options options;
 
     void Awake()
     {
@@ -352,7 +352,7 @@ public class LevelData
 
 //Options Dropdowns
 [System.Serializable]
-public class Options
+public class Deprecated_Options
 {
     public Dropdown resolutionDropdown;
     public Dropdown windowDropdown;
