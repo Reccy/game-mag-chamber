@@ -13,9 +13,6 @@ public class MainMenu : MonoBehaviour
     //Options management
     public Options options;
 
-    //Font
-    public Font uiFont;
-
     //State Machine
     enum MenuState {Closed, Options, Quit};
     StateMachine<MenuState> menuState;
