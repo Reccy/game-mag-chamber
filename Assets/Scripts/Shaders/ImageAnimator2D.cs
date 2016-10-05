@@ -5,6 +5,7 @@ using System.Collections;
 public class ImageAnimator2D : MonoBehaviour
 {
     private RawImage img;
+    public float speed = 0.17f;
 
     void Awake()
     {
@@ -13,7 +14,7 @@ public class ImageAnimator2D : MonoBehaviour
 
     void Update()
     {
-        float offset = Time.time * 0.17f;
+        float offset = Time.time * speed;
         img.uvRect = new Rect(offset, offset/1.2f, img.uvRect.width, img.uvRect.height);
     }
 }
