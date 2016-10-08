@@ -9,7 +9,7 @@ public class MainMenu : MonoBehaviour
     public GameObject optionsPanel, optionsButton, quitPanel, quitButton; //UI objects
     RectTransform optionsPanelRect, optionsButtonRect, quitPanelRect, quitButtonRect; //Panel Rects
     public float optionsOpenX, optionsClosedX, optionsButtonOpenX, optionsButtonClosedX, quitOpenX, quitClosedX, quitButtonOpenX, quitButtonClosedX; //Positions for opened and closed panels
-    public float animationDuration = 0.06f; //How long it should take for a tweening animation to complete
+    public float animationDuration = 20f; //How long it should take for a tweening animation to complete
 
     //Options management
     public Options options;
@@ -39,7 +39,7 @@ public class MainMenu : MonoBehaviour
     //
     //State Management
     //
-    void Closed_Update()
+    void Closed_FixedUpdate()
     {
         //Velocities
         float v1 = 0;
@@ -56,7 +56,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void Options_Update()
+    void Options_FixedUpdate()
     {
         //Velocities
         float v1 = 0;
@@ -73,7 +73,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    void Quit_Update()
+    void Quit_FixedUpdate()
     {
         //Velocities
         float v1 = 0;
