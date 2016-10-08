@@ -6,22 +6,25 @@ using MonsterLove.StateMachine;
 public class MainMenu : MonoBehaviour
 {
     //Panel management
-    public GameObject optionsPanel, quitPanel; //Panels
-    RectTransform optionsPanelRect, quitPanelRect; //Panel Rects
-    public float optionsOpenX, optionsClosedX, quitOpenX, quitClosedX; //Positions for opened and closed panels
+    public GameObject optionsPanel, optionsButton, quitPanel, quitButton; //UI objects
+    RectTransform optionsPanelRect, optionsButtonRect, quitPanelRect, quitButtonRect; //Panel Rects
+    public float optionsOpenX, optionsClosedX, optionsButtonOpenX, optionsButtonClosedX, quitOpenX, quitClosedX, quitButtonOpenX, quitButtonClosedX; //Positions for opened and closed panels
+    public float animationDuration = 0.06f; //How long it should take for a tweening animation to complete
 
     //Options management
     public Options options;
 
     //State Machine
-    enum MenuState {Closed, Options, Quit};
+    enum MenuState { Closed, Options, Quit };
     StateMachine<MenuState> menuState;
 
     //Init Menu
     void Awake()
     {
         optionsPanelRect = optionsPanel.GetComponent<RectTransform>();
+        optionsButtonRect = optionsButton.GetComponent<RectTransform>();
         quitPanelRect = quitPanel.GetComponent<RectTransform>();
+        quitButtonRect = quitButton.GetComponent<RectTransform>();
         InitOptionsMenu();
         menuState = StateMachine<MenuState>.Initialize(this);
         menuState.ChangeState(MenuState.Closed);
@@ -36,23 +39,55 @@ public class MainMenu : MonoBehaviour
     //
     //State Management
     //
-
     void Closed_Update()
     {
-        optionsPanelRect.anchoredPosition = new Vector2(optionsClosedX, optionsPanelRect.anchoredPosition.y);
-        quitPanelRect.anchoredPosition = new Vector2(quitClosedX, quitPanelRect.anchoredPosition.y);
+        //Velocities
+        float v1 = 0;
+        float v2 = 0;
+        float v3 = 0;
+        float v4 = 0;
+
+        if (optionsPanelRect.anchoredPosition.x != optionsOpenX || quitPanelRect.anchoredPosition.x != quitClosedX)
+        {
+            optionsPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsPanelRect.anchoredPosition.x, optionsClosedX, ref v1, animationDuration), optionsPanelRect.anchoredPosition.y);
+            optionsButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsButtonRect.anchoredPosition.x, optionsButtonClosedX, ref v2, animationDuration), optionsButtonRect.anchoredPosition.y);
+            quitPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitPanelRect.anchoredPosition.x, quitClosedX, ref v3, animationDuration), quitPanelRect.anchoredPosition.y);
+            quitButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitButtonRect.anchoredPosition.x, quitButtonClosedX, ref v4, animationDuration), quitButtonRect.anchoredPosition.y);
+        }
     }
 
     void Options_Update()
     {
-        optionsPanelRect.anchoredPosition = new Vector2(optionsOpenX, optionsPanelRect.anchoredPosition.y);
-        quitPanelRect.anchoredPosition = new Vector2(quitClosedX, quitPanelRect.anchoredPosition.y);
+        //Velocities
+        float v1 = 0;
+        float v2 = 0;
+        float v3 = 0;
+        float v4 = 0;
+
+        if (optionsPanelRect.anchoredPosition.x != optionsOpenX || quitPanelRect.anchoredPosition.x != quitClosedX)
+        {
+            optionsPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsPanelRect.anchoredPosition.x, optionsOpenX, ref v1, animationDuration), optionsPanelRect.anchoredPosition.y);
+            optionsButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsButtonRect.anchoredPosition.x, optionsButtonOpenX, ref v2, animationDuration), optionsButtonRect.anchoredPosition.y);
+            quitPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitPanelRect.anchoredPosition.x, quitClosedX, ref v3, animationDuration), quitPanelRect.anchoredPosition.y);
+            quitButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitButtonRect.anchoredPosition.x, quitButtonClosedX, ref v4, animationDuration), quitButtonRect.anchoredPosition.y);
+        }
     }
 
     void Quit_Update()
     {
-        optionsPanelRect.anchoredPosition = new Vector2(optionsClosedX, optionsPanelRect.anchoredPosition.y);
-        quitPanelRect.anchoredPosition = new Vector2(quitOpenX, quitPanelRect.anchoredPosition.y);
+        //Velocities
+        float v1 = 0;
+        float v2 = 0;
+        float v3 = 0;
+        float v4 = 0;
+
+        if (optionsPanelRect.anchoredPosition.x != optionsOpenX || quitPanelRect.anchoredPosition.x != quitClosedX)
+        {
+            optionsPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsPanelRect.anchoredPosition.x, optionsClosedX, ref v1, animationDuration), optionsPanelRect.anchoredPosition.y);
+            optionsButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(optionsButtonRect.anchoredPosition.x, optionsButtonClosedX, ref v2, animationDuration), optionsButtonRect.anchoredPosition.y);
+            quitPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitPanelRect.anchoredPosition.x, quitOpenX, ref v3, animationDuration), quitPanelRect.anchoredPosition.y);
+            quitButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitButtonRect.anchoredPosition.x, quitButtonOpenX, ref v4, animationDuration), quitButtonRect.anchoredPosition.y);
+        }
     }
 
     //Immediately snaps menus to positions
