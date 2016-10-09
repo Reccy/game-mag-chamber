@@ -294,6 +294,20 @@ public class MainMenu : MonoBehaviour
         options.vsDropdown.value = 0;
         options.fpsDropdown.value = 0;
     }
+
+    //
+    //Social Media links
+    //
+
+    public void GotoTwitter()
+    {
+        Application.OpenURL("https://twitter.com/TheReccy");
+    }
+
+    public void GotoItchio()
+    {
+        Application.OpenURL("https://reccy.itch.io/");
+    }
 }
 
 //Options Dropdowns
