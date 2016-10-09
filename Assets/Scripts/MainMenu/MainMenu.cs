@@ -28,6 +28,41 @@ public class MainMenu : MonoBehaviour
         InitOptionsMenu();
         menuState = StateMachine<MenuState>.Initialize(this);
         menuState.ChangeState(MenuState.Closed);
+
+        //Update UI Time
+        if(!PlayerPrefs.HasKey("HighScoreSeconds"))
+            PlayerPrefs.SetInt("HighScoreSeconds", 0);
+
+        if(!PlayerPrefs.HasKey("HighScoreMinutes"))
+            PlayerPrefs.SetInt("HighScoreMinutes", 0);
+
+        int seconds = PlayerPrefs.GetInt("HighScoreSeconds");
+        int minutes = PlayerPrefs.GetInt("HighScoreMinutes");
+
+        Text timeText = GameObject.Find("BestTimeNumText").GetComponent<Text>();
+
+        if (minutes < 10)
+        {
+            if (seconds < 10)
+            {
+                timeText.text = "0" + minutes + ":0" + seconds;
+            }
+            else
+            {
+                timeText.text = "0" + minutes + ":" + seconds;
+            }
+        }
+        else
+        {
+            if (seconds < 10)
+            {
+                timeText.text = minutes + ":0" + seconds;
+            }
+            else
+            {
+                timeText.text = minutes + ":" + seconds;
+            }
+        }
     }
 
     //Set positions of GUI

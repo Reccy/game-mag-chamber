@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     GameManager gameManager;
     MainCameraManager cameraManager;
     SoundManager sound;
+    LevelManager levelManager;
 
     //State machine variables
     public enum State { Stationary, MovingNormal, MovingFast, MovingRedirected };
@@ -51,6 +52,7 @@ public class Player : MonoBehaviour
         gameManager = Object.FindObjectOfType<GameManager>();
         cameraManager = Object.FindObjectOfType<MainCameraManager>();
         sound = Object.FindObjectOfType<SoundManager>();
+        levelManager = Object.FindObjectOfType<LevelManager>();
         shield = transform.Find("Shield").GetComponent<SpriteRenderer>();
         glow = transform.Find("Glow").GetComponent<SpriteRenderer>();
         lineRenderer = GetComponent<LineRenderer>();
@@ -263,6 +265,16 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
+        //Save high score
+        if(levelManager.GetHighScoreMinutes() > PlayerPrefs.GetInt("HighScoreMinutes"))
+            PlayerPrefs.SetInt("HighScoreMinutes", levelManager.GetHighScoreMinutes());
+
+        if(levelManager.GetHighScoreSeconds() > PlayerPrefs.GetInt("HighScoreSeconds"))
+            PlayerPrefs.SetInt("HighScoreSeconds", levelManager.GetHighScoreSeconds());
+
+        PlayerPrefs.Save();
+
+        //Kill player
         gameManager.DisableSlowMotion(0); //Disables slow mo
         GameObject colFX = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity); //Creates destruction effect
         Destroy(colFX, 2); //Destroy destruction effect in 2 seconds

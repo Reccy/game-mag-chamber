@@ -10,7 +10,7 @@ public class LevelImageTransition : MonoBehaviour
     void Awake()
     {
         img = this.gameObject.GetComponent<RectTransform>();
-        img.anchoredPosition = intro ? new Vector2(-100, 0) : new Vector2(-1600, 0);
+        img.anchoredPosition = intro ? new Vector2(-100, 0) : new Vector2(-3100, 0);
     }
 
     void FixedUpdate()
@@ -19,11 +19,11 @@ public class LevelImageTransition : MonoBehaviour
 
         if (intro)
         {
-            img.anchoredPosition = new Vector2(Mathf.SmoothDamp(img.anchoredPosition.x, 1500, ref v, 0.02f), 0);
+            img.anchoredPosition = new Vector2(Mathf.SmoothDamp(img.anchoredPosition.x, 3000, ref v, 0.02f, 40000), 0);
         }
         else
         {
-            img.anchoredPosition = new Vector2(Mathf.SmoothDamp(img.anchoredPosition.x, 0, ref v, 0.02f) , 0);
+            img.anchoredPosition = new Vector2(Mathf.SmoothDamp(img.anchoredPosition.x, 0, ref v, 0.02f, 40000) , 0);
         }
     }
 }

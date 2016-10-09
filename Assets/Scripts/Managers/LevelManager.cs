@@ -201,6 +201,23 @@ public class LevelManager : MonoBehaviour
     {
         menuUI.enabled = false;
     }
+
+    public int GetHighScoreMinutes()
+    {
+        int minutes, timeInSeconds;
+        timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
+        minutes = (int)Mathf.Floor(timeInSeconds / 60);
+        return minutes;
+    }
+
+    public int GetHighScoreSeconds()
+    {
+        int minutes, seconds, timeInSeconds;
+        timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
+        minutes = (int)Mathf.Floor(timeInSeconds / 60);
+        seconds = timeInSeconds - (minutes * 60);
+        return seconds;
+    }
 }
 
 //A level phase
