@@ -126,6 +126,10 @@ MonoBehaviour:
   gfxRaycaster: {fileID: 0}
   slowMotionMultiplier: 1
   slowMotionMultiplierTarget: 0.2
+  introTransition: {fileID: 1000012586736606, guid: 0978875e70289494599e6b4ab0e7172f,
+    type: 2}
+  outroTransition: {fileID: 1000013394966660, guid: 91b47cc66a61d464b8af1559ec39fd90,
+    type: 2}
 --- !u!4 &803345570
 Transform:
   m_ObjectHideFlags: 0

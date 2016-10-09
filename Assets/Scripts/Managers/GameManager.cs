@@ -23,6 +23,10 @@ public class GameManager : MonoBehaviour {
     public float slowMotionMultiplierTarget = 0.2f;
     Coroutine startSlowMotion, stopSlowMotion;
 
+    //Level transitions
+    public GameObject introTransition, outroTransition;
+    GameObject introTransitionInstance, outroTransitionInstance;
+
     LevelManager levelManager;
 
 	void Awake()
@@ -33,6 +37,10 @@ public class GameManager : MonoBehaviour {
         //Init game state
         gameState = StateMachine<GameState>.Initialize(this);
         gameState.ChangeState(GameState.Initializing);
+
+        //Transition instances should be null
+        introTransitionInstance = null;
+        outroTransitionInstance = null;
 
         //Creates psuedo-singleton pattern
         DontDestroyOnLoad(this.gameObject);
@@ -139,6 +147,20 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            float secondDelay = Time.time + 0.3f;
+
+            FadeOutAnimation();
+
+            while (secondDelay > Time.time)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+        }
+
+        introTransitionInstance = null;
+        outroTransitionInstance = null;
         SceneManager.LoadScene(scene);
     }
 
@@ -157,6 +179,21 @@ public class GameManager : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
 
+        if(SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            float secondDelay = Time.time + 0.3f;
+
+            FadeOutAnimation();
+
+            while (secondDelay > Time.time)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+        }
+        
+
+        introTransitionInstance = null;
+        outroTransitionInstance = null;
         SceneManager.LoadScene(scene);
     }
 
@@ -174,10 +211,45 @@ public class GameManager : MonoBehaviour {
 
             levelManager = Object.FindObjectOfType<LevelManager>();
 
+            if (SceneManager.GetActiveScene().buildIndex != 1)
+                FadeInAnimation();
+
             gameState.ChangeState(GameState.MainMenu);
 
             yield break;
         }
+    }
+
+    public void FadeInAnimation()
+    {
+        Transform mainCanvas;
+        if(SceneManager.GetActiveScene().name == "Level1")
+        {
+            mainCanvas = GameObject.Find("ScreenCanvas").transform;
+        }
+        else
+        {
+            mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas").transform.Find("CanvasPanel");
+        }
+        
+        if(introTransitionInstance == null)
+            introTransitionInstance = Instantiate(introTransition, Vector3.zero, Quaternion.identity, mainCanvas) as GameObject;
+    }
+
+    public void FadeOutAnimation()
+    {
+        Transform mainCanvas;
+        if (SceneManager.GetActiveScene().name == "Level1")
+        {
+            mainCanvas = GameObject.Find("TransitionCanvas").transform;
+        }
+        else
+        {
+            mainCanvas = GameObject.FindGameObjectWithTag("MainCanvas").transform.Find("CanvasPanel");
+        }
+
+        if(outroTransitionInstance == null)
+            outroTransitionInstance = Instantiate(outroTransition, Vector3.zero, Quaternion.identity, mainCanvas) as GameObject;
     }
 
     //On scene change

@@ -19,7 +19,6 @@ public class SplashScreen : MonoBehaviour
     {
         logoRect.anchoredPosition = new Vector2(1000, 0);
         creditRect.anchoredPosition = new Vector2(-1000, 0);
-        gameManager.LoadScene("Level1", 7);
     }
 
     void FixedUpdate()
@@ -27,5 +26,11 @@ public class SplashScreen : MonoBehaviour
         float v1 = 0, v2 = 0;
         logoRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(logoRect.anchoredPosition.x, 0, ref v1, animationDuration), 0);
         creditRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(creditRect.anchoredPosition.x, 0, ref v2, animationDuration), -220);
+    }
+
+    void Update()
+    {
+        if (Input.anyKeyDown || Time.timeSinceLevelLoad > 5)
+            gameManager.LoadScene("Level1");
     }
 }
