@@ -30,17 +30,17 @@ public class MainMenu : MonoBehaviour
         menuState.ChangeState(MenuState.Closed);
 
         //Update UI Time
-        if(!PlayerPrefs.HasKey("HighScoreSeconds"))
-            PlayerPrefs.SetInt("HighScoreSeconds", 0);
+        if(!PlayerPrefs.HasKey("HighScore"))
+            PlayerPrefs.SetFloat("HighScore", 0);
 
-        if(!PlayerPrefs.HasKey("HighScoreMinutes"))
-            PlayerPrefs.SetInt("HighScoreMinutes", 0);
-
-        int seconds = PlayerPrefs.GetInt("HighScoreSeconds");
-        int minutes = PlayerPrefs.GetInt("HighScoreMinutes");
+        PlayerPrefs.Save();
 
         Text timeText = GameObject.Find("BestTimeNumText").GetComponent<Text>();
 
+        int minutes, seconds;
+        float score = PlayerPrefs.GetFloat("HighScore");
+        minutes = (int)Mathf.Floor(score / 60);
+        seconds = (int)score - (minutes * 60);
         if (minutes < 10)
         {
             if (seconds < 10)

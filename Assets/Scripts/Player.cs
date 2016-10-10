@@ -266,11 +266,8 @@ public class Player : MonoBehaviour
     void Die()
     {
         //Save high score
-        if(levelManager.GetHighScoreMinutes() > PlayerPrefs.GetInt("HighScoreMinutes"))
-            PlayerPrefs.SetInt("HighScoreMinutes", levelManager.GetHighScoreMinutes());
-
-        if(levelManager.GetHighScoreSeconds() > PlayerPrefs.GetInt("HighScoreSeconds"))
-            PlayerPrefs.SetInt("HighScoreSeconds", levelManager.GetHighScoreSeconds());
+        if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
+            PlayerPrefs.SetFloat("HighScore", levelManager.GetHighScore());
 
         PlayerPrefs.Save();
 
