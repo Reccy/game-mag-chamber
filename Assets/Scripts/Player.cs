@@ -228,7 +228,7 @@ public class Player : MonoBehaviour
         {
             if (colCast.transform.gameObject != platform) //If the player collides with a different platform
             {
-                cameraManager.ScreenShake(0.2f); //Screen shake
+                cameraManager.ScreenShake(0.3f); //Screen shake
 
                 //Set player position
                 platform = colCast.transform.gameObject; //Set the connected platform

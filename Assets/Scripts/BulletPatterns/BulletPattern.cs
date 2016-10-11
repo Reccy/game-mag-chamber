@@ -28,7 +28,7 @@ public class BulletPattern : MonoBehaviour
         if (spawnColor == null)
             spawnColor = SpawnColor.Red;
 
-        Vector3 particlePosition = new Vector3(transform.position.x, transform.position.y, 20);
+        Vector3 particlePosition = new Vector3(transform.position.x, transform.position.y, 100);
 
         switch(spawnColor)
         {
