@@ -27,7 +27,7 @@ public class TestEnemy : BulletPattern
             transform.rotation = Quaternion.AngleAxis(angleToPlayer, Vector3.forward);
 
             //Check if ready to shoot
-            if (Vector2.Distance(transform.position, Player.transform.position) < 5)
+            if (Vector2.Distance(transform.position, Player.transform.position) < 2.5f)
             {
                 state.ChangeState(State.Shooting);
             }

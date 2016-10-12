@@ -28,6 +28,7 @@ public class GameManager : MonoBehaviour {
     GameObject introTransitionInstance, outroTransitionInstance;
 
     LevelManager levelManager;
+    public bool newScore = false;
 
 	void Awake()
     {

@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
         //Prevents sound from playing on level load
         if(playerState.LastState != State.Stationary)
         {
-            sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 0.8f, false, 0.3f, 128);
+            sound.PlayOneShot("sfx_Land", SoundManager.SoundChannel.SFX, 0.2f, false, 0.3f, 128);
         }
     }
 
@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
     void MovingNormal_Enter()
     {
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
-        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.5f, false, 0.3f, 128);
+        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.4f, true, 0.1f, 128);
         gameManager.EnableSlowMotion(0.4f);
     }
 
@@ -183,7 +183,7 @@ public class Player : MonoBehaviour
     //MovingRedirected State
     void MovingRedirected_Enter()
     {
-        sound.PlayOneShot("sfx_Jump2", SoundManager.SoundChannel.SFX, 0.3f, false, 0.3f, 128);
+        sound.PlayOneShot("sfx_Jump2", SoundManager.SoundChannel.SFX, 0.2f, false, 0.3f, 128);
         LineRendererEnabled(false);
         gameManager.DisableSlowMotion(0);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
@@ -276,14 +276,22 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
-        //Play death sound effect
-        sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 1, false);
-
         //Save high score
         if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
+        {
+            //Play high score effect
+            sound.PlayOneShot("sfx_HighScore", SoundManager.SoundChannel.SFX, 0.6f);
+            gameManager.newScore = true;
             PlayerPrefs.SetFloat("HighScore", levelManager.GetHighScore());
-
-        PlayerPrefs.Save();
+            PlayerPrefs.Save();
+        }
+        else
+        {
+            //Play death sound effect
+            sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 0.6f, false, 0.2f);
+            gameManager.newScore = false;
+        }
+        
 
         //Kill player
         gameManager.DisableSlowMotion(0); //Disables slow mo

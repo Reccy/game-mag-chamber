@@ -41,6 +41,11 @@ public class LevelManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = Object.FindObjectOfType<GameManager>();
         sound = Object.FindObjectOfType<SoundManager>();
+        if(gameManager.newScore)
+        {
+            menuUI.transform.Find("BestTimeBG").Find("BestTimeText").gameObject.GetComponent<Text>().text = "New Best Time!";
+            
+        }
         gameUI.SetActive(false);
     }
 
@@ -134,6 +139,9 @@ public class LevelManager : MonoBehaviour
 
                 //Give reference to player
                 obstacleObject.GetComponent<BulletPattern>().Player = player;
+
+                //Give reference to sound manager
+                obstacleObject.GetComponent<BulletPattern>().SoundManager = sound;
 
                 //Update last spawn time
                 lastSpawnTime = Time.time;
