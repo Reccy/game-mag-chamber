@@ -33,12 +33,14 @@ public class LevelManager : MonoBehaviour
 
     //Reference to Game Manager
     GameManager gameManager;
+    SoundManager sound;
 
     //Get instances to objects and hide game UI
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = Object.FindObjectOfType<GameManager>();
+        sound = Object.FindObjectOfType<SoundManager>();
         gameUI.SetActive(false);
     }
 
@@ -210,6 +212,17 @@ public class LevelManager : MonoBehaviour
     public float GetHighScore()
     {
         return levelElapsedTime;
+    }
+
+    //Play UI sounds
+    public void PlaySound_Click()
+    {
+        sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI);
+    }
+
+    public void PlaySound_DropdownHover()
+    {
+        sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI, 0.2f);
     }
 }
 

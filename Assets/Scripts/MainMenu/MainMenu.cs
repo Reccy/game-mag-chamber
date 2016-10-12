@@ -14,6 +14,9 @@ public class MainMenu : MonoBehaviour
     //Options management
     public Options options;
 
+    //GM classes
+    SoundManager sound;
+
     //State Machine
     enum MenuState { Closed, Options, Quit };
     StateMachine<MenuState> menuState;
@@ -21,6 +24,7 @@ public class MainMenu : MonoBehaviour
     //Init Menu
     void Awake()
     {
+        sound = Object.FindObjectOfType<SoundManager>();
         optionsPanelRect = optionsPanel.GetComponent<RectTransform>();
         optionsButtonRect = optionsButton.GetComponent<RectTransform>();
         quitPanelRect = quitPanel.GetComponent<RectTransform>();
@@ -74,6 +78,13 @@ public class MainMenu : MonoBehaviour
     //
     //State Management
     //
+
+    void Closed_Enter()
+    {
+        if(menuState.LastState != MenuState.Closed)
+            sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI, 0.6f);
+    }
+
     void Closed_FixedUpdate()
     {
         //Velocities
@@ -91,6 +102,11 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+    void Options_Enter()
+    {
+        sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI);
+    }
+
     void Options_FixedUpdate()
     {
         //Velocities
@@ -106,6 +122,11 @@ public class MainMenu : MonoBehaviour
             quitPanelRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitPanelRect.anchoredPosition.x, quitClosedX, ref v3, animationDuration), quitPanelRect.anchoredPosition.y);
             quitButtonRect.anchoredPosition = new Vector2(Mathf.SmoothDamp(quitButtonRect.anchoredPosition.x, quitButtonClosedX, ref v4, animationDuration), quitButtonRect.anchoredPosition.y);
         }
+    }
+
+    void Quit_Enter()
+    {
+        sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI);
     }
 
     void Quit_FixedUpdate()

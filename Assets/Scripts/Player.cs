@@ -159,7 +159,7 @@ public class Player : MonoBehaviour
     void MovingNormal_Enter()
     {
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
-        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.9f, false, 0.3f, 128);
+        sound.PlayOneShot("sfx_Jump", SoundManager.SoundChannel.SFX, 0.5f, false, 0.3f, 128);
         gameManager.EnableSlowMotion(0.4f);
     }
 
@@ -183,6 +183,7 @@ public class Player : MonoBehaviour
     //MovingRedirected State
     void MovingRedirected_Enter()
     {
+        sound.PlayOneShot("sfx_Jump2", SoundManager.SoundChannel.SFX, 0.3f, false, 0.3f, 128);
         LineRendererEnabled(false);
         gameManager.DisableSlowMotion(0);
         movingRotation = inputManager.GetMouseQuaternionFrom(this.gameObject);
@@ -275,6 +276,9 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
+        //Play death sound effect
+        sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 1, false);
+
         //Save high score
         if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
             PlayerPrefs.SetFloat("HighScore", levelManager.GetHighScore());

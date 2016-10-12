@@ -160,8 +160,12 @@ MonoBehaviour:
   groupUI: {fileID: 243000011971157574, guid: 0b823ba97cdce01439da2ced10a5869c, type: 2}
   groupSFX: {fileID: 243000010855947760, guid: 0b823ba97cdce01439da2ced10a5869c, type: 2}
   audioClips:
-  - {fileID: 8300000, guid: 69d6c926edb05ad4cb9e296e9c4e1185, type: 3}
+  - {fileID: 8300000, guid: d148cdd9b385c004284bfcfb4e4df294, type: 3}
   - {fileID: 8300000, guid: 9e8f1bf667eaff7409829292936c0025, type: 3}
+  - {fileID: 8300000, guid: cff6de6e9e2b761489ddfa77140649de, type: 3}
+  - {fileID: 8300000, guid: dafb422da59ea3e4f9104c885829ef15, type: 3}
+  - {fileID: 8300000, guid: 31cabfac6d4794a42aa9e2106dd8e3e8, type: 3}
+  - {fileID: 8300000, guid: b9f82868b10f2a24ea8be3341a89a9e9, type: 3}
   maxSlots: 30
 --- !u!114 &803345572
 MonoBehaviour:
