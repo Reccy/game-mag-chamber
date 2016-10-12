@@ -130,6 +130,7 @@ MonoBehaviour:
     type: 2}
   outroTransition: {fileID: 1000013394966660, guid: 91b47cc66a61d464b8af1559ec39fd90,
     type: 2}
+  newScore: 0
 --- !u!4 &803345570
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +168,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 31cabfac6d4794a42aa9e2106dd8e3e8, type: 3}
   - {fileID: 8300000, guid: b9f82868b10f2a24ea8be3341a89a9e9, type: 3}
   - {fileID: 8300000, guid: 972fa75262244f340b92e1cdee31e4f7, type: 3}
+  - {fileID: 8300000, guid: 1ac45cec267938f42a4519979c45dea1, type: 3}
   maxSlots: 30
 --- !u!114 &803345572
 MonoBehaviour:

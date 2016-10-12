@@ -44,7 +44,6 @@ public class LevelManager : MonoBehaviour
         if(gameManager.newScore)
         {
             menuUI.transform.Find("BestTimeBG").Find("BestTimeText").gameObject.GetComponent<Text>().text = "New Best Time!";
-            
         }
         gameUI.SetActive(false);
     }

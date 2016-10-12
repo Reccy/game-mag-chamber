@@ -7,10 +7,12 @@ public class SplashScreen : MonoBehaviour
     public float animationDuration = 0.2f;
     RectTransform logoRect, creditRect;
     GameManager gameManager;
+    SoundManager soundManager;
 
     void Awake()
     {
         gameManager = Object.FindObjectOfType<GameManager>();
+        soundManager = Object.FindObjectOfType<SoundManager>();
         logoRect = logo.GetComponent<RectTransform>();
         creditRect = credit.GetComponent<RectTransform>();
     }
@@ -19,6 +21,7 @@ public class SplashScreen : MonoBehaviour
     {
         logoRect.anchoredPosition = new Vector2(1000, 0);
         creditRect.anchoredPosition = new Vector2(-1000, 0);
+        soundManager.PlayOneShot("sfx_Intro", SoundManager.SoundChannel.UI, 0.8f);
     }
 
     void FixedUpdate()
