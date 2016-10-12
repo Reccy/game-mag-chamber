@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     public Color lineRendererNormalStart, lineRendererNormalEnd, lineRendererBlockedStart, lineRendererBlockedEnd;
     public Sprite greenShield, redShield, greenGlow, redGlow;
     public GameObject playerImpactParticles, playerDeathParticles;
+    public TrailRenderer[] trailRenderers;
     SpriteRenderer shield, glow;
     LineRenderer lineRenderer;
     CircleCollider2D col;
@@ -76,7 +77,16 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         //Rotate generator
-        generator.transform.Rotate(Vector3.forward, generatorRotationSpeed * generatorRotationPercent * Time.deltaTime); 
+        generator.transform.Rotate(Vector3.forward, generatorRotationSpeed * generatorRotationPercent * gameManager.slowMotionMultiplier * Time.deltaTime); 
+
+        //Update trail renderer time
+        float slowMotionTrail = Mathf.Lerp(0.15f, 0, gameManager.slowMotionMultiplier);
+        trailRenderers[0].time = (0.2f + slowMotionTrail);
+
+        for (int i = 1; i < trailRenderers.Length; i++)
+        {
+            trailRenderers[i].time = (0.15f + slowMotionTrail);
+        }
 
         //Move eye to follow mouse
         eye.transform.position = transform.position;

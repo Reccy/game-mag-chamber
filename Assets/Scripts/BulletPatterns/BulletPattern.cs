@@ -25,9 +25,6 @@ public class BulletPattern : MonoBehaviour
         GreenParticles = LevelManager.greenParticles;
         BlueParticles = LevelManager.blueParticles;
 
-        if (spawnColor == null)
-            spawnColor = SpawnColor.Red;
-
         Vector3 particlePosition = new Vector3(transform.position.x, transform.position.y, 100);
 
         switch(spawnColor)

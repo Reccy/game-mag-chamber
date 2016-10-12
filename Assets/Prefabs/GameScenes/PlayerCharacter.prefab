@@ -73,7 +73,7 @@ GameObject:
   - 120: {fileID: 120000011020590854}
   m_Layer: 9
   m_Name: PlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -631,6 +631,7 @@ MonoBehaviour:
   playerSpeed: 35
   fastSpeed: 45
   lineRendererOffset: 0.24
+  canJumpDistance: 5
 --- !u!120 &120000011020590854
 LineRenderer:
   m_ObjectHideFlags: 1
