@@ -625,8 +625,13 @@ MonoBehaviour:
   redGlow: {fileID: 21300000, guid: 2dd877bd65bd987438076d80101aa48e, type: 3}
   playerImpactParticles: {fileID: 1000012196661924, guid: bd74ec7121797ec409f3fc70f91bfa7b,
     type: 2}
-  playerDeathParticles: {fileID: 1000014290997836, guid: 35000d181d92f1348a702b83733b71d0,
+  playerDeathParticles: {fileID: 1000012323374960, guid: a406953c78dfd884aab135aee21116cf,
     type: 2}
+  trailRenderers:
+  - {fileID: 96000013474618268}
+  - {fileID: 96000010581821350}
+  - {fileID: 96000010407243676}
+  - {fileID: 96000011477404532}
   generatorRotationSpeed: 50
   playerSpeed: 35
   fastSpeed: 45
