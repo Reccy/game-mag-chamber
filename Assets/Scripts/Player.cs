@@ -276,6 +276,9 @@ public class Player : MonoBehaviour
     //Player Death
     void Die()
     {
+        //Stop BGM
+        sound.Stop("sfx_Mayhem");
+
         //Save high score
         if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
         {
@@ -291,7 +294,6 @@ public class Player : MonoBehaviour
             sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 0.6f, false, 0.2f);
             gameManager.newScore = false;
         }
-        
 
         //Kill player
         gameManager.DisableSlowMotion(0); //Disables slow mo

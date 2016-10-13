@@ -73,6 +73,7 @@ public class LevelManager : MonoBehaviour
             GameObject.Find("BeginButton").SetActive(false);
 
         menuUI.enabled = false;
+        sound.Play("sfx_Mayhem", SoundManager.SoundChannel.Music, 0.8f, true, 0, 128, true);
     }
 
     //Go to next phase

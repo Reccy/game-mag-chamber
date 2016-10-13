@@ -125,7 +125,7 @@ public class SoundManager : MonoBehaviour
     //
 
     //Plays sound
-    public AudioSlot Play(string soundName, SoundChannel channel, float volume = 1, bool loop = false, float randomPitchRange = 0, int priority = 128)
+    public AudioSlot Play(string soundName, SoundChannel channel, float volume = 1, bool loop = false, float randomPitchRange = 0, int priority = 128, bool randomStart = false)
     {
         //Get a slot to apply the clip to
         AudioSlot slot = null;
@@ -147,6 +147,10 @@ public class SoundManager : MonoBehaviour
         //Apply pitch if required
         if (randomPitchRange != 0)
             slot.GetSource().pitch = Random.Range(slot.GetSource().pitch - randomPitchRange / 2, slot.GetSource().pitch + randomPitchRange / 2);
+
+        //Start at random point in clip if applied
+        if (randomStart)
+            slot.GetSource().time = Random.Range(0, slot.GetSource().clip.length);
 
         //Play sound
         slot.Play();

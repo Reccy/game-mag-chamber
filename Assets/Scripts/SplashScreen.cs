@@ -21,7 +21,7 @@ public class SplashScreen : MonoBehaviour
     {
         logoRect.anchoredPosition = new Vector2(1000, 0);
         creditRect.anchoredPosition = new Vector2(-1000, 0);
-        soundManager.PlayOneShot("sfx_Intro", SoundManager.SoundChannel.UI, 0.8f);
+        soundManager.PlayOneShot("sfx_Intro", SoundManager.SoundChannel.UI, 0.2f);
     }
 
     void FixedUpdate()
