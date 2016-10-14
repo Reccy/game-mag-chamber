@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     private float lastSpawnTime; //Time when last obstacle was spawned
     private float accumulatedPhaseTime; //Accumulated time from phaseDuration
     public Text timeText; //UI text to display time
+    public bool timerRunning = true; //If the timer should continue to run
 
     //UI management
     public GameObject gameUI; //Game UI
@@ -164,30 +165,33 @@ public class LevelManager : MonoBehaviour
             }
             
             //Update UI Time
-            int minutes, seconds, timeInSeconds;
-            timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
-            minutes = (int)Mathf.Floor(timeInSeconds / 60);
-            seconds = timeInSeconds - (minutes * 60);
-            if(minutes < 10)
+            if(timerRunning)
             {
-                if(seconds < 10)
+                int minutes, seconds, timeInSeconds;
+                timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
+                minutes = (int)Mathf.Floor(timeInSeconds / 60);
+                seconds = timeInSeconds - (minutes * 60);
+                if (minutes < 10)
                 {
-                    timeText.text = "0" + minutes + ":0" + seconds;
+                    if (seconds < 10)
+                    {
+                        timeText.text = "0" + minutes + ":0" + seconds;
+                    }
+                    else
+                    {
+                        timeText.text = "0" + minutes + ":" + seconds;
+                    }
                 }
                 else
                 {
-                    timeText.text = "0" + minutes + ":" + seconds;
-                }
-            }
-            else
-            {
-                if (seconds < 10)
-                {
-                    timeText.text = minutes + ":0" + seconds;
-                }
-                else
-                {
-                    timeText.text = minutes + ":" + seconds;
+                    if (seconds < 10)
+                    {
+                        timeText.text = minutes + ":0" + seconds;
+                    }
+                    else
+                    {
+                        timeText.text = minutes + ":" + seconds;
+                    }
                 }
             }
 

@@ -279,6 +279,9 @@ public class Player : MonoBehaviour
         //Stop BGM
         sound.Stop("sfx_Mayhem");
 
+        //Stop timer
+        levelManager.timerRunning = false;
+
         //Save high score
         if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
         {
