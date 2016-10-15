@@ -17,7 +17,9 @@ public class LevelManager : MonoBehaviour
     private float levelElapsedTime; //Time since beginning of level
     private float lastSpawnTime; //Time when last obstacle was spawned
     private float accumulatedPhaseTime; //Accumulated time from phaseDuration
+    private float timeInSeconds; //Level elapsed time accounted for by deltaTime
     public Text timeText; //UI text to display time
+    public Text timeMillisecondsText; //UI text to display milliseconds
     public bool timerRunning = true; //If the timer should continue to run
 
     //UI management
@@ -167,10 +169,15 @@ public class LevelManager : MonoBehaviour
             //Update UI Time
             if(timerRunning)
             {
-                int minutes, seconds, timeInSeconds;
-                timeInSeconds = (int)Mathf.Floor(levelElapsedTime);
+                int minutes, seconds;
+                float milliseconds;
+                timeInSeconds += (Time.deltaTime * gameManager.slowMotionMultiplier);
                 minutes = (int)Mathf.Floor(timeInSeconds / 60);
-                seconds = timeInSeconds - (minutes * 60);
+                seconds = (int)Mathf.Floor(timeInSeconds) - (minutes * 60);
+                milliseconds = timeInSeconds - seconds;
+
+                timeMillisecondsText.text = milliseconds.ToString().Substring(1, 4);
+
                 if (minutes < 10)
                 {
                     if (seconds < 10)
@@ -223,7 +230,7 @@ public class LevelManager : MonoBehaviour
 
     public float GetHighScore()
     {
-        return levelElapsedTime;
+        return timeInSeconds;
     }
 
     //Play UI sounds

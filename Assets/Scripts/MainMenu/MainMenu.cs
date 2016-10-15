@@ -40,11 +40,17 @@ public class MainMenu : MonoBehaviour
         PlayerPrefs.Save();
 
         Text timeText = GameObject.Find("BestTimeNumText").GetComponent<Text>();
+        Text msText = GameObject.Find("BestTimeMillisecondText").GetComponent<Text>();
 
         int minutes, seconds;
+        float milliseconds;
         float score = PlayerPrefs.GetFloat("HighScore");
         minutes = (int)Mathf.Floor(score / 60);
         seconds = (int)score - (minutes * 60);
+        milliseconds = score - seconds;
+
+        msText.text = milliseconds.ToString().Substring(1, 4);
+
         if (minutes < 10)
         {
             if (seconds < 10)
