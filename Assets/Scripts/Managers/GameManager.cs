@@ -91,6 +91,7 @@ public class GameManager : MonoBehaviour {
     void Paused_Enter()
     {
         Time.timeScale = 0;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().cameraManager.ScreenShake(0);
         levelManager.ShowMenu();
     }
 

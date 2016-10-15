@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour {
         //Toggle game pause
         if(Input.GetKeyDown(KeyCode.Escape))
         {
-            gameManager.TogglePause();
+            GameObject.FindGameObjectWithTag("Player").GetComponent<Player>().EndGame();
         }
     }
 

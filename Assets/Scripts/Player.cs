@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     //Manager variables
     InputManager inputManager;
     GameManager gameManager;
-    MainCameraManager cameraManager;
+    public MainCameraManager cameraManager;
     SoundManager sound;
     LevelManager levelManager;
 
@@ -271,6 +271,13 @@ public class Player : MonoBehaviour
     void HandleCollisionEnter_Enemy(Collider2D enemyCollision)
     {
         Die();
+    }
+
+    //End game
+    public void EndGame()
+    {
+        if (gameManager.gameState.State == GameManager.GameState.Running)
+            Die();
     }
 
     //Player Death
