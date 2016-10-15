@@ -173,12 +173,15 @@ public class LevelManager : MonoBehaviour
             {
                 int minutes, seconds;
                 float milliseconds;
+                string millisecondsString;
                 timeInSeconds += (Time.deltaTime * gameManager.slowMotionMultiplier);
                 minutes = (int)Mathf.Floor(timeInSeconds / 60);
                 seconds = (int)Mathf.Floor(timeInSeconds) - (minutes * 60);
                 milliseconds = timeInSeconds - seconds;
 
-                timeMillisecondsText.text = milliseconds.ToString().Substring(1, 4);
+                millisecondsString = milliseconds.ToString() + "00000";
+                millisecondsString = millisecondsString.Substring(1, 4);
+                timeMillisecondsText.text = millisecondsString;
 
                 if (minutes < 10)
                 {

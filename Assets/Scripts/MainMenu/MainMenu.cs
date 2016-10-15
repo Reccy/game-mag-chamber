@@ -46,12 +46,15 @@ public class MainMenu : MonoBehaviour
 
         int minutes, seconds;
         float milliseconds;
+        string millisecondsString;
         float score = PlayerPrefs.GetFloat("HighScore");
         minutes = (int)Mathf.Floor(score / 60);
         seconds = (int)score - (minutes * 60);
         milliseconds = score - seconds;
 
-        msText.text = milliseconds.ToString().Substring(1, 4);
+        millisecondsString = milliseconds.ToString() + "00000";
+        millisecondsString = millisecondsString.Substring(1, 4);
+        msText.text = millisecondsString;
 
         if (minutes < 10)
         {
