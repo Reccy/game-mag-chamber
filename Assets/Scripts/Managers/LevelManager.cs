@@ -25,6 +25,7 @@ public class LevelManager : MonoBehaviour
     //UI management
     public GameObject gameUI; //Game UI
     public Canvas menuUI; //Menu UI
+    MainMenu mainMenu;
 
     //Reference to player
     GameObject player;
@@ -44,6 +45,7 @@ public class LevelManager : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         gameManager = Object.FindObjectOfType<GameManager>();
         sound = Object.FindObjectOfType<SoundManager>();
+        mainMenu = Object.FindObjectOfType<MainMenu>();
         if(gameManager.newScore)
         {
             menuUI.transform.Find("BestTimeBG").Find("BestTimeText").gameObject.GetComponent<Text>().text = "New Best Time!";
@@ -241,7 +243,8 @@ public class LevelManager : MonoBehaviour
 
     public void PlaySound_DropdownHover()
     {
-        sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI, 0.2f);
+        if(sound && mainMenu.isInitialized)
+            sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI, 0.2f);
     }
 }
 

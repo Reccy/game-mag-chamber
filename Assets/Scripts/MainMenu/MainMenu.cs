@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using MonsterLove.StateMachine;
 
@@ -10,6 +11,7 @@ public class MainMenu : MonoBehaviour
     RectTransform optionsPanelRect, optionsButtonRect, quitPanelRect, quitButtonRect; //Panel Rects
     public float optionsOpenX, optionsClosedX, optionsButtonOpenX, optionsButtonClosedX, quitOpenX, quitClosedX, quitButtonOpenX, quitButtonClosedX; //Positions for opened and closed panels
     public float animationDuration = 20f; //How long it should take for a tweening animation to complete
+    public bool isInitialized = false;
 
     //Options management
     public Options options;
@@ -79,6 +81,12 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         QuickCloseMenus();
+    }
+
+    //Fix dropdown unset bug
+    void Update()
+    {
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
     //
@@ -294,6 +302,7 @@ public class MainMenu : MonoBehaviour
                 options.fpsDropdown.value = 2;
                 break;
         }
+        isInitialized = true;
     }
     
     //Apply saved options
