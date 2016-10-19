@@ -30,11 +30,6 @@ public class LevelManager : MonoBehaviour
     //Reference to player
     GameObject player;
 
-    //Particle systems for bulletpatterns
-    public GameObject redParticles;
-    public GameObject greenParticles;
-    public GameObject blueParticles;
-
     //Reference to Game Manager
     GameManager gameManager;
     SoundManager sound;

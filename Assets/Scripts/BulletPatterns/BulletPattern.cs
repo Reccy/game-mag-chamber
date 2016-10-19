@@ -7,11 +7,6 @@ public class BulletPattern : MonoBehaviour
     public LevelManager LevelManager { set; get; }
     public SoundManager SoundManager { set; get; }
     public GameObject Player { set; get; }
-    public GameObject GreenParticles { set; get; }
-    public GameObject RedParticles { set; get; }
-    public GameObject BlueParticles { set; get; }
-    public enum SpawnColor { Red, Green, Blue };
-    public SpawnColor spawnColor;
 
     void Start()
     {
@@ -21,25 +16,6 @@ public class BulletPattern : MonoBehaviour
             LevelManager = Object.FindObjectOfType<LevelManager>();
             Player = GameObject.FindGameObjectWithTag("Player");
             SoundManager = Object.FindObjectOfType<SoundManager>();
-        }
-
-        RedParticles = LevelManager.redParticles;
-        GreenParticles = LevelManager.greenParticles;
-        BlueParticles = LevelManager.blueParticles;
-
-        Vector3 particlePosition = new Vector3(transform.position.x, transform.position.y, 100);
-
-        switch(spawnColor)
-        {
-            case SpawnColor.Red:
-                Destroy(Instantiate(RedParticles, particlePosition, Quaternion.identity), 5);
-                break;
-            case SpawnColor.Green:
-                Destroy(Instantiate(GreenParticles, particlePosition, Quaternion.identity), 5);
-                break;
-            case SpawnColor.Blue:
-                Destroy(Instantiate(BlueParticles, particlePosition, Quaternion.identity), 5);
-                break;
         }
     }
 

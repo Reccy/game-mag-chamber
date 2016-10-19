@@ -3,7 +3,7 @@ using UnityExtensions.MathfExtensions;
 using System.Collections;
 using MonsterLove.StateMachine;
 
-public class TestEnemy : BulletPattern
+public class Enemy_Pointer : BulletPattern
 {
     private enum State { Seeking, Shooting }
     StateMachine<State> state;
