@@ -301,16 +301,16 @@ public class Player : MonoBehaviour
         else
         {
             //Play death sound effect
-            sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 0.6f, false, 0.2f);
+            sound.PlayOneShot("sfx_Death", SoundManager.SoundChannel.SFX, 2f, false, 0.1f);
             gameManager.newScore = false;
         }
 
         //Kill player
-        gameManager.DisableSlowMotion(0); //Disables slow mo
+        gameManager.DisableSlowMotion(0.5f); //Disables slow mo
         GameObject colFX = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity); //Creates destruction effect
         Destroy(colFX, 2); //Destroy destruction effect in 2 seconds
         Destroy(this.gameObject); //Destroy the player object
-        gameManager.LoadScene(SceneManager.GetActiveScene().name, 1); //Reload the scene in 1 second
+        gameManager.LoadScene(SceneManager.GetActiveScene().name, 2.5f); //Reload the scene
     }
 
     //Returns true if the player can jump
