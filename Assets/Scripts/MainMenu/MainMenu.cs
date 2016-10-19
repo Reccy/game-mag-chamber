@@ -382,6 +382,11 @@ public class MainMenu : MonoBehaviour
     {
         Application.OpenURL("https://reccy.itch.io/");
     }
+
+    public void GotoMusic()
+    {
+        Application.OpenURL("http://soundimage.org/");
+    }
 }
 
 //Options Dropdowns
