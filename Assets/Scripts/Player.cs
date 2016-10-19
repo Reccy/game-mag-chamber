@@ -289,6 +289,9 @@ public class Player : MonoBehaviour
         //Stop timer
         levelManager.timerRunning = false;
 
+        //Show high score
+        levelManager.HighlightScore();
+
         //Save high score
         if(levelManager.GetHighScore() > PlayerPrefs.GetFloat("HighScore"))
         {
@@ -307,6 +310,7 @@ public class Player : MonoBehaviour
 
         //Kill player
         gameManager.DisableSlowMotion(0.5f); //Disables slow mo
+        cameraManager.ScreenShake(1); //Screen shake!
         GameObject colFX = (GameObject)Instantiate(playerDeathParticles, transform.position, Quaternion.identity); //Creates destruction effect
         Destroy(colFX, 2); //Destroy destruction effect in 2 seconds
         Destroy(this.gameObject); //Destroy the player object

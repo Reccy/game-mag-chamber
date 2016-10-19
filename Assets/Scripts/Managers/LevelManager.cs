@@ -249,6 +249,32 @@ public class LevelManager : MonoBehaviour
         if(sound && mainMenu.isInitialized)
             sound.PlayOneShot("sfx_Click", SoundManager.SoundChannel.UI, 0.2f);
     }
+
+    //Makes the high score highlight on player death
+    public void HighlightScore()
+    {
+        StartCoroutine(HighlightScoreCoroutine());
+    }
+
+    private IEnumerator HighlightScoreCoroutine()
+    {
+        Color targetColor = new Color(timeText.color.r, timeText.color.g, timeText.color.b, 1);
+        float alpha;
+        while(true)
+        {
+            if (timeText.color != targetColor)
+            {
+                alpha = timeText.color.a + 0.05f;
+                timeText.color = new Color(timeText.color.r, timeText.color.g, timeText.color.b, Mathf.Clamp(alpha, 0, 1));
+                timeMillisecondsText.color = new Color(timeMillisecondsText.color.r, timeMillisecondsText.color.g, timeMillisecondsText.color.b, Mathf.Clamp(alpha, 0, 1));
+            }
+            else
+            {
+                yield break;
+            }
+            yield return new WaitForFixedUpdate();
+        }
+    }
 }
 
 //A level phase
