@@ -103,9 +103,4 @@ public class Enemy_Orbiter : BulletPattern {
             Destroy(this.gameObject);
         }
     }
-
-    void Update()
-    {
-        Debug.Log("Current State: " + state.State.ToString() + ", Anticipation Speed: " + anticipationSpeed);
-    }
 }

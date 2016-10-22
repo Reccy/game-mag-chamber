@@ -38,7 +38,7 @@ GameObject:
   - 212: {fileID: 212000012297692992}
   - 50: {fileID: 50000010238933578}
   - 60: {fileID: 60000011946749028}
-  - 114: {fileID: 114000012638158544}
+  - 114: {fileID: 114000012755414366}
   m_Layer: 11
   m_Name: Enemy_CDuster
   m_TagString: Untagged
@@ -177,7 +177,7 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
---- !u!114 &114000012638158544
+--- !u!114 &114000012755414366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -185,9 +185,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013496570538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e9f06566bd27a4a87ace695a6e2702, type: 3}
+  m_Script: {fileID: 11500000, guid: 3b09ba5d4153e424a85856bb227b9775, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullet: {fileID: 1000013035365850, guid: 342be3a16b85bbb4cbdd8e6fe5509dce, type: 2}
 --- !u!212 &212000012297692992
 SpriteRenderer:
   m_ObjectHideFlags: 1
