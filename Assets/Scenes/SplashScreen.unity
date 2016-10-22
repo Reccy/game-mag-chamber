@@ -342,7 +342,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Game by Aaron Meaney
+  m_Text: A Game by Aaron Meaney
 --- !u!222 &304761976
 CanvasRenderer:
   m_ObjectHideFlags: 0

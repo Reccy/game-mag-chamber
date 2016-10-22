@@ -60,7 +60,6 @@ public class LevelManager : MonoBehaviour
         lastSpawnTime = 0;
         accumulatedPhaseTime = currentPhase.phaseDuration;
         StartCoroutine(LevelManagerCoroutine());
-        PhaseCode(phaseIndex);
         gameUI.SetActive(true);
         
         if(GameObject.Find("ClickText"))
@@ -85,24 +84,6 @@ public class LevelManager : MonoBehaviour
             phaseIndex++;
             currentPhase = phases[phaseIndex];
             accumulatedPhaseTime += currentPhase.phaseDuration;
-            PhaseCode(phaseIndex);
-        }
-    }
-
-    //Phase dependant code execution
-    void PhaseCode(int phaseIndex)
-    {
-        switch (phaseIndex)
-        {
-            case 0:
-                Debug.Log("TEST_First");
-                break;
-            case 1:
-                Debug.Log("TEST_Second");
-                break;
-            case 2:
-                Debug.Log("TEST_Third");
-                break;
         }
     }
 
