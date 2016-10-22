@@ -29,7 +29,7 @@ public class Enemy_Bomber : BulletPattern {
     }
 
     //Bomber is seeking the player
-    void Seeking_Update()
+    void Seeking_FixedUpdate()
     {
         //Move towards the player
         transform.Translate(Vector2.up * speed * GameManager.slowMotionMultiplier * Time.deltaTime);
@@ -48,6 +48,10 @@ public class Enemy_Bomber : BulletPattern {
 
             preExplosionTimer -= (GameManager.slowMotionMultiplier * Time.deltaTime);
         }
+        else
+        {
+            state.ChangeState(State.PreExploding);
+        }
     }
 
     //Bomber is about to explode
@@ -64,6 +68,7 @@ public class Enemy_Bomber : BulletPattern {
             speed -= 2 * GameManager.slowMotionMultiplier * Time.deltaTime;
         else
             speed = 0;
+
         transform.Translate(Vector2.up * speed * GameManager.slowMotionMultiplier * Time.deltaTime);
 
         //Change scale

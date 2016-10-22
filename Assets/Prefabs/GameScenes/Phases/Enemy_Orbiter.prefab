@@ -22,7 +22,7 @@ GameObject:
   - 212: {fileID: 212000013564512774}
   - 50: {fileID: 50000013101421386}
   - 60: {fileID: 60000010449187632}
-  - 114: {fileID: 114000012328533424}
+  - 114: {fileID: 114000010889959916}
   m_Layer: 11
   m_Name: Enemy_Orbiter
   m_TagString: Untagged
@@ -168,7 +168,7 @@ TrailRenderer:
       rgba: 16777215
   m_MinVertexDistance: 0.1
   m_Autodestruct: 1
---- !u!114 &114000012328533424
+--- !u!114 &114000010889959916
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -176,7 +176,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012984770646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0e9f06566bd27a4a87ace695a6e2702, type: 3}
+  m_Script: {fileID: 11500000, guid: e9373cb071a7f334cb7a681c3b484849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!212 &212000013564512774
