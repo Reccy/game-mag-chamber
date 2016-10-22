@@ -7,6 +7,7 @@ public class Enemy_Pointer : BulletPattern
 {
     private enum State { Seeking, Shooting }
     StateMachine<State> state;
+    private float timeUntilLaunch = 5f;
 
     void Awake()
     {
@@ -20,17 +21,18 @@ public class Enemy_Pointer : BulletPattern
         transform.Translate(Vector2.up * 3 * GameManager.slowMotionMultiplier * Time.deltaTime);
 
         //Rotate towards player
-
         if(Player)
         {
             float angleToPlayer = MathfExtensions.AngleFromTo(this.gameObject, Player);
             transform.rotation = Quaternion.AngleAxis(angleToPlayer, Vector3.forward);
 
             //Check if ready to shoot
-            if (Vector2.Distance(transform.position, Player.transform.position) < 2.5f)
+            if (timeUntilLaunch <= 0 || Vector2.Distance(transform.position, Player.transform.position) < 2.5f)
             {
                 state.ChangeState(State.Shooting);
             }
+
+            timeUntilLaunch -= (GameManager.slowMotionMultiplier * Time.deltaTime);
         }
         else
         {
@@ -39,6 +41,7 @@ public class Enemy_Pointer : BulletPattern
         
     }
 
+    //Move forward
     void Shooting_Update()
     {
         transform.Translate(Vector2.up * 10 * GameManager.slowMotionMultiplier * Time.deltaTime);
