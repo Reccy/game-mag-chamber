@@ -7,14 +7,16 @@ public class Enemy_Bomber : BulletPattern {
 
     private SoundManager sound;
 
-    private enum State { Seeking, PreExploding, Exploding } //Bomber's current state
+    private enum State { Anticipation, Seeking, PreExploding, Exploding } //Bomber's current state
     private StateMachine<State> state;
 
     private float speed = 2.5f; //Bomber's speed
+    private float anticipationSpeed; //Speed during anticipation state
 
     private float engagementDistance = 5f; //Distance to be under to trigger explosion
     private float preExplosionTimer = 5f; //Timer before pre-explosion starts by default
     private float explosionTimer = 2f; //Time before bomber explodes
+    private float anticipationTimer = 0.5f; //Time before anticipation state ends
 
     private float preExplosionStartTime; //Time when preExplosion begins
 
@@ -25,7 +27,49 @@ public class Enemy_Bomber : BulletPattern {
         sound = Object.FindObjectOfType<SoundManager>();
 
         state = StateMachine<State>.Initialize(this);
-        state.ChangeState(State.Seeking);
+        state.ChangeState(State.Anticipation);
+    }
+
+    void Start()
+    {
+        if (Player)
+        {
+            float angleToPlayer = MathfExtensions.AngleFromTo(this.gameObject, Player);
+            transform.rotation = Quaternion.AngleAxis(angleToPlayer, Vector3.forward);
+            transform.Rotate(0, 0, transform.rotation.z + Random.Range(-5, 5));
+        }
+    }
+
+    void Anticipation_Enter()
+    {
+        anticipationSpeed = speed;
+    }
+
+    void Anticipation_FixedUpdate()
+    {
+        //Slow down once object enters the game boundaries
+        if ((transform.position.x > -9.4f && transform.position.x < 9.4f) && (transform.position.y > -7.3f && transform.position.y < 7.3f))
+        {
+            if (anticipationSpeed <= 0)
+            {
+                anticipationSpeed = 0;
+                if (anticipationTimer < 0)
+                {
+                    state.ChangeState(State.Seeking);
+                }
+                else
+                {
+                    anticipationTimer -= GameManager.slowMotionMultiplier * Time.deltaTime;
+                }
+            }
+            else
+            {
+                anticipationSpeed -= 0.05f * GameManager.slowMotionMultiplier;
+            }
+        }
+
+        //Move forwards
+        transform.Translate(Vector2.up * anticipationSpeed * GameManager.slowMotionMultiplier * Time.deltaTime);
     }
 
     //Bomber is seeking the player

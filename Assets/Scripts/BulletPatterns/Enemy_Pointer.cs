@@ -58,8 +58,6 @@ public class Enemy_Pointer : BulletPattern
 
         //Move forwards
         transform.Translate(Vector2.up * anticipationSpeed * GameManager.slowMotionMultiplier * Time.deltaTime);
-
-        Debug.Log("Anticipation Speed: " + anticipationSpeed + ", Anticipation Timer: " + anticipationTimer + ", Transform Position: " + transform.position);
     }
 
     void Seeking_FixedUpdate()
