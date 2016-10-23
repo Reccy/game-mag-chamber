@@ -56,41 +56,35 @@ MonoBehaviour:
     - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
         type: 2}
     maxObstacles: 1
-    patternSpawnRate: 1
-    phaseDuration: 120
-    phaseStartTime: 0
-  - obstacles:
-    - obstacleObject: {fileID: 1000012984770646, guid: 9291060b154db7a44a28d0e7a8aa83f4,
-        type: 2}
-    - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
-        type: 2}
-    - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
-        type: 2}
-    maxObstacles: 5
     patternSpawnRate: 2
-    phaseDuration: 10
+    phaseDuration: 5
     phaseStartTime: 0
   - obstacles:
-    - obstacleObject: {fileID: 1000013437265500, guid: 6d8da5033aaa0984ab74c9ada160c0e4,
-        type: 2}
-    - obstacleObject: {fileID: 1000012984770646, guid: 9291060b154db7a44a28d0e7a8aa83f4,
-        type: 2}
     - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
         type: 2}
     maxObstacles: 5
-    patternSpawnRate: 1.5
+    patternSpawnRate: 1
     phaseDuration: 10
     phaseStartTime: 0
   - obstacles:
     - obstacleObject: {fileID: 1000013437265500, guid: 6d8da5033aaa0984ab74c9ada160c0e4,
         type: 2}
-    - obstacleObject: {fileID: 1000012984770646, guid: 9291060b154db7a44a28d0e7a8aa83f4,
+    maxObstacles: 2
+    patternSpawnRate: 2
+    phaseDuration: 15
+    phaseStartTime: 0
+  - obstacles:
+    - obstacleObject: {fileID: 1000013437265500, guid: 6d8da5033aaa0984ab74c9ada160c0e4,
+        type: 2}
+    - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
+        type: 2}
+    - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
         type: 2}
     - obstacleObject: {fileID: 1000010775201592, guid: 4540feefa544edd42bb293495f8a47f3,
         type: 2}
     - obstacleObject: {fileID: 1000013496570538, guid: 88516d583747d0141a9105b9de0f8ff1,
         type: 2}
-    maxObstacles: 6
+    maxObstacles: 4
     patternSpawnRate: 1
     phaseDuration: 10
     phaseStartTime: 0

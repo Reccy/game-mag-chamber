@@ -81,6 +81,7 @@ public class LevelManager : MonoBehaviour
         //If there is a next phase, go to next phase
         if(HasNextPhase())
         {
+            Debug.Log("NEXT PHASE! " + timeInSeconds);
             phaseIndex++;
             currentPhase = phases[phaseIndex];
             accumulatedPhaseTime += currentPhase.phaseDuration;
@@ -132,7 +133,7 @@ public class LevelManager : MonoBehaviour
             }
 
             //Update level elapsed time
-            levelElapsedTime = Time.time - levelStartTime;
+            levelElapsedTime = timeInSeconds;
 
             //Error checking for negative values
             if (levelElapsedTime < 0)
