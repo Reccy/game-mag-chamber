@@ -89,10 +89,14 @@ public class Enemy_Bomber : BulletPattern {
         //Play sound
         sound.Play("sfx_BomberExplosion", SoundManager.SoundChannel.SFX, 0.3f, false, 0.3f);
 
+        //Screen shake
+        Camera.main.GetComponent<MainCameraManager>().ScreenShake(0.4f);
+
         //Spawn bullets
-        Instantiate(bomberBullets, transform.position, Quaternion.identity);
+        GameObject g = Instantiate(bomberBullets, transform.position, Quaternion.identity) as GameObject;
 
         //Die
+        Destroy(g, 10);
         Destroy(this.gameObject);
     }
 }
