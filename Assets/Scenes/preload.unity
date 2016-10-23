@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbac508ab6782ce488af60663248b569, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugMode: 1
+  debugMode: 0
   debugMenuPrefab: {fileID: 1000011481369906, guid: f1686bd0df558ea48b81e57e6481efdb,
     type: 2}
   gfxRaycaster: {fileID: 0}
