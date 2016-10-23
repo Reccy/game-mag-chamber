@@ -54,6 +54,10 @@ public class MainMenu : MonoBehaviour
 
         millisecondsString = milliseconds.ToString() + "00000";
         millisecondsString = millisecondsString.Substring(1, 4);
+        
+        if (milliseconds == 0)
+            millisecondsString = ".000";
+
         msText.text = millisecondsString;
 
         if (minutes < 10)

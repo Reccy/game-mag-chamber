@@ -15,7 +15,7 @@ public class Enemy_Orbiter : BulletPattern {
 
     private float orbitDistance = 3f; //Distance to orbit the player at
     private float orbitingTimer = 4f; //Duration of orbiting
-    private float preLaunchTimer = 0.2f; //Duration of PreLaunch state
+    private float preLaunchTimer = 0.5f; //Duration of PreLaunch state
 
     void Awake()
     {
