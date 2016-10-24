@@ -258,9 +258,10 @@ public class MainMenu : MonoBehaviour
             string resString = res.ToString();
             string[] splitRes = resString.Split('@');
 
-            if (selectedResolution.Equals(splitRes[0].Trim()))
+            if (selectedResolution.Trim().Equals(splitRes[0].Trim()))
             {
                 resIndex = i;
+                Debug.Log("FOUND RESOLUTION: " + selectedResolution);
             }
 
             options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
