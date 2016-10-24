@@ -223,16 +223,16 @@ public class MainMenu : MonoBehaviour
     {
         //Check if PlayePrefs exist, else generate keys
         if (!PlayerPrefs.HasKey("Resolution"))
-            PlayerPrefs.SetString("Resolution", "640 x 480");
+            PlayerPrefs.SetString("Resolution", Screen.resolutions[Screen.resolutions.Length - 1].width + " x " + Screen.resolutions[Screen.resolutions.Length - 1].height);
 
         if (!PlayerPrefs.HasKey("Fullscreen"))
-            PlayerPrefs.SetInt("Fullscreen", 0);
+            PlayerPrefs.SetInt("Fullscreen", 1);
 
         if (!PlayerPrefs.HasKey("AntiAliasing"))
-            PlayerPrefs.SetInt("AntiAliasing", 0);
+            PlayerPrefs.SetInt("AntiAliasing", 8);
 
-        if (!PlayerPrefs.HasKey("VSync"))
-            PlayerPrefs.SetInt("VSync", 0);
+        if (!PlayerPrefs.HasKey("VSync") || PlayerPrefs.GetInt("VSync") == 2)
+            PlayerPrefs.SetInt("VSync", 1);
 
         if (!PlayerPrefs.HasKey("FPS"))
             PlayerPrefs.SetInt("FPS", 60);
@@ -246,6 +246,8 @@ public class MainMenu : MonoBehaviour
         int vsValue = PlayerPrefs.GetInt("VSync");
         int targetFPS = PlayerPrefs.GetInt("FPS");
 
+        Debug.Log("RES: " + selectedResolution);
+
         //Get Resolution
         options.resolutionDropdown.ClearOptions();
 
@@ -256,13 +258,14 @@ public class MainMenu : MonoBehaviour
             string resString = res.ToString();
             string[] splitRes = resString.Split('@');
 
-            if (selectedResolution.Equals(splitRes[0]))
+            if (selectedResolution.Equals(splitRes[0].Trim()))
             {
                 resIndex = i;
             }
 
             options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
             i++;
+            Debug.Log("C RES: " + splitRes[0].Trim() + " - " + selectedResolution);
         }
         options.resolutionDropdown.captionText = options.resolutionDropdown.transform.Find("Label").GetComponent<Text>();
         options.resolutionDropdown.value = resIndex;
@@ -286,8 +289,7 @@ public class MainMenu : MonoBehaviour
         //Init VSync
         options.vsDropdown.ClearOptions();
         options.vsDropdown.options.Add(new Dropdown.OptionData("VSync Disabled"));
-        options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for VBlank"));
-        options.vsDropdown.options.Add(new Dropdown.OptionData("Wait for Second VBlank"));
+        options.vsDropdown.options.Add(new Dropdown.OptionData("VSync Enabled"));
         options.vsDropdown.captionText = options.vsDropdown.transform.Find("Label").GetComponent<Text>();
         options.vsDropdown.value = vsValue;
 
@@ -380,6 +382,11 @@ public class MainMenu : MonoBehaviour
     public void GotoTwitter()
     {
         Application.OpenURL("https://twitter.com/TheReccy");
+    }
+
+    public void GotoXtreme()
+    {
+        Application.OpenURL("https://twitter.com/XtremePrime");
     }
 
     public void GotoItchio()
