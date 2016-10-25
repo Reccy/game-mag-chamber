@@ -32,6 +32,45 @@ public class GameManager : MonoBehaviour {
 
 	void Awake()
     {
+        //Checks if the user is clearing the PlayerPrefs or Score
+        bool clearPrefs = false;
+        bool clearScore = false;
+        string[] args = System.Environment.GetCommandLineArgs();
+        for (int j = 0; j < args.Length; j++)
+        {
+            if (args[j] == "-clearPrefs")
+            {
+                clearPrefs = true;
+            }
+
+            if(args[j] == "-clearScore")
+            {
+                clearScore = true;
+            }
+        }
+
+        if(clearPrefs || clearScore)
+        {
+            if(clearScore)
+            {
+                PlayerPrefs.SetFloat("HighScore", 0);
+            }
+
+            if(clearPrefs)
+            {
+                float score = 0;
+                if(PlayerPrefs.HasKey("HighScore"))
+                    score = PlayerPrefs.GetFloat("HighScore");
+
+                PlayerPrefs.DeleteAll();
+
+                PlayerPrefs.SetFloat("HighScore", score);
+                PlayerPrefs.Save();
+            }
+
+            Application.Quit();
+        }
+
         //Subscribe to Scene Manager callback
         SceneManager.activeSceneChanged += SceneManager_activeSceneChanged;
 

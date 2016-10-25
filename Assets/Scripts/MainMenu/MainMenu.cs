@@ -221,24 +221,6 @@ public class MainMenu : MonoBehaviour
     //Initialize the Options Menu
     void InitOptionsMenu()
     {
-        //Check for command line args
-        bool clearPrefs = false;
-
-        string[] args = System.Environment.GetCommandLineArgs();
-        for (int j = 0; j < args.Length; j++)
-        {
-            if (args[j] == "-clearPrefs")
-            {
-                clearPrefs = true;
-            }
-        }
-
-        //Clear PlayePrefs
-        if(clearPrefs)
-        {
-            PlayerPrefs.DeleteAll();
-        }
-
         //Check if PlayePrefs exist, else generate keys
         if (!PlayerPrefs.HasKey("Resolution"))
             PlayerPrefs.SetString("Resolution", Screen.resolutions[Screen.resolutions.Length - 1].width + " x " + Screen.resolutions[Screen.resolutions.Length - 1].height);
@@ -256,11 +238,6 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("FPS", 60);
 
         PlayerPrefs.Save();
-
-        if (clearPrefs)
-        {
-            ApplyOptions();
-        }
 
         //Load player preferences
         string selectedResolution = PlayerPrefs.GetString("Resolution");
@@ -290,8 +267,8 @@ public class MainMenu : MonoBehaviour
                 }
 
                 options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
+                i++;
             }
-            i++;
             Debug.Log("C RES: " + splitRes[0].Trim() + " - " + selectedResolution);
         }
         options.resolutionDropdown.captionText = options.resolutionDropdown.transform.Find("Label").GetComponent<Text>();
@@ -395,10 +372,23 @@ public class MainMenu : MonoBehaviour
     //Load Default Options
     public void LoadDefaults()
     {
-        options.resolutionDropdown.value = 0;
-        options.windowDropdown.value = 0;
-        options.aaDropdown.value = 0;
-        options.vsDropdown.value = 0;
+        int i = 0;
+        foreach (Resolution res in Screen.resolutions)
+        {
+            //Remove refresh rate from input
+            string resString = res.ToString();
+            string[] splitRes = resString.Split('@');
+
+            if(res.width >= 640 && res.height >= 480)
+            {
+                i++;
+            }
+        }
+
+        options.resolutionDropdown.value = i;
+        options.windowDropdown.value = 1;
+        options.aaDropdown.value = 3;
+        options.vsDropdown.value = 1;
         options.fpsDropdown.value = 0;
     }
 
