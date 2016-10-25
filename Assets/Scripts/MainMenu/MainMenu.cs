@@ -221,6 +221,24 @@ public class MainMenu : MonoBehaviour
     //Initialize the Options Menu
     void InitOptionsMenu()
     {
+        //Check for command line args
+        bool clearPrefs = false;
+
+        string[] args = System.Environment.GetCommandLineArgs();
+        for (int j = 0; j < args.Length; j++)
+        {
+            if (args[j] == "-clearPrefs")
+            {
+                clearPrefs = true;
+            }
+        }
+
+        //Clear PlayePrefs
+        if(clearPrefs)
+        {
+            PlayerPrefs.DeleteAll();
+        }
+
         //Check if PlayePrefs exist, else generate keys
         if (!PlayerPrefs.HasKey("Resolution"))
             PlayerPrefs.SetString("Resolution", Screen.resolutions[Screen.resolutions.Length - 1].width + " x " + Screen.resolutions[Screen.resolutions.Length - 1].height);
@@ -238,6 +256,11 @@ public class MainMenu : MonoBehaviour
             PlayerPrefs.SetInt("FPS", 60);
 
         PlayerPrefs.Save();
+
+        if (clearPrefs)
+        {
+            ApplyOptions();
+        }
 
         //Load player preferences
         string selectedResolution = PlayerPrefs.GetString("Resolution");
@@ -258,13 +281,16 @@ public class MainMenu : MonoBehaviour
             string resString = res.ToString();
             string[] splitRes = resString.Split('@');
 
-            if (selectedResolution.Trim().Equals(splitRes[0].Trim()))
+            if(res.width >= 640 && res.height >= 480)
             {
-                resIndex = i;
-                Debug.Log("FOUND RESOLUTION: " + selectedResolution);
-            }
+                if (selectedResolution.Trim().Equals(splitRes[0].Trim()))
+                {
+                    resIndex = i;
+                    Debug.Log("FOUND RESOLUTION: " + selectedResolution);
+                }
 
-            options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
+                options.resolutionDropdown.options.Add(new Dropdown.OptionData(splitRes[0]));
+            }
             i++;
             Debug.Log("C RES: " + splitRes[0].Trim() + " - " + selectedResolution);
         }
